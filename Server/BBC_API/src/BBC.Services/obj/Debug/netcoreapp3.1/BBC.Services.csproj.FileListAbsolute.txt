@@ -1,0 +1,11 @@
+E:\Github\BBC\Server\BBC_API\src\BBC.Services\bin\Debug\netcoreapp3.1\BBC.Services.deps.json
+E:\Github\BBC\Server\BBC_API\src\BBC.Services\bin\Debug\netcoreapp3.1\BBC.Services.dll
+E:\Github\BBC\Server\BBC_API\src\BBC.Services\bin\Debug\netcoreapp3.1\BBC.Services.pdb
+E:\Github\BBC\Server\BBC_API\src\BBC.Services\bin\Debug\netcoreapp3.1\BBC.Core.dll
+E:\Github\BBC\Server\BBC_API\src\BBC.Services\bin\Debug\netcoreapp3.1\BBC.Core.pdb
+E:\Github\BBC\Server\BBC_API\src\BBC.Services\obj\Debug\netcoreapp3.1\BBC.Services.csprojAssemblyReference.cache
+E:\Github\BBC\Server\BBC_API\src\BBC.Services\obj\Debug\netcoreapp3.1\BBC.Services.AssemblyInfoInputs.cache
+E:\Github\BBC\Server\BBC_API\src\BBC.Services\obj\Debug\netcoreapp3.1\BBC.Services.AssemblyInfo.cs
+E:\Github\BBC\Server\BBC_API\src\BBC.Services\obj\Debug\netcoreapp3.1\BBC.Services.csproj.CopyComplete
+E:\Github\BBC\Server\BBC_API\src\BBC.Services\obj\Debug\netcoreapp3.1\BBC.Services.dll
+E:\Github\BBC\Server\BBC_API\src\BBC.Services\obj\Debug\netcoreapp3.1\BBC.Services.pdb

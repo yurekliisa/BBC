@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Mapper\" />
+    <Folder Include="Exceptions\" />
+    <Folder Include="Services\Category\Dto\" />
+    <Folder Include="Services\Category\Interfaces\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BBC.Core\BBC.Core.csproj" />
+  </ItemGroup>
+
+</Project>
