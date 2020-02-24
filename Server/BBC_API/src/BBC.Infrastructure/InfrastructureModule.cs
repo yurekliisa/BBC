@@ -32,6 +32,8 @@ namespace BBC.Infrastructure
                 {
                     opt.UseSqlServer(connectionString);
                 });
+
+                services.AddTransient(typeof(BBCContext));
             }
         }
 
@@ -39,8 +41,7 @@ namespace BBC.Infrastructure
 
         protected override void Load(ContainerBuilder builder)
         {
-            builder.DIRegister();
-            builder.RegisterDatabase();
+            //builder.RegisterDatabase();
         }
 
         public override void PostInit(ContainerBuilder builder)

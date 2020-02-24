@@ -17,8 +17,6 @@ namespace BBC.Core.Module
         {
             ContainerBuilder builder = new ContainerBuilder();
 
-            builder.Populate(services);
-
             var modular = KernelAssembly.GetAssemblyType()
                 .Where(module => module.BaseType != null ? module.BaseType.Equals(typeof(BaseModule)) : false).Select(Activator.CreateInstance).Cast<BaseModule>().ToList();
 
@@ -28,6 +26,7 @@ namespace BBC.Core.Module
                 builder.RegisterModule(module);
             });
 
+            builder.Populate(services);
             return builder;
         }
 

@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using BBC.Core.Module;
+using BBC.Core.Registery;
 
 namespace BBC.Core
 {
@@ -7,7 +8,7 @@ namespace BBC.Core
     {
         protected override void Load(ContainerBuilder builder)
         {
-            
+            builder.DIRegister();
         }
     }
 }

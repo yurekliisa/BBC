@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using BBC.Infrastructure;
 using BBC.Services;
+using Autofac.Extensions.DependencyInjection;
 
 namespace BBC.API
 {
@@ -23,17 +24,16 @@ namespace BBC.API
 
         public IConfiguration Configuration { get; }
 
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
             new InfrastructureModule();
             new ServicesModule();
-
-            services.AddControllers();
-
             var assemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
             KernelAssembly.SetAssembly(assemblies);
             ContainerBuilder builder = services.RegisterPopulate();
-            builder.LoaderIoCManager();           
+            builder.LoaderIoCManager();
+            return new AutofacServiceProvider(IoCManager.Container);
         }
 
       

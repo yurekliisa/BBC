@@ -13,8 +13,8 @@ namespace BBC.API.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-       
-        // GET: api/student
+
+        [HttpGet("Get")]
         public IEnumerable<string> Get()
         {
             //context.Tt();
