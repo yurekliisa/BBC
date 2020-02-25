@@ -12,32 +12,59 @@ using Microsoft.Extensions.Hosting;
 using BBC.Infrastructure;
 using BBC.Services;
 using Autofac.Extensions.DependencyInjection;
+using BBC.Core;
+using Microsoft.Extensions.Logging;
+using System.Reflection;
+using System.Collections.Generic;
 
 namespace BBC.API
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IWebHostEnvironment env)
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddEnvironmentVariables();
+            this.Configuration = builder.Build();
         }
 
-        public IConfiguration Configuration { get; }
+        public IConfigurationRoot Configuration { get; private set; }
 
-        public IServiceProvider ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-            new InfrastructureModule();
-            new ServicesModule();
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
+            services.AddOptions();
+            //services.AddControllers();
+        
+            var assemblies = new List<Assembly>();
+            Assembly current = this.GetType().Assembly;
+            assemblies.Add(current);
+
+            var references = current.GetReferencedAssemblies().Where(x => x.Name.Contains("BBC"));
+            
+            foreach (var reference in references)
+            {
+                assemblies.Add(Assembly.Load(reference));
+            }
+
             KernelAssembly.SetAssembly(assemblies);
-            ContainerBuilder builder = services.RegisterPopulate();
-            builder.LoaderIoCManager();
-            return new AutofacServiceProvider(IoCManager.Container);
+            services.PreBuild(Configuration);
+
         }
 
-      
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.RegisterModule(new CoreModule());
+            builder.RegisterModule(new InfrastructureModule());
+            builder.RegisterModule(new ServicesModule());
+            builder.RegisterModule(new APIModule());
+
+        }
+        public void Configure(
+          IApplicationBuilder app,
+          ILoggerFactory loggerFactory, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -54,6 +81,10 @@ namespace BBC.API
             {
                 endpoints.MapControllers();
             });
+
+            IoCManager.Container = app.ApplicationServices.GetAutofacRoot();
+
+            app.ApplicationServices.PostBuilder();
         }
     }
 }

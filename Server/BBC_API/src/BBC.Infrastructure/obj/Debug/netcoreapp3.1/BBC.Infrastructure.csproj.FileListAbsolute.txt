@@ -1,4 +1,6 @@
 E:\Github\BBC\Server\BBC_API\src\BBC.Infrastructure\bin\Debug\netcoreapp3.1\BBC.Infrastructure.deps.json
+E:\Github\BBC\Server\BBC_API\src\BBC.Infrastructure\bin\Debug\netcoreapp3.1\BBC.Infrastructure.runtimeconfig.json
+E:\Github\BBC\Server\BBC_API\src\BBC.Infrastructure\bin\Debug\netcoreapp3.1\BBC.Infrastructure.runtimeconfig.dev.json
 E:\Github\BBC\Server\BBC_API\src\BBC.Infrastructure\bin\Debug\netcoreapp3.1\BBC.Infrastructure.dll
 E:\Github\BBC\Server\BBC_API\src\BBC.Infrastructure\bin\Debug\netcoreapp3.1\BBC.Infrastructure.pdb
 E:\Github\BBC\Server\BBC_API\src\BBC.Infrastructure\bin\Debug\netcoreapp3.1\BBC.Core.dll
@@ -9,5 +11,3 @@ E:\Github\BBC\Server\BBC_API\src\BBC.Infrastructure\obj\Debug\netcoreapp3.1\BBC.
 E:\Github\BBC\Server\BBC_API\src\BBC.Infrastructure\obj\Debug\netcoreapp3.1\BBC.Infrastructure.csproj.CopyComplete
 E:\Github\BBC\Server\BBC_API\src\BBC.Infrastructure\obj\Debug\netcoreapp3.1\BBC.Infrastructure.dll
 E:\Github\BBC\Server\BBC_API\src\BBC.Infrastructure\obj\Debug\netcoreapp3.1\BBC.Infrastructure.pdb
-E:\Github\BBC\Server\BBC_API\src\BBC.Infrastructure\bin\Debug\netcoreapp3.1\BBC.Infrastructure.runtimeconfig.json
-E:\Github\BBC\Server\BBC_API\src\BBC.Infrastructure\bin\Debug\netcoreapp3.1\BBC.Infrastructure.runtimeconfig.dev.json

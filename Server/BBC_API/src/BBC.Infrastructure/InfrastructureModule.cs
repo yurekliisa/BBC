@@ -19,35 +19,24 @@ namespace BBC.Infrastructure
 {
     public class InfrastructureModule : BaseModule
     {
-        public override void PreInit(IServiceCollection services)
+        public override void PreInit(IServiceCollection services, IConfiguration Configuration)
         {
-            var scopeFactory = services.BuildServiceProvider().GetRequiredService<IServiceScopeFactory>();
-            using (var scope = scopeFactory.CreateScope())
+            services.AddDbContext<BBCContext>(opt =>
             {
-                var provider = scope.ServiceProvider;
-                var config = provider.GetRequiredService<IConfiguration>();
-                var connectionString = config.GetConnectionString("Default");
+                opt.UseSqlServer(Configuration.GetConnectionString("Default"));
+            });
 
-                services.AddDbContext<BBCContext>(opt =>
-                {
-                    opt.UseSqlServer(connectionString);
-                });
-
-                services.AddTransient(typeof(BBCContext));
-            }
         }
-
-
 
         protected override void Load(ContainerBuilder builder)
         {
-            //builder.RegisterDatabase();
+            builder.RegisterDatabase();
         }
-
-        public override void PostInit(ContainerBuilder builder)
+        public override void PostInit(IServiceProvider provider)
         {
             RegisterEntities();
         }
+       
 
         private void RegisterEntities()
         {

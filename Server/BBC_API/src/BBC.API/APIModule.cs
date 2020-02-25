@@ -3,6 +3,7 @@ using BBC.Core;
 using BBC.Core.Module;
 using BBC.Infrastructure;
 using BBC.Services;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -13,15 +14,20 @@ namespace BBC.API
 {
     public class APIModule: BaseModule
     {
-     
         protected override void Load(ContainerBuilder builder)
         {
            
         }
 
-        public override void PreInit(IServiceCollection services)
+        public override void PreInit(IServiceCollection services, IConfiguration Configuration)
         {
-           
+            services.AddControllers();
         }
+
+        public override void PostInit(IServiceProvider provider)
+        {
+            base.PostInit(provider);
+        }
+
     }
 }

@@ -28,7 +28,10 @@ namespace BBC.Core.Registery
 
         private static void DIRegisterSingleton(this ContainerBuilder builder)
         {
-            builder.RegisterAssemblyTypes(KernelAssembly.GetAssemblies().ToArray())
+            builder.Register(c => new Configuration.ConfigDatabase()).SingleInstance();
+
+            // TODO : Not working
+            builder.RegisterAssemblyTypes()
             .Where(type =>
                     type.GetInterfaces().Contains(typeof(ISingletonDI)) && type.IsClass
                     )

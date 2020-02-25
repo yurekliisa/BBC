@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using BBC.Core.Kernel;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -11,15 +12,15 @@ namespace BBC.Core.Module
     {
         protected BaseModule()
         {
-            KernelAssembly.SetAssembly(GetType().Assembly);
+            //KernelAssembly.SetAssembly(GetType().Assembly);
         }
 
-        public virtual void PreInit(IServiceCollection services)
+        public virtual void PreInit(IServiceCollection services,IConfiguration Configuration)
         {
           
         }
      
-        public virtual void PostInit(ContainerBuilder builder)
+        public virtual void PostInit(IServiceProvider provider)
         {
 
         }

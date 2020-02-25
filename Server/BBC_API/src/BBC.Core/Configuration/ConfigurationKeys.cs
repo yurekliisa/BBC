@@ -7,7 +7,7 @@ namespace BBC.Core.Configuration
     public static class ConfigurationKeys
     {
         public static string Cache = "Cache";
-        public static string Database = "Database";
+        public static string Database = "ConnectionStrings";
         public static string Redis = "Redis";
         public static string Swagger = "Swagger";
         public static string Jwt = "Jwt";

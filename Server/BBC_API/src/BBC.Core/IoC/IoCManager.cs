@@ -7,7 +7,7 @@ namespace BBC.Core.IoC
 {
     public static class IoCManager
     {
-        public static IContainer Container;
+        public static ILifetimeScope Container;
 
         public static T GetResolve<T>()
         {

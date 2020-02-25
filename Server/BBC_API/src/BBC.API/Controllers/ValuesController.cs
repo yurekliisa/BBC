@@ -2,26 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BBC.Core.Configuration;
 using BBC.Infrastructure.Data;
-using BBC.Infrastructure.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BBC.API.Controllers
 {
-    [Route("api/values")]
+    [Route("[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase
     {
-
-        [HttpGet("Get")]
+        [HttpGet]
         public IEnumerable<string> Get()
         {
-            //context.Tt();
             return new string[] { "value1", "value2" };
         }
 
-        // GET: api/student/5
         public string Get(int id)
         {
             return "value";
