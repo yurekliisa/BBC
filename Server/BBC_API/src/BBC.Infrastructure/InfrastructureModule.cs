@@ -6,6 +6,7 @@ using BBC.Core.Module;
 using BBC.Core.Registery;
 using BBC.Infrastructure.Data;
 using BBC.Infrastructure.Registery;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,61 +18,23 @@ using System.Text;
 
 namespace BBC.Infrastructure
 {
-    public class InfrastructureModule : BaseModule
+    public class InfrastructureModule : ModuleBase
     {
         public override void PreInit(IServiceCollection services, IConfiguration Configuration)
         {
-            services.AddDbContext<BBCContext>(opt =>
-            {
-                opt.UseSqlServer(Configuration.GetConnectionString("Default"));
-            });
-
+            services.UseCache(Configuration);
+            services.UseSQL(Configuration);
         }
-
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterCache();
             builder.RegisterDatabase();
+            builder.RegisterGenericRepository();
+            builder.RegisterRepository();
         }
-        public override void PostInit(IServiceProvider provider)
+        public override void PostInit(IApplicationBuilder app)
         {
-            RegisterEntities();
-        }
-       
-
-        private void RegisterEntities()
-        {
-            var context = IoCManager.Container.Resolve<BBCContext>();
-            List<PropertyInfo> dbSetProperties = GetDbSetProperties(context);
-            List<object> dbSets = dbSetProperties.Select(x => x.GetValue(context, null)).ToList();
-            foreach (var model in dbSets)
-            {
-                if (EntitiesHelper.ExistsEntity(model.GetType()))
-                {
-                    EntitiesHelper.SetEntityBases(model.GetType());
-                }
-            }
-
-        }
-
-        private List<PropertyInfo> GetDbSetProperties(DbContext context)
-        {
-            var dbSetProperties = new List<PropertyInfo>();
-            var properties = context.GetType().GetProperties();
-
-            foreach (var property in properties)
-            {
-                var setType = property.PropertyType;
-
-                var isDbSet = setType.IsGenericType && (typeof(DbSet<>).IsAssignableFrom(setType.GetGenericTypeDefinition()));
-
-                if (isDbSet)
-                {
-                    dbSetProperties.Add(property);
-                }
-            }
-
-            return dbSetProperties;
-
+            app.RegisterEntities();
         }
 
     }

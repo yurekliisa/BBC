@@ -5,8 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Repository\" />
-    <Folder Include="Services\" />
     <Folder Include="Logging\" />
     <Folder Include="Exceptions\" />
   </ItemGroup>

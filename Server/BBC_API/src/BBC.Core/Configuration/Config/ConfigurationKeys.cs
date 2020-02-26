@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BBC.Core.Configuration
+namespace BBC.Core.Configuration.Config
 {
     public static class ConfigurationKeys
     {

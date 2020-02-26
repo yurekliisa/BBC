@@ -29,14 +29,16 @@ namespace BBC.Core.Registery
         private static void DIRegisterSingleton(this ContainerBuilder builder)
         {
             builder.Register(c => new Configuration.ConfigDatabase()).SingleInstance();
+            builder.Register(c => new Configuration.ConfigJWT()).SingleInstance();
 
-            // TODO : Not working
+            /*
+             * // TODO : Not working
             builder.RegisterAssemblyTypes()
             .Where(type =>
                     type.GetInterfaces().Contains(typeof(ISingletonDI)) && type.IsClass
                     )
             .AsImplementedInterfaces()
-            .SingleInstance();
+            .SingleInstance();*/
         }
     }
 }

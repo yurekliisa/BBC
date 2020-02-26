@@ -3,6 +3,7 @@ using Autofac.Core;
 using Autofac.Extensions.DependencyInjection;
 using BBC.Core.IoC;
 using BBC.Core.Kernel;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -17,7 +18,7 @@ namespace BBC.Core.Module
         public static void PreBuild(this IServiceCollection services, IConfiguration Configuration)
         {
             var modular = KernelAssembly.GetAssemblyType()
-                .Where(module => module.BaseType != null ? module.BaseType.Equals(typeof(BaseModule)) : false).Select(Activator.CreateInstance).Cast<BaseModule>().ToList();
+                .Where(module => module.BaseType != null ? module.BaseType.Equals(typeof(ModuleBase)) : false).Select(Activator.CreateInstance).Cast<ModuleBase>().ToList();
 
             modular.ForEach(module =>
             {
@@ -27,14 +28,14 @@ namespace BBC.Core.Module
            
         }
 
-        public static void PostBuilder(this IServiceProvider provider)
+        public static void PostBuilder(this IApplicationBuilder app)
         {
             var modular = KernelAssembly.GetAssemblyType()
-                .Where(module => module.BaseType != null ? module.BaseType.Equals(typeof(BaseModule)) : false).Select(Activator.CreateInstance).Cast<BaseModule>().ToList();
+                .Where(module => module.BaseType != null ? module.BaseType.Equals(typeof(ModuleBase)) : false).Select(Activator.CreateInstance).Cast<ModuleBase>().ToList();
 
             modular.ForEach(module =>
             {
-                module.PostInit(provider);
+                module.PostInit(app);
             });
 
         }

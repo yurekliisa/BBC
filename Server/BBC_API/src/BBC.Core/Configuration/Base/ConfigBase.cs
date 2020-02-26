@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BBC.Core.Configuration
+namespace BBC.Core.Configuration.Base
 {
     public class ConfigBase : ISingletonDI
     {

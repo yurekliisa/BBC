@@ -5,14 +5,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Mapper\" />
     <Folder Include="Exceptions\" />
-    <Folder Include="Services\Category\Dto\" />
-    <Folder Include="Services\Category\Interfaces\" />
+    <Folder Include="Services\CategoryService\Interfaces\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BBC.Core\BBC.Core.csproj" />
+    <ProjectReference Include="..\BBC.Infrastructure\BBC.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

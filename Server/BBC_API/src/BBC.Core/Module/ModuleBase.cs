@@ -1,16 +1,12 @@
-﻿using Autofac;
-using BBC.Core.Kernel;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BBC.Core.Module
 {
-    public class BaseModule : Autofac.Module
+    public class ModuleBase : Autofac.Module
     {
-        protected BaseModule()
+        protected ModuleBase()
         {
             //KernelAssembly.SetAssembly(GetType().Assembly);
         }
@@ -19,8 +15,8 @@ namespace BBC.Core.Module
         {
           
         }
-     
-        public virtual void PostInit(IServiceProvider provider)
+
+        public virtual void PostInit(IApplicationBuilder app)
         {
 
         }

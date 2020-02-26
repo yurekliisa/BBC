@@ -64,13 +64,13 @@ namespace BBC.API
         }
         public void Configure(
           IApplicationBuilder app,
-          ILoggerFactory loggerFactory, IWebHostEnvironment env)
+          IWebHostEnvironment env)
         {
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -81,10 +81,9 @@ namespace BBC.API
             {
                 endpoints.MapControllers();
             });
-
             IoCManager.Container = app.ApplicationServices.GetAutofacRoot();
 
-            app.ApplicationServices.PostBuilder();
+            app.PostBuilder();
         }
     }
 }

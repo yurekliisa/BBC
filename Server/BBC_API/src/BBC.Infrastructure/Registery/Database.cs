@@ -1,7 +1,10 @@
 ﻿using Autofac;
+using BBC.Core.Interfaces;
 using BBC.Core.Kernel;
 using BBC.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
 
@@ -9,6 +12,14 @@ namespace BBC.Infrastructure.Registery
 {
     public static class Database
     {
+        public static void UseSQL(this IServiceCollection services,IConfiguration Configuration)
+        {
+            services.AddDbContext<BBCContext>(opt =>
+            {
+                opt.UseSqlServer(Configuration.GetConnectionString("Default"));
+            });
+        }
+
         public static void RegisterDatabase(this ContainerBuilder builder)
         {
             /*
@@ -20,7 +31,7 @@ namespace BBC.Infrastructure.Registery
 
             builder.RegisterAssemblyTypes(KernelAssembly.GetAssemblies().ToArray())
                  .Where(type =>
-                         type.GetInterfaces().Contains(typeof(DbContext))
+                         type.GetInterfaces().Contains(typeof(IContext))
                          ).AsImplementedInterfaces()
                 .InstancePerLifetimeScope();
         }
