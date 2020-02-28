@@ -12,5 +12,6 @@ namespace BBC.Core.Configuration.Config
         public static string Swagger = "Swagger";
         public static string Jwt = "Jwt";
         public static string Cors = "Cors";
+        public static string Identity = "Identity";
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BBC.Core.Repositories.Base
 {
-    public interface IBaseRepository<TDbContext, TEntity, TKey> : IRepository
+    public interface IRepositoryBase<TDbContext, TEntity, TKey> : IRepository
     {
         #region Context
         //TDbContext GetDbContext();

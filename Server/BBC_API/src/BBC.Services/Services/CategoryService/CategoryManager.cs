@@ -12,9 +12,9 @@ namespace BBC.Services.Services.CategoryService
 {
     public class CategoryManager:ICategoryService,ITransientDI
     {
-        private readonly IBaseRepository<BBCContext, Category, int> _repository;
+        private readonly IRepositoryBase<BBCContext, Category, int> _repository;
         private readonly IMapper _mapper;
-        public CategoryManager(IBaseRepository<BBCContext, Category, int> repository, IMapper mapper)
+        public CategoryManager(IRepositoryBase<BBCContext, Category, int> repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;

@@ -5,6 +5,7 @@ using BBC.Core.IoC;
 using BBC.Core.Module;
 using BBC.Core.Registery;
 using BBC.Infrastructure.Data;
+using BBC.Infrastructure.Data.Seed;
 using BBC.Infrastructure.Registery;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -35,6 +36,7 @@ namespace BBC.Infrastructure
         public override void PostInit(IApplicationBuilder app)
         {
             app.RegisterEntities();
+            app.Seed();
         }
 
     }

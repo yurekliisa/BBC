@@ -14,7 +14,7 @@ namespace BBC.Infrastructure.Registery
     {
         public static void RegisterGenericRepository(this ContainerBuilder builder)
         {
-            builder.RegisterGeneric(typeof(RepositoryBase<,,>)).As(typeof(IBaseRepository<,,>)).InstancePerLifetimeScope();
+            builder.RegisterGeneric(typeof(RepositoryBase<,,>)).As(typeof(IRepositoryBase<,,>)).InstancePerLifetimeScope();
         }
 
         public static void RegisterRepository(this ContainerBuilder builder)

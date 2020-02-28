@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace BBC.Infrastructure.Repository
 {
-    public class RepositoryBase<TDbContext, TEntity, TKey> : IBaseRepository<TDbContext, TEntity, TKey>
+    public class RepositoryBase<TDbContext, TEntity, TKey> : IRepositoryBase<TDbContext, TEntity, TKey>
        where TDbContext : DbContext, IContext
        where TKey : IEquatable<TKey>
        where TEntity : class, IEntityBase<TKey>, new()

@@ -1,8 +1,10 @@
 ﻿using Autofac;
 using BBC.API.Registery;
 using BBC.Core;
+using BBC.Core.Domain.Identity;
 using BBC.Core.Module;
 using BBC.Infrastructure;
+using BBC.Infrastructure.Data;
 using BBC.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -24,17 +26,22 @@ namespace BBC.API
 
         public override void PreInit(IServiceCollection services, IConfiguration Configuration)
         {
+            //TODO : CORS PROBLEM
             services.AddControllers();
             services.AddScoped<IHttpContextAccessor, HttpContextAccessor>();
             services.AddHttpContextAccessor();
             services.UseSwagger();
-            services.UseCors(Configuration);
+            //services.UseCors(Configuration);
+            services.SetIdentityOptions(Configuration);
+            services.UseIdentity<BBCContext, User, Role>();
+            services.UseAuthentication(Configuration);
         }
 
         public override void PostInit(IApplicationBuilder app)
         {
             app.SwaggerBuilder();
-            app.CorsBuilder();
+            //app.CorsBuilder();
+            app.AuthorizeBuilder();
         }
 
     }

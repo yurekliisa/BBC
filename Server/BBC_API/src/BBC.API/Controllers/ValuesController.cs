@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using BBC.API.Helper.Attribute;
 using BBC.Core.Configuration;
 using BBC.Core.Interfaces;
-using BBC.Infrastructure.Data;
+using BBC.Core.Permission;
 using BBC.Services.Services.CategoryService;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace BBC.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [RequiredPermission(Permissions.Category)]
     public class ValuesController : ControllerBase
     {
         private readonly ICategoryService _service;
