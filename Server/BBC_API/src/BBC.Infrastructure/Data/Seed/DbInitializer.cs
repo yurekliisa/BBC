@@ -1,4 +1,5 @@
-﻿using BBC.Core.Domain.Identity;
+﻿using BBC.Core.Domain;
+using BBC.Core.Domain.Identity;
 using BBC.Core.Permission;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
@@ -115,6 +116,18 @@ namespace BBC.Infrastructure.Data.Seed
                     {
                         await _userManager.AddToRoleAsync(userAccount, "UserTest");
                     }
+                }
+                #endregion
+
+                #region Country Default Value
+                var trValue = await _dbContext.Countries.FirstOrDefaultAsync(x => x.Name == "Türkiye" && x.Code == "TR");
+                if(trValue == null)
+                {
+                    _dbContext.Countries.Add(new Country()
+                    {
+                        Code = "TR",
+                        Name = "Türkiye"
+                    });
                 }
                 #endregion
 

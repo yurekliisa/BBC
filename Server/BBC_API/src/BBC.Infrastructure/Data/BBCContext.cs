@@ -11,6 +11,7 @@ namespace BBC.Infrastructure.Data
     public class BBCContext: IdentityDbContext<User,Role,int>, IBBCContext
     {
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Country> Countries { get; set; }
         public BBCContext(DbContextOptions<BBCContext> options):base(options)
         {
 

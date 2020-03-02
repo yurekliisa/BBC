@@ -11,3 +11,16 @@ E:\Github\BBC\Server\BBC_API\src\BBC.Services\bin\Debug\netcoreapp3.1\BBC.Infras
 E:\Github\BBC\Server\BBC_API\src\BBC.Services\obj\Debug\netcoreapp3.1\BBC.Services.csproj.CopyComplete
 E:\Github\BBC\Server\BBC_API\src\BBC.Services\obj\Debug\netcoreapp3.1\BBC.Services.dll
 E:\Github\BBC\Server\BBC_API\src\BBC.Services\obj\Debug\netcoreapp3.1\BBC.Services.pdb
+C:\Users\aetan\Masaüstü\BBC\Server\BBC_API\src\BBC.Services\bin\Debug\netcoreapp3.1\BBC.Services.deps.json
+C:\Users\aetan\Masaüstü\BBC\Server\BBC_API\src\BBC.Services\bin\Debug\netcoreapp3.1\BBC.Services.dll
+C:\Users\aetan\Masaüstü\BBC\Server\BBC_API\src\BBC.Services\bin\Debug\netcoreapp3.1\BBC.Services.pdb
+C:\Users\aetan\Masaüstü\BBC\Server\BBC_API\src\BBC.Services\bin\Debug\netcoreapp3.1\BBC.Core.dll
+C:\Users\aetan\Masaüstü\BBC\Server\BBC_API\src\BBC.Services\bin\Debug\netcoreapp3.1\BBC.Infrastructure.dll
+C:\Users\aetan\Masaüstü\BBC\Server\BBC_API\src\BBC.Services\bin\Debug\netcoreapp3.1\BBC.Core.pdb
+C:\Users\aetan\Masaüstü\BBC\Server\BBC_API\src\BBC.Services\bin\Debug\netcoreapp3.1\BBC.Infrastructure.pdb
+C:\Users\aetan\Masaüstü\BBC\Server\BBC_API\src\BBC.Services\obj\Debug\netcoreapp3.1\BBC.Services.csprojAssemblyReference.cache
+C:\Users\aetan\Masaüstü\BBC\Server\BBC_API\src\BBC.Services\obj\Debug\netcoreapp3.1\BBC.Services.AssemblyInfoInputs.cache
+C:\Users\aetan\Masaüstü\BBC\Server\BBC_API\src\BBC.Services\obj\Debug\netcoreapp3.1\BBC.Services.AssemblyInfo.cs
+C:\Users\aetan\Masaüstü\BBC\Server\BBC_API\src\BBC.Services\obj\Debug\netcoreapp3.1\BBC.Services.csproj.CopyComplete
+C:\Users\aetan\Masaüstü\BBC\Server\BBC_API\src\BBC.Services\obj\Debug\netcoreapp3.1\BBC.Services.dll
+C:\Users\aetan\Masaüstü\BBC\Server\BBC_API\src\BBC.Services\obj\Debug\netcoreapp3.1\BBC.Services.pdb

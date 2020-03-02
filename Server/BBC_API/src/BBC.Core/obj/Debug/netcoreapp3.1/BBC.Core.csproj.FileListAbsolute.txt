@@ -5,3 +5,10 @@ E:\Github\BBC\Server\BBC_API\src\BBC.Core\obj\Debug\netcoreapp3.1\BBC.Core.Assem
 E:\Github\BBC\Server\BBC_API\src\BBC.Core\obj\Debug\netcoreapp3.1\BBC.Core.AssemblyInfo.cs
 E:\Github\BBC\Server\BBC_API\src\BBC.Core\obj\Debug\netcoreapp3.1\BBC.Core.dll
 E:\Github\BBC\Server\BBC_API\src\BBC.Core\obj\Debug\netcoreapp3.1\BBC.Core.pdb
+C:\Users\aetan\Masaüstü\BBC\Server\BBC_API\src\BBC.Core\bin\Debug\netcoreapp3.1\BBC.Core.deps.json
+C:\Users\aetan\Masaüstü\BBC\Server\BBC_API\src\BBC.Core\bin\Debug\netcoreapp3.1\BBC.Core.dll
+C:\Users\aetan\Masaüstü\BBC\Server\BBC_API\src\BBC.Core\bin\Debug\netcoreapp3.1\BBC.Core.pdb
+C:\Users\aetan\Masaüstü\BBC\Server\BBC_API\src\BBC.Core\obj\Debug\netcoreapp3.1\BBC.Core.AssemblyInfoInputs.cache
+C:\Users\aetan\Masaüstü\BBC\Server\BBC_API\src\BBC.Core\obj\Debug\netcoreapp3.1\BBC.Core.AssemblyInfo.cs
+C:\Users\aetan\Masaüstü\BBC\Server\BBC_API\src\BBC.Core\obj\Debug\netcoreapp3.1\BBC.Core.dll
+C:\Users\aetan\Masaüstü\BBC\Server\BBC_API\src\BBC.Core\obj\Debug\netcoreapp3.1\BBC.Core.pdb

@@ -41,7 +41,7 @@ namespace BBC.API.Controllers
             var cqwe = _contextAccessor.HttpContext.User.Claims;
             var bq = _cacheManager.GetAllCache();
             var b = _configJWT.Audience;
-            _service.Exception();
+           // _service.Exception();
             _service.InsertData();
             _service.GetData();
 
