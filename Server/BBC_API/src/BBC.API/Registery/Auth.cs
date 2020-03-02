@@ -16,51 +16,37 @@ namespace BBC.API.Registery
     {
         public static void UseAuthentication(this IServiceCollection services, IConfiguration Configuration)
         {
-            ///--- IMPORTANT : IdentityService AuthorizeServiceden önce olmalı jwt token için
-            services.AddTransient(typeof(TokenValidationParameters));
-
-
             SymmetricSecurityKey signingKey =
-                   new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration[ConfigurationKeys.Jwt + ":Secret"].ToString()));
-
+                   new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration[ConfigurationKeys.Jwt + ":Key"].ToString()));
             string Issuer = Configuration[ConfigurationKeys.Jwt + ":Issuer"].ToString();
             string Audience = Configuration[ConfigurationKeys.Jwt + ":Audience"].ToString();
-            SigningCredentials SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
 
+            services
+                 .AddAuthentication(o => o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme)
+                 .AddJwtBearer(o =>
+                 {
+                     //o.RequireHttpsMetadata = false;
+                     //o.SaveToken = false;
+                     o.TokenValidationParameters = new TokenValidationParameters
+                     {
+                         ValidateIssuerSigningKey = true,
+                         ValidateIssuer = true,
+                         ValidateAudience = true,
+                         ValidateLifetime = true,
+                         ClockSkew = TimeSpan.Zero,
 
-            TokenValidationParameters tokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuer = true,
-                ValidIssuer = Issuer,
-
-                ValidateAudience = true,
-                ValidAudience = Audience,
-
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = signingKey,
-
-                RequireExpirationTime = false,
-
-                ValidateLifetime = true,
-                ClockSkew = TimeSpan.Zero
-            };
-
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(configureOptions =>
-            {
-                configureOptions.ClaimsIssuer = Issuer;
-                configureOptions.TokenValidationParameters = tokenValidationParameters;
-                configureOptions.SaveToken = true;
-            });
+                         ValidIssuer = Issuer,
+                         ValidAudience = Audience,
+                         IssuerSigningKey = signingKey
+                     };
+                 });
 
         }
 
         public static void AuthorizeBuilder(this IApplicationBuilder app)
         {
             app.UseAuthentication();
+            app.UseAuthorization();
         }
     }
 }

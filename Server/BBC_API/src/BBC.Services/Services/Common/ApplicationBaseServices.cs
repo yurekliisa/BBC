@@ -49,21 +49,18 @@ namespace BBC.Services.Services.Base
     {
         protected readonly UserManager<TUser> _userManager;
         protected readonly RoleManager<TRole> _roleManager;
-        protected readonly SignInManager<TUser> _signInManager;
         protected readonly HttpContext _httpContext;
         protected ApplicationBaseServices()
         {
             _userManager = IoCManager.GetResolve<UserManager<TUser>>();
             _roleManager = IoCManager.GetResolve<RoleManager<TRole>>();
-            _signInManager = IoCManager.GetResolve<SignInManager<TUser>>();
             _httpContext = IoCManager.GetResolve<IHttpContextAccessor>().HttpContext;
         }
 
 
         protected virtual async Task<TUser> GetCurrentUserAsync()
         {
-            ClaimsPrincipal identity = _httpContext.User;
-            TUser user = await _userManager.GetUserAsync(identity);
+            TUser user = await _userManager.FindByIdAsync(_httpContext.User.FindFirst("uid")?.Value);
             if (user != null)
             {
                 return user;

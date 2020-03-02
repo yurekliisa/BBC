@@ -13,5 +13,8 @@ namespace BBC.Core.Configuration.Config
         public static string Jwt = "Jwt";
         public static string Cors = "Cors";
         public static string Identity = "Identity";
+        public static string ClientApp = "ClientApp";
+        public static string Email = "Email";
+        public static string QRCode = "QRCode";
     }
 }

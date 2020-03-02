@@ -16,24 +16,30 @@ namespace BBC.API.Registery
         public static void UseCors(this IServiceCollection services, IConfiguration Configuration)
         {
             uiURL = Configuration[ConfigurationKeys.Cors + ":UiUrl"].ToString();
-            services.AddCors(opt =>
+            //services.AddCors(opt =>
+            //{
+            //    opt.AddPolicy("AllowConfig",
+            //        builder => builder
+            //                        .WithOrigins(uiURL)
+            //                        .SetIsOriginAllowedToAllowWildcardSubdomains()
+            //                        .AllowAnyHeader()
+            //                        .AllowAnyMethod()
+            //                        .AllowCredentials()
+            //            );
+            //});
+            services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
             {
-                opt.AddPolicy("AllowConfig",
-                    builder => builder
-                                    .WithOrigins(uiURL)
-                                    .SetIsOriginAllowedToAllowWildcardSubdomains()
-                                    .AllowAnyHeader()
-                                    .AllowAnyMethod()
-                                    .AllowCredentials()
-                        );
-            });
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
         }
 
 
         public static void CorsBuilder(this IApplicationBuilder app)
         {
-            //app.UseCors();
-            app.UseCors(x => x.WithOrigins(uiURL).AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials());
+            app.UseCors("CorsPolicy");
+            //app.UseCors(x => x.WithOrigins(uiURL).AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials());
         }
     }
 }

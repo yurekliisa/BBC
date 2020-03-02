@@ -9,5 +9,6 @@ namespace BBC.Services.Services.CategoryService
     {
         void GetData();
         void InsertData();
+        void Exception();
     }
 }

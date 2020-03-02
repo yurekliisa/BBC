@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using BBC.Core.Domain.Identity;
 using BBC.Core.Interfaces;
-using BBC.Services.Identity.Dto;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,8 +11,7 @@ namespace BBC.Services.Mapper
     {
         public IdentityMapper()
         {
-            CreateMap<RegisterDto, User>();
-            CreateMap<UserRegistrationRequest, User>();
+            
         }
     }
 }

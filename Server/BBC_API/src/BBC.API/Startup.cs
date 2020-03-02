@@ -16,6 +16,7 @@ using BBC.Core;
 using Microsoft.Extensions.Logging;
 using System.Reflection;
 using System.Collections.Generic;
+using BBC.API.Middlewares;
 
 namespace BBC.API
 {
@@ -71,19 +72,27 @@ namespace BBC.API
             {
                 app.UseDeveloperExceptionPage();
             }
+          
+
+            IoCManager.Container = app.ApplicationServices.GetAutofacRoot();
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
-            app.UseAuthorization();
+
+            app.PostBuilder();
+
+            app.UseErrorHandlingMiddleware();
+
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
-            IoCManager.Container = app.ApplicationServices.GetAutofacRoot();
+            
 
-            app.PostBuilder();
+
         }
     }
 }

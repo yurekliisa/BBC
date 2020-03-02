@@ -30,7 +30,9 @@ namespace BBC.Core.Registery
         {
             builder.Register(c => new Configuration.ConfigDatabase()).SingleInstance();
             builder.Register(c => new Configuration.ConfigJWT()).SingleInstance();
-            builder.Register(c => new Permission.Permissions()).SingleInstance();
+            builder.Register(c => new Configuration.ConfigEmail()).SingleInstance();
+            builder.Register(c => new Configuration.ConfigClientApp()).SingleInstance();
+            builder.Register(c => new Configuration.ConfigQRCode()).SingleInstance();
             /*
              * // TODO : Not working
             builder.RegisterAssemblyTypes()

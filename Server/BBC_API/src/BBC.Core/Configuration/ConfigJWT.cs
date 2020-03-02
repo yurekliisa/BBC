@@ -10,10 +10,10 @@ namespace BBC.Core.Configuration
 {
     public class ConfigJWT : ConfigBase
     {
-        public virtual string Secret { get; set; }
-        public virtual string Issuer { get; set; }
-        public virtual string Audience { get; set; }
-        public virtual string TokenLifetime { get; set; }
+        public string Key { get; set; }
+        public string Issuer { get; set; }
+        public string Audience { get; set; }
+        public double DurationInMinutes { get; set; }
         public ConfigJWT()
         {
             _configuration.Bind(ConfigurationKeys.Jwt, this);

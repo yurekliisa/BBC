@@ -1,7 +1,7 @@
-E:\Github\BBC\Server\BBC_API\src\BBC.Core\obj\Debug\netcoreapp3.1\BBC.Core.AssemblyInfoInputs.cache
-E:\Github\BBC\Server\BBC_API\src\BBC.Core\obj\Debug\netcoreapp3.1\BBC.Core.AssemblyInfo.cs
 E:\Github\BBC\Server\BBC_API\src\BBC.Core\bin\Debug\netcoreapp3.1\BBC.Core.deps.json
 E:\Github\BBC\Server\BBC_API\src\BBC.Core\bin\Debug\netcoreapp3.1\BBC.Core.dll
 E:\Github\BBC\Server\BBC_API\src\BBC.Core\bin\Debug\netcoreapp3.1\BBC.Core.pdb
+E:\Github\BBC\Server\BBC_API\src\BBC.Core\obj\Debug\netcoreapp3.1\BBC.Core.AssemblyInfoInputs.cache
+E:\Github\BBC\Server\BBC_API\src\BBC.Core\obj\Debug\netcoreapp3.1\BBC.Core.AssemblyInfo.cs
 E:\Github\BBC\Server\BBC_API\src\BBC.Core\obj\Debug\netcoreapp3.1\BBC.Core.dll
 E:\Github\BBC\Server\BBC_API\src\BBC.Core\obj\Debug\netcoreapp3.1\BBC.Core.pdb

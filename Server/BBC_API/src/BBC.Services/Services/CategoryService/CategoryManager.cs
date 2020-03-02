@@ -3,6 +3,7 @@ using BBC.Core.Dependency;
 using BBC.Core.Domain;
 using BBC.Core.Repositories.Base;
 using BBC.Infrastructure.Data;
+using BBC.Services.Exceptions;
 using BBC.Services.Services.CategoryService.Dto;
 using System;
 using System.Collections.Generic;
@@ -27,9 +28,14 @@ namespace BBC.Services.Services.CategoryService
         }
 
         public void InsertData()
-        {
+        {   
             var insert = _repository.Insert(new Category() { Name = "testetet" });
             _repository.SaveChanges();
+        }
+
+        public void Exception()
+        {
+            throw new ServiceException("trial exception");
         }
     }
 }

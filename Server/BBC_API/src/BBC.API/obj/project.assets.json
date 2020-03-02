@@ -3134,6 +3134,7 @@
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "7.0.0",
           "BBC.Core": "1.0.0",
           "BBC.Infrastructure": "1.0.0",
+          "Microsoft.AspNetCore.Hosting.Abstractions": "2.2.0",
           "System.IdentityModel.Tokens.Jwt": "5.6.0"
         },
         "compile": {

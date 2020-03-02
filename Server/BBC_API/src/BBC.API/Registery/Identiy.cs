@@ -26,6 +26,7 @@ namespace BBC.API.Registery
             services.Configure<IdentityOptions>(
                 options =>
                 {
+                    // Password settings
                     options.Password.RequireDigit = true;
                     options.Password.RequiredLength = 6;
                     options.Password.RequireNonAlphanumeric = false;
