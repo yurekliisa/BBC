@@ -1,26 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\aetan\\Masaüstü\\BBC\\Server\\BBC_API\\src\\BBC.Core\\BBC.Core.csproj": {}
+    "D:\\NetCoreProjects\\BBC\\Server\\BBC_API\\src\\BBC.Core\\BBC.Core.csproj": {}
   },
   "projects": {
-    "C:\\Users\\aetan\\Masaüstü\\BBC\\Server\\BBC_API\\src\\BBC.Core\\BBC.Core.csproj": {
+    "D:\\NetCoreProjects\\BBC\\Server\\BBC_API\\src\\BBC.Core\\BBC.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\aetan\\Masaüstü\\BBC\\Server\\BBC_API\\src\\BBC.Core\\BBC.Core.csproj",
+        "projectUniqueName": "D:\\NetCoreProjects\\BBC\\Server\\BBC_API\\src\\BBC.Core\\BBC.Core.csproj",
         "projectName": "BBC.Core",
-        "projectPath": "C:\\Users\\aetan\\Masaüstü\\BBC\\Server\\BBC_API\\src\\BBC.Core\\BBC.Core.csproj",
-        "packagesPath": "C:\\Users\\aetan\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\aetan\\Masaüstü\\BBC\\Server\\BBC_API\\src\\BBC.Core\\obj\\",
+        "projectPath": "D:\\NetCoreProjects\\BBC\\Server\\BBC_API\\src\\BBC.Core\\BBC.Core.csproj",
+        "packagesPath": "C:\\Users\\Emre\\.nuget\\packages\\",
+        "outputPath": "D:\\NetCoreProjects\\BBC\\Server\\BBC_API\\src\\BBC.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\aetan\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\Emre\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
