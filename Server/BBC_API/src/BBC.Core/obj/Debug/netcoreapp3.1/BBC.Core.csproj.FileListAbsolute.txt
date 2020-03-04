@@ -12,3 +12,10 @@ C:\Users\aetan\Masaüstü\BBC\Server\BBC_API\src\BBC.Core\obj\Debug\netcoreapp3.
 C:\Users\aetan\Masaüstü\BBC\Server\BBC_API\src\BBC.Core\obj\Debug\netcoreapp3.1\BBC.Core.AssemblyInfo.cs
 C:\Users\aetan\Masaüstü\BBC\Server\BBC_API\src\BBC.Core\obj\Debug\netcoreapp3.1\BBC.Core.dll
 C:\Users\aetan\Masaüstü\BBC\Server\BBC_API\src\BBC.Core\obj\Debug\netcoreapp3.1\BBC.Core.pdb
+D:\NetCoreProjects\BBC\Server\BBC_API\src\BBC.Core\bin\Debug\netcoreapp3.1\BBC.Core.deps.json
+D:\NetCoreProjects\BBC\Server\BBC_API\src\BBC.Core\bin\Debug\netcoreapp3.1\BBC.Core.dll
+D:\NetCoreProjects\BBC\Server\BBC_API\src\BBC.Core\bin\Debug\netcoreapp3.1\BBC.Core.pdb
+D:\NetCoreProjects\BBC\Server\BBC_API\src\BBC.Core\obj\Debug\netcoreapp3.1\BBC.Core.AssemblyInfoInputs.cache
+D:\NetCoreProjects\BBC\Server\BBC_API\src\BBC.Core\obj\Debug\netcoreapp3.1\BBC.Core.AssemblyInfo.cs
+D:\NetCoreProjects\BBC\Server\BBC_API\src\BBC.Core\obj\Debug\netcoreapp3.1\BBC.Core.dll
+D:\NetCoreProjects\BBC\Server\BBC_API\src\BBC.Core\obj\Debug\netcoreapp3.1\BBC.Core.pdb

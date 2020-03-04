@@ -12,6 +12,8 @@ namespace BBC.Infrastructure.Data
     {
         public DbSet<Category> Categories { get; set; }
         public DbSet<Country> Countries { get; set; }
+        public DbSet<Content> Contents { get; set; }
+        public DbSet<Lobi> Lobis { get; set; }
         public BBCContext(DbContextOptions<BBCContext> options):base(options)
         {
 
