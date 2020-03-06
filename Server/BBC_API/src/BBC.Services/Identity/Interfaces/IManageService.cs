@@ -12,14 +12,13 @@ namespace BBC.Services.Identity.Interfaces
     public interface IManageService : IApplicationBaseServices<User, Role>
     {
         Task<UserInfoOutputDto> UserInfo();
-        Task<TwoFactorAuthenticationOutputDto> TwoFactorAuthentication();
         Task<EnableAuthenticatorInputDto> EnableAuthenticator();
         Task<IdentityResult> ChangePassword(ChangePasswordInputDto model);
         Task<IdentityResult> SendVerificationEmail();
         Task<IdentityResult> SetPassword(SetPasswordInputDto model);
-        Task<IdentityResult> Disable2fa();
         Task<RecoveryCodeOutputDto> EnableAuthenticator(EnableAuthenticatorInputDto model, bool isValid);
         Task<IdentityResult> ResetAuthenticator();
         Task<ShowRecoveryCodesOutputDto> GenerateRecoveryCodes();
+        Task<TokenOutputDto> RefreshToken(TokenInputDto model);
     }
 }

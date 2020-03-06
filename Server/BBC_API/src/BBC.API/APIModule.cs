@@ -38,7 +38,6 @@ namespace BBC.API
             services.AddHttpContextAccessor();
             services.UseSwagger();
 
-            services.AddTransient<IEmailService, EmailService>();
 
 
         }

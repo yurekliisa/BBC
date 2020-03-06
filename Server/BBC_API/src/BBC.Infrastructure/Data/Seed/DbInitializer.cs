@@ -28,6 +28,8 @@ namespace BBC.Infrastructure.Data.Seed
                 RoleManager<Role> _roleManager = serviceScope.ServiceProvider.GetService<RoleManager<Role>>();
                 Permissions _permissions = serviceScope.ServiceProvider.GetService<Permissions>();
 
+                _dbContext.Database.Migrate();
+
                 #region Full Permission 
 
                 //--- Role

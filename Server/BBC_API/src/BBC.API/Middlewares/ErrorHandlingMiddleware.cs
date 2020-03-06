@@ -37,7 +37,7 @@ namespace BBC.API.Middlewares
             }
             catch (Exception ex)
             {
-                await _emailService.SendException(ex);
+                //await _emailService.SendException(ex);
                 await HandleExceptionAsync(httpContext, ex);
             }
         }

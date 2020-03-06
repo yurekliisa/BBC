@@ -39,6 +39,19 @@ namespace BBC.API.Registery
                          ValidAudience = Audience,
                          IssuerSigningKey = signingKey
                      };
+                     o.Events = new JwtBearerEvents
+                     {
+                         //Token süresi biterse clientin anlaması için Token-Expired keywordü varmı yokmu die bakar
+                         //Headerda keyword varsa refresh token 
+                         OnAuthenticationFailed = context =>
+                         {
+                             if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+                             {
+                                 context.Response.Headers.Add("Token-Expired", "true");
+                             }
+                             return Task.CompletedTask;
+                         }
+                     };
                  });
 
         }

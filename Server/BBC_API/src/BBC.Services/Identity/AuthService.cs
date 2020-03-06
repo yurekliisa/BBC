@@ -117,66 +117,19 @@ namespace BBC.Services.Identity
             {
                 tokenModel.HasVerifiedEmail = true;
 
-                if (user.TwoFactorEnabled)
-                {
-                    tokenModel.TFAEnabled = true;
-                    return tokenModel;
-                }
-                else
-                {
-                    JwtSecurityToken jwtSecurityToken = await CreateJwtToken(user);
-                    tokenModel.TFAEnabled = false;
-                    tokenModel.Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
 
-                    tokenModel.RefreshToken = await _userManager.GetAuthenticationTokenAsync(user, "local", "RefreshToken");
-                    if (String.IsNullOrEmpty(tokenModel.RefreshToken))
-                    {
-                        tokenModel.RefreshToken = Guid.NewGuid().ToString();
-                        await _userManager.SetAuthenticationTokenAsync(user, "local", "RefreshToken", tokenModel.RefreshToken);
-                    }
-                    return tokenModel;
+                JwtSecurityToken jwtSecurityToken = await CreateJwtToken(user);
+                tokenModel.Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+                tokenModel.RefreshToken = await _userManager.GetAuthenticationTokenAsync(user, "BBC", "RefreshToken");
+                if (String.IsNullOrEmpty(tokenModel.RefreshToken))
+                {
+                    tokenModel.RefreshToken = await _userManager.GenerateUserTokenAsync(user, "BBC", "RefreshToken");
+                    await _userManager.SetAuthenticationTokenAsync(user, "BBC", "RefreshToken", tokenModel.RefreshToken);
                 }
+
+                return tokenModel;
             }
             tokenModel.Errors = new string[] { "Invalid login attempt." };
-            return tokenModel;
-        }
-
-        public async Task<TokenOutputDto> LoginWith2fa(LoginWith2faInputDto model)
-        {
-            var tokenModel = new TokenOutputDto();
-
-            var user = await _userManager.FindByEmailAsync(model.Email);
-            if (user == null)
-            {
-                tokenModel.Errors = new string[] { "Not Found User" };
-                return tokenModel;
-            }
-            if (await _userManager.VerifyTwoFactorTokenAsync(user, "Authenticator", model.TwoFactorCode))
-            {
-                JwtSecurityToken jwtSecurityToken = await CreateJwtToken(user);
-
-                tokenModel = new TokenOutputDto()
-                {
-                    HasVerifiedEmail = true,
-                    TFAEnabled = false,
-                    Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken)
-                };
-
-                string refreshToken = await _userManager.GetAuthenticationTokenAsync(user, "local", "RefreshToken");
-                if (String.IsNullOrEmpty(refreshToken))
-                {
-                    refreshToken = Guid.NewGuid().ToString();
-                    await _userManager.SetAuthenticationTokenAsync(user, "local", "RefreshToken", refreshToken);
-                }
-                await _userManager.AddLoginAsync(user, new UserLoginInfo("local", "Web", user.UserName));
-
-                await _signInManager.CreateUserPrincipalAsync(user);
-
-
-                return tokenModel;
-            }
-            tokenModel.Errors = new string[] { "Unable to verify Authenticator Code!" };
-
             return tokenModel;
         }
 

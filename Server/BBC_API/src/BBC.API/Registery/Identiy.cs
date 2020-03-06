@@ -1,4 +1,5 @@
 ﻿using BBC.Core.Configuration.Config;
+using BBC.Core.Domain.Identity;
 using BBC.Core.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +19,7 @@ namespace BBC.API.Registery
             where TUser : class
             where TRole : class
         {
-            services.AddIdentity<TUser, TRole>().AddEntityFrameworkStores<TContext>().AddDefaultTokenProviders();
+            services.AddIdentity<TUser, TRole>().AddEntityFrameworkStores<TContext>().AddDefaultTokenProviders().AddTokenProvider("BBC",typeof(DataProtectorTokenProvider<User>));
         }
 
         public static void SetIdentityOptions(this IServiceCollection services, IConfiguration Configuration)

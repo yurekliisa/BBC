@@ -1,13 +1,17 @@
 ﻿using BBC.Core.Configuration;
 using BBC.Core.Domain.Identity;
 using BBC.Infrastructure.Identity.Providers;
+using BBC.Services.Helper;
 using BBC.Services.Identity.Dto.Auth;
 using BBC.Services.Identity.Interfaces;
 using BBC.Services.Services.Base;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
@@ -20,6 +24,7 @@ namespace BBC.Services.Identity
         private readonly IEmailService _emailService;
         private readonly ConfigClientApp _client;
         private readonly ConfigQRCode _qr;
+        private readonly ConfigJWT _jwt;
 
         private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
 
@@ -27,13 +32,15 @@ namespace BBC.Services.Identity
             UrlEncoder urlEncoder,
             IEmailService emailService,
             ConfigClientApp client,
-            ConfigQRCode qr
+            ConfigQRCode qr,
+            ConfigJWT jwt
             )
         {
             _urlEncoder = urlEncoder;
             _emailService = emailService;
             _client = client;
             _qr = qr;
+            _jwt = jwt;
         }
 
         public async Task<UserInfoOutputDto> UserInfo()
@@ -53,23 +60,6 @@ namespace BBC.Services.Identity
             return userInfoDto;
         }
 
-        public async Task<TwoFactorAuthenticationOutputDto> TwoFactorAuthentication()
-        {
-            var user = await GetCurrentUserAsync();
-            if (user == null)
-                return null;
-
-            var result = new TwoFactorAuthenticationOutputDto
-            {
-                HasAuthenticator = await _userManager.GetAuthenticatorKeyAsync(user) != null,
-                Is2faEnabled = user.TwoFactorEnabled,
-                RecoveryCodesLeft = await _userManager.CountRecoveryCodesAsync(user)
-            };
-
-            return result;
-        }
-
-
         public async Task<EnableAuthenticatorInputDto> EnableAuthenticator()
         {
             var user = await GetCurrentUserAsync();
@@ -81,7 +71,6 @@ namespace BBC.Services.Identity
 
             return model;
         }
-
 
         public async Task<IdentityResult> ChangePassword(ChangePasswordInputDto model)
         {
@@ -133,7 +122,6 @@ namespace BBC.Services.Identity
             await _emailService.SendEmailConfirmationAsync(user.Email, callbackUrl);
             return IdentityResult.Success;
         }
-
 
         public async Task<IdentityResult> SetPassword(SetPasswordInputDto model)
         {
@@ -289,6 +277,89 @@ namespace BBC.Services.Identity
 
             return result;
         }
+
+        public async Task<TokenOutputDto> RefreshToken(TokenInputDto model)
+        {
+            var user = await _userManager.FindByEmailAsync(model.Email);
+
+            var checkRefreshToken = await _userManager.VerifyUserTokenAsync(user, "BBC", "RefreshToken", model.RefreshToken);
+            if (checkRefreshToken)
+            {
+                //set new refresh token
+                model.RefreshToken = await _userManager.GenerateUserTokenAsync(user, "BBC", "RefreshToken");
+                await _userManager.SetAuthenticationTokenAsync(user, "BBC", "RefreshToken", model.RefreshToken);
+
+                var tokenModel = new TokenOutputDto()
+                {
+                    HasVerifiedEmail = true,
+                    RefreshToken = model.RefreshToken
+                };
+
+                JwtSecurityToken jwtSecurityToken = await CreateJwtToken(user);
+                tokenModel.Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+                return tokenModel;
+            }
+            return new TokenOutputDto()
+            {
+                Errors = new string[]
+                {
+                    "Not Found User",
+                }
+            };
+        }
+        //TODO: Authda ve burda kullanıldı teke dusur
+        private async Task<JwtSecurityToken> CreateJwtToken(User user)
+        {
+            var userClaims = await _userManager.GetClaimsAsync(user);
+            var roles = await _userManager.GetRolesAsync(user);
+
+            var roleClaims = new List<Claim>();
+
+            for (int i = 0; i < roles.Count; i++)
+            {
+                roleClaims.Add(new Claim("roles", roles[i]));
+            }
+            var permissions = await GetUserPermissions(user);
+            string ipAddress = IpHelper.GetIpAddress();
+
+            var claims = new[]
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(JwtRegisteredClaimNames.Email, user.Email),
+                new Claim("uid", user.Id.ToString()),
+                new Claim("ip", ipAddress),
+
+            }
+            .Union(permissions)
+            .Union(userClaims)
+            .Union(roleClaims);
+
+            var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwt.Key));
+            var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
+
+            var jwtSecurityToken = new JwtSecurityToken(
+                issuer: _jwt.Issuer,
+                audience: _jwt.Audience,
+                claims: claims,
+                expires: DateTime.UtcNow.AddMinutes(_jwt.DurationInMinutes),
+                signingCredentials: signingCredentials);
+            return jwtSecurityToken;
+        }
+        private async Task<List<Claim>> GetUserPermissions(User user)
+        {
+            List<Claim> userPermissions = new List<Claim>();
+            IList<string> userRole = await _userManager.GetRolesAsync(user);
+            foreach (string role in userRole)
+            {
+                Role getRole = await _roleManager.FindByNameAsync(role);
+                IList<Claim> roleClaims = await _roleManager.GetClaimsAsync(getRole);
+                userPermissions = userPermissions.Union(roleClaims).ToList();
+            }
+
+            return userPermissions;
+        }
+
 
         private string FormatKey(string unformattedKey)
         {

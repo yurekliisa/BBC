@@ -1,10 +1,11 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using BBC.Core.Dependency;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Threading.Tasks;
 
 namespace BBC.Infrastructure.Identity.Providers
 {
-    public interface IEmailService
+    public interface IEmailService: ITransientDI
     {
         Task SendAsync(string EmailDisplayName, string Subject, string Body, string From, string To);
 

@@ -15,7 +15,6 @@ namespace BBC.Services.Identity.Interfaces
         Task<IdentityResult> ConfirmEmail(ConfirmEmailInputDto model);
         Task<IdentityResult> Register(RegisterInputDto model);
         Task<TokenOutputDto> CreateToken(LoginInputDto model);
-        Task<TokenOutputDto> LoginWith2fa(LoginWith2faInputDto model);
         Task<IdentityResult> ForgotPassword(ForgotPasswordInputDto model);
         Task<IdentityResult> ResetPassword(ResetPasswordInputDto model);
         Task<IdentityResult> ResendVerificationEmail(UserDto model);

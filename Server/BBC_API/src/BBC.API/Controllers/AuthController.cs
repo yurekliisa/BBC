@@ -73,8 +73,8 @@ namespace BBC.API.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(TokenOutputDto), 200)]
         [ProducesResponseType(typeof(IEnumerable<string>), 400)]
-        [Route("Token")]
-        public async Task<IActionResult> CreateToken([FromBody]LoginInputDto model)
+        [Route("Login")]
+        public async Task<IActionResult> Login([FromBody]LoginInputDto model)
         {
             var result = await _authService.CreateToken(model);
             if (result.Errors != null)
@@ -82,22 +82,6 @@ namespace BBC.API.Controllers
 
             return Ok(result);
         }
-
-        [HttpPost]
-        [ProducesResponseType(typeof(TokenOutputDto), 200)]
-        [ProducesResponseType(typeof(IEnumerable<string>), 400)]
-        [Route("TFA")]
-        public async Task<IActionResult> LoginWith2fa([FromBody]LoginWith2faInputDto model)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState.Values.Select(x => x.Errors.FirstOrDefault().ErrorMessage));
-
-            var result = await _authService.LoginWith2fa(model);
-            if (result.Errors.Length > 0)
-                return BadRequest(result.Errors);
-            return Ok(result);
-        }
-
 
         [HttpPost]
         [ProducesResponseType(200)]

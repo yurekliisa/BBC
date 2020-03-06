@@ -25,6 +25,7 @@ namespace BBC.Infrastructure
         {
             services.UseCache(Configuration);
             services.UseSQL(Configuration);
+
         }
         protected override void Load(ContainerBuilder builder)
         {

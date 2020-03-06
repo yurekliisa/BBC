@@ -8,8 +8,6 @@ namespace BBC.Services.Identity.Dto.Auth
     public class LoginInputDto
     {
 
-        public string UserName { get; set; }
-
         [Required]
         [EmailAddress]
         [DataType(DataType.EmailAddress)]

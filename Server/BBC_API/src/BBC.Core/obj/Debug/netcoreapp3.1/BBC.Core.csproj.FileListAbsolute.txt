@@ -12,3 +12,4 @@ C:\Users\aetan\Masaüstü\BBC\Server\BBC_API\src\BBC.Core\obj\Debug\netcoreapp3.
 C:\Users\aetan\Masaüstü\BBC\Server\BBC_API\src\BBC.Core\obj\Debug\netcoreapp3.1\BBC.Core.AssemblyInfo.cs
 C:\Users\aetan\Masaüstü\BBC\Server\BBC_API\src\BBC.Core\obj\Debug\netcoreapp3.1\BBC.Core.dll
 C:\Users\aetan\Masaüstü\BBC\Server\BBC_API\src\BBC.Core\obj\Debug\netcoreapp3.1\BBC.Core.pdb
+E:\Github\BBC\Server\BBC_API\src\BBC.Core\obj\Debug\netcoreapp3.1\BBC.Core.csprojAssemblyReference.cache

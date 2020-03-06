@@ -1,4 +1,5 @@
 ﻿using BBC.Core.Configuration;
+using BBC.Core.Dependency;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Options;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BBC.Infrastructure.Identity.Providers
 {
-    public class EmailService: IEmailService
+    public class EmailService: IEmailService,ITransientDI
     {
         private readonly ConfigEmail _email;
         //private readonly IWebHostEnvironment _env;

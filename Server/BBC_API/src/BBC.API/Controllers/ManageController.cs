@@ -48,18 +48,6 @@ namespace BBC.API.Controllers
         }
 
 
-        [HttpGet]
-        [ProducesResponseType(typeof(TwoFactorAuthenticationOutputDto), 200)]
-        [ProducesResponseType(typeof(IEnumerable<string>), 400)]
-        [Route("TwoFactorAuthentication")]
-        public async Task<IActionResult> TwoFactorAuthentication()
-        {
-            var result = await _manageService.TwoFactorAuthentication();
-            if (result == null)
-                return BadRequest(new string[] { "Could not find user!" });
-
-            return Ok(result);
-        }
 
 
         [HttpGet]
@@ -126,22 +114,6 @@ namespace BBC.API.Controllers
             return BadRequest(result.Errors.Select(x => x.Description));
         }
 
-
-        [HttpPost]
-        [ProducesResponseType(typeof(IdentityResult), 200)]
-        [ProducesResponseType(typeof(IEnumerable<string>), 400)]
-        [Route("DisableTFA")]
-        public async Task<IActionResult> Disable2fa()
-        {
-            IdentityResult result = await _manageService.Disable2fa();
-            if (result.Succeeded)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result.Errors.Select(x => x.Description));
-        }
-
-
         [HttpPost]
         [ProducesResponseType(typeof(IEnumerable<string>), 200)]
         [ProducesResponseType(typeof(IEnumerable<string>), 400)]
@@ -189,6 +161,20 @@ namespace BBC.API.Controllers
                 return Ok(result.RecoveryCodes);
             }
             return BadRequest(result.IdentityResult.Errors.Select(x => x.Description));
+        }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(TokenOutputDto), 200)]
+        [ProducesResponseType(typeof(IEnumerable<string>), 400)]
+        [Route("UpdateToken")]
+        [AllowAnonymous]
+        public async Task<IActionResult> UpdateToken([FromBody]TokenInputDto model)
+        {
+            var result = await _manageService.RefreshToken(model);
+            if (result.Errors != null)
+                return BadRequest(result.Errors);
+
+            return Ok(result);
         }
     }
 }
