@@ -1,17 +1,8 @@
 name: .NET Core
 
-on: [push]
-
-jobs:
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET Core SDK
-      uses: actions/setup-dotnet@v1.4.0
-      with:
-        dotnet-version: 3.1.100
-    - name: Build with dotnet
-      run: dotnet build --configuration Release
+steps:
+- uses: actions/checkout@master
+- uses: actions/setup-dotnet@v1
+  with:
+    dotnet-version: '3.1.100' 
+- run: dotnet build --configuration Release
