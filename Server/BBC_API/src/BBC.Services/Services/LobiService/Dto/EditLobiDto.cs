@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BBC.Services.Services.LobiService.Dto
 {
-    public class EditLobiDto : BaseDto<int>
+    public class EditSocialMediaDto : BaseDto<int>
     {
         public string Name { get; set; }
     }

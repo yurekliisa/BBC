@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BBC.Services.Services.LobiService
 {
-    public interface ILobiService : IBaseService
+    public interface ISocialMediaService : IBaseService
     {
         Task<List<LobiListDto>> GetAllLobis();
         Task<EditLobiDto> GetLobi(int Id);

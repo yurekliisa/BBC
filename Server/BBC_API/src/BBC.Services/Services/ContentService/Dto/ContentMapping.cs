@@ -7,14 +7,14 @@ using System.Text;
 
 namespace BBC.Services.Services.ContentService.Dto
 {
-    public class LobiMapping : Profile, IMapperBase
+    public class ContentMapping : Profile, IMapperBase
     {
-        public LobiMapping()
+        public ContentMapping()
         {
-            CreateMap<Content, LobiListDto>();
-            CreateMap<Content, EditLobiDto>();
-            CreateMap<EditLobiDto, Content>();
-            CreateMap<CreateLobiDto, Content>();
+            CreateMap<Content, ContentListDto>();
+            CreateMap<Content, EditContentDto>();
+            CreateMap<EditContentDto, Content>();
+            CreateMap<CreateContentDto, Content>();
         }
     }
 }

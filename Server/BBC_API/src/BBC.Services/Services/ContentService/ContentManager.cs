@@ -10,15 +10,15 @@ using System.Threading.Tasks;
 
 namespace BBC.Services.Services.ContentService
 {
-    public class LobiManager : BaseService, ILobiService
+    public class ContentManager : BaseService, IContentService
     {
         private readonly IRepositoryBase<BBCContext, Content, int> _contentRepository;
 
-        public LobiManager(IRepositoryBase<BBCContext, Content, int> contentRepository)
+        public ContentManager(IRepositoryBase<BBCContext, Content, int> contentRepository)
         {
             _contentRepository = contentRepository;
         }
-        public async Task CreateContent(CreateLobiDto input)
+        public async Task CreateContent(CreateContentDto input)
         {
             var content = _mapper.Map<Content>(input);
             await _contentRepository.InsertAsync(content);
@@ -29,24 +29,24 @@ namespace BBC.Services.Services.ContentService
             await _contentRepository.DeleteAsync(Id);
         }
 
-        public async Task EditContent(EditLobiDto input)
+        public async Task EditContent(EditContentDto input)
         {
             var content = await _contentRepository.FindAsync(input.Id);
             _mapper.Map(content, input);
             await _contentRepository.UpdateAsync(content);
         }
 
-        public async Task<List<LobiListDto>> GetAllContents()
+        public async Task<List<ContentListDto>> GetAllContents()
         {
             var contents = await _contentRepository.GetListAsync();
-            var result = _mapper.Map<List<LobiListDto>>(contents);
+            var result = _mapper.Map<List<ContentListDto>>(contents);
             return result;
         }
 
-        public async Task<EditLobiDto> GetContent(int Id)
+        public async Task<EditContentDto> GetContent(int Id)
         {
             var content = await _contentRepository.GetAsync(Id);
-            var result = _mapper.Map<EditLobiDto>(content);
+            var result = _mapper.Map<EditContentDto>(content);
             return result;
         }
     }

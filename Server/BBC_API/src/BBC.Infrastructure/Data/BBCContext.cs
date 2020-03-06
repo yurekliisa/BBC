@@ -14,6 +14,17 @@ namespace BBC.Infrastructure.Data
         public DbSet<Country> Countries { get; set; }
         public DbSet<Content> Contents { get; set; }
         public DbSet<Lobi> Lobis { get; set; }
+        public DbSet<Job> Jobs { get; set; }
+        public DbSet<Media> Medias { get; set; }
+        public DbSet<LobiMessages> LobiMessages { get; set; }
+        public DbSet<LobiUser> LobiUsers { get; set; }
+        public DbSet<Popularity> Popularities { get; set; }
+        public DbSet<PrivateMessages> PrivateMessages { get; set; }
+        public DbSet<SocialMedia> SocialMedias { get; set; }
+        public DbSet<TarifAndRecete> TarifAndRecetes { get; set; }
+        public DbSet<Template> Templates { get; set; }
+        public DbSet<JobsApplication> JobsApplications { get; set; }
+
         public BBCContext(DbContextOptions<BBCContext> options):base(options)
         {
 

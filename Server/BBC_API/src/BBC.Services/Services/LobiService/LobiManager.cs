@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace BBC.Services.Services.LobiService
 {
-    public class LobiManager : BaseService, ILobiService
+    public class SocialMediaManager : BaseService, ISocialMediaService
     {
         private readonly IRepositoryBase<BBCContext, Lobi, int> _lobiRepository;
 
-        public LobiManager(IRepositoryBase<BBCContext, Lobi, int> lobiRepository)
+        public SocialMediaManager(IRepositoryBase<BBCContext, Lobi, int> lobiRepository)
         {
             _lobiRepository = lobiRepository;
         }

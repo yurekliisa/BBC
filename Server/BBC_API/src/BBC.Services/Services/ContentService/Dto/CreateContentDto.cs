@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BBC.Services.Services.ContentService.Dto
 {
-    public class CreateLobiDto
+    public class CreateContentDto
     {
         public string ContentText { get; set; }
         public string Title { get; set; }

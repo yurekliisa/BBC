@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace BBC.Services.Services.ContentService
 {
-    public interface ILobiService : IBaseService
+    public interface IContentService : IBaseService
     {
-        Task<List<LobiListDto>> GetAllContents();
-        Task<EditLobiDto> GetContent(int Id);
-        Task CreateContent(CreateLobiDto input);
-        Task EditContent(EditLobiDto input);
+        Task<List<ContentListDto>> GetAllContents();
+        Task<EditContentDto> GetContent(int Id);
+        Task CreateContent(CreateContentDto input);
+        Task EditContent(EditContentDto input);
         Task DeleteContent(int Id);
     }
 }
