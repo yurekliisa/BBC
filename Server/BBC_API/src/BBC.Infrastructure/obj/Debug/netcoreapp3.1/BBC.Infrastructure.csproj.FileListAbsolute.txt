@@ -24,3 +24,16 @@ C:\Users\aetan\Masaüstü\BBC\Server\BBC_API\src\BBC.Infrastructure\obj\Debug\ne
 C:\Users\aetan\Masaüstü\BBC\Server\BBC_API\src\BBC.Infrastructure\obj\Debug\netcoreapp3.1\BBC.Infrastructure.csproj.CopyComplete
 C:\Users\aetan\Masaüstü\BBC\Server\BBC_API\src\BBC.Infrastructure\obj\Debug\netcoreapp3.1\BBC.Infrastructure.dll
 C:\Users\aetan\Masaüstü\BBC\Server\BBC_API\src\BBC.Infrastructure\obj\Debug\netcoreapp3.1\BBC.Infrastructure.pdb
+D:\NetCoreProjects\BBC\Server\BBC_API\src\BBC.Infrastructure\bin\Debug\netcoreapp3.1\BBC.Infrastructure.deps.json
+D:\NetCoreProjects\BBC\Server\BBC_API\src\BBC.Infrastructure\bin\Debug\netcoreapp3.1\BBC.Infrastructure.runtimeconfig.json
+D:\NetCoreProjects\BBC\Server\BBC_API\src\BBC.Infrastructure\bin\Debug\netcoreapp3.1\BBC.Infrastructure.runtimeconfig.dev.json
+D:\NetCoreProjects\BBC\Server\BBC_API\src\BBC.Infrastructure\bin\Debug\netcoreapp3.1\BBC.Infrastructure.dll
+D:\NetCoreProjects\BBC\Server\BBC_API\src\BBC.Infrastructure\bin\Debug\netcoreapp3.1\BBC.Infrastructure.pdb
+D:\NetCoreProjects\BBC\Server\BBC_API\src\BBC.Infrastructure\bin\Debug\netcoreapp3.1\BBC.Core.dll
+D:\NetCoreProjects\BBC\Server\BBC_API\src\BBC.Infrastructure\bin\Debug\netcoreapp3.1\BBC.Core.pdb
+D:\NetCoreProjects\BBC\Server\BBC_API\src\BBC.Infrastructure\obj\Debug\netcoreapp3.1\BBC.Infrastructure.csprojAssemblyReference.cache
+D:\NetCoreProjects\BBC\Server\BBC_API\src\BBC.Infrastructure\obj\Debug\netcoreapp3.1\BBC.Infrastructure.AssemblyInfoInputs.cache
+D:\NetCoreProjects\BBC\Server\BBC_API\src\BBC.Infrastructure\obj\Debug\netcoreapp3.1\BBC.Infrastructure.AssemblyInfo.cs
+D:\NetCoreProjects\BBC\Server\BBC_API\src\BBC.Infrastructure\obj\Debug\netcoreapp3.1\BBC.Infrastructure.csproj.CopyComplete
+D:\NetCoreProjects\BBC\Server\BBC_API\src\BBC.Infrastructure\obj\Debug\netcoreapp3.1\BBC.Infrastructure.dll
+D:\NetCoreProjects\BBC\Server\BBC_API\src\BBC.Infrastructure\obj\Debug\netcoreapp3.1\BBC.Infrastructure.pdb

@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
     "E:\\Github\\BBC\\Server\\BBC_API\\src\\BBC.Core\\BBC.Core.csproj": {}
   },
   "projects": {
@@ -12,12 +13,29 @@
         "projectPath": "E:\\Github\\BBC\\Server\\BBC_API\\src\\BBC.Core\\BBC.Core.csproj",
         "packagesPath": "C:\\Users\\yurek\\.nuget\\packages\\",
         "outputPath": "E:\\Github\\BBC\\Server\\BBC_API\\src\\BBC.Core\\obj\\",
+=======
+    "D:\\NetCoreProjects\\BBC\\Server\\BBC_API\\src\\BBC.Core\\BBC.Core.csproj": {}
+  },
+  "projects": {
+    "D:\\NetCoreProjects\\BBC\\Server\\BBC_API\\src\\BBC.Core\\BBC.Core.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\NetCoreProjects\\BBC\\Server\\BBC_API\\src\\BBC.Core\\BBC.Core.csproj",
+        "projectName": "BBC.Core",
+        "projectPath": "D:\\NetCoreProjects\\BBC\\Server\\BBC_API\\src\\BBC.Core\\BBC.Core.csproj",
+        "packagesPath": "C:\\Users\\Emre\\.nuget\\packages\\",
+        "outputPath": "D:\\NetCoreProjects\\BBC\\Server\\BBC_API\\src\\BBC.Core\\obj\\",
+>>>>>>> master
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
+<<<<<<< HEAD
           "C:\\Users\\yurek\\AppData\\Roaming\\NuGet\\NuGet.Config",
+=======
+          "C:\\Users\\Emre\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> master
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

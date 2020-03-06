@@ -5,9 +5,9 @@ using System.Text;
 
 namespace BBC.Core.Domain
 {
-    public class Category:EntityBase<int>
+    public class Category : EntityBase<int>
     {
         public string Name { get; set; }
-
+        public bool IsDeleted { get; set; }
     }
 }
