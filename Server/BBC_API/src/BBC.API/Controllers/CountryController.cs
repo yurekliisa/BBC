@@ -24,7 +24,8 @@ namespace BBC.API.Controllers
         [Route("GetData")]
         public async Task<IActionResult> GetAllCountries()
         {
-            return Ok(await _countryService.GetAllCountries());
+            var result = await _countryService.GetAllCountries();
+            return Ok(result);
         }
     }
 }
