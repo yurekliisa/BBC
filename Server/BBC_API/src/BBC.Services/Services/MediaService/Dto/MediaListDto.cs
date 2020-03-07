@@ -4,8 +4,9 @@ using System.Text;
 
 namespace BBC.Services.Services.MediaService.Dto
 {
-    class MediaListDto
+    public class MediaListDto
     {
         public string Name { get; set; }
+        public int Id { get; set; }
     }
 }

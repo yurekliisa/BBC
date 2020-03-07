@@ -2,6 +2,7 @@
 using BBC.Core.Repositories.Base;
 using BBC.Infrastructure.Data;
 using BBC.Services.Services.Common.Base;
+using BBC.Services.Services.MediaService.Dto;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BBC.Services.Services.MediaService
 {
-    public class MediaManager : BaseService 
+    public class MediaManager : BaseService, IMediaService 
     {
         //Inject
         private readonly IRepositoryBase<BBCContext, Media, int> _mediaRepository;
@@ -38,7 +39,7 @@ namespace BBC.Services.Services.MediaService
             var result = _mapper.Map<List<MediaListDto>>(medias);
             return result;
         }
-        public async Task<EditMediaDto> GetMediaDto(int Id)
+        public async Task<EditMediaDto> GetMedia(int Id)
         {
             var media = await _mediaRepository.GetAsync(Id);
             var result = _mapper.Map<EditMediaDto>(media);

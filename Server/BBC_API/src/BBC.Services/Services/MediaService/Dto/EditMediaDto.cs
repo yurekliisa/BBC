@@ -4,7 +4,10 @@ using System.Text;
 
 namespace BBC.Services.Services.MediaService.Dto
 {
-    class EditMediaDto
+    public class EditMediaDto
     {
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public int Id { get; set; }
     }
 }
