@@ -36,6 +36,11 @@ export default {
           title: "Dashboard",
           to: "/admin/dashboard"
         },
+        {
+          icon: "mdi-chart-buble",
+          title: "Category",
+          to: "/admin/category"
+        },
       ]
     };
   },
