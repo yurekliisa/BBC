@@ -4,6 +4,7 @@ using BBC.Infrastructure.Data;
 using BBC.Services.Services.Common.Base;
 using BBC.Services.Services.ContentService.Dto;
 using BBC.Services.Services.LobiService.Dto;
+using BBC.Services.Services.SocialMediaService.Dto;
 using System;
 using System.Collections.Generic;
 using System.Text;

@@ -3,6 +3,7 @@ using BBC.Core.Repositories.Base;
 using BBC.Infrastructure.Data;
 using BBC.Services.Services.Common.Base;
 using BBC.Services.Services.ContentService.Dto;
+using BBC.Services.Services.LobiService.Dto;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace BBC.Services.Services.LobiService
 {
-    public class SocialMediaManager : BaseService, ISocialMediaService
+    public class LobiManager : BaseService, ILobiService
     {
         private readonly IRepositoryBase<BBCContext, Lobi, int> _lobiRepository;
 
-        public SocialMediaManager(IRepositoryBase<BBCContext, Lobi, int> lobiRepository)
+        public LobiManager(IRepositoryBase<BBCContext, Lobi, int> lobiRepository)
         {
             _lobiRepository = lobiRepository;
         }

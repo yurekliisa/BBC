@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BBC.Services.Services.LobiService.Dto
 {
-    public class SocialMediaListDto
+    public class LobiListDto
     {
         public string Name { get; set; }
     }
