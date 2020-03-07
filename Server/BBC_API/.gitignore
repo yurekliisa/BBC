@@ -1,3 +1,5 @@
 /src/*/bin
 /src/*/obj
 .vs
+
+/src/BBC.API/appsettings.json
