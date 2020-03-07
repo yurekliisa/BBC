@@ -112,16 +112,13 @@ export default {
     editCountry(item) {
       this.newCountry = this.countries.find(c => c.name == item.name).name;
       this.currentIndex = this.countries.findIndex(c => c.name == item.name);
-      console.log(this.currentIndex);
       this.dialog = true;
     },
     addCountry() {
-      console.log(this.currentIndex);
       if (this.currentIndex != -1) {
         this.countries[this.currentIndex].name= this.newCountry;
         this.currentIndex = -1;
         this.countries = [...this.countries];
-        console.table(this.countries);
       } else {
         this.countries.push({ name: this.newCountry });
       }
