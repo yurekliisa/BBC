@@ -2,4 +2,5 @@
 /src/*/obj
 .vs
 
+/src/BBC.API/appsettings.*
 /src/BBC.API/appsettings.json
