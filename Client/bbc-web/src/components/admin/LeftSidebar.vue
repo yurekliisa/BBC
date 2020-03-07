@@ -37,9 +37,19 @@ export default {
           to: "/admin/dashboard"
         },
         {
-          icon: "mdi-chart-buble",
+          icon: "mdi-chart-bubble",
           title: "Category",
           to: "/admin/category"
+        },
+        {
+          icon: "mdi-chart-bubble",
+          title: "Country",
+          to: "/admin/country"
+        },
+        {
+          icon: "mdi-chart-bubble",
+          title: "UserReports",
+          to: "/admin/userreports"
         },
       ]
     };
