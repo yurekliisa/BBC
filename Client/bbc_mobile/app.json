@@ -1,0 +1,41 @@
+{
+  "expo": {
+    "name": "chef.net",
+    "slug": "chef-mobile-application",
+    "icon": "./assets/icon.png",
+    "description": "chef.net",
+    "sdkVersion": "36.0.0",
+    "version": "1",
+    "orientation": "portrait",
+    "android": {
+      "permissions": [
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "INTERNET"
+      ],
+      "package": "com.chef.mobileapplication",
+     
+      "versionCode": 2,
+      "icon": "./assets/icon.png"
+    },
+    "ios": {
+      "bundleIdentifier": "com.chef.mobileapplication",
+     
+      "supportsTablet": false,
+      "isTabletOnly": false,
+      "infoPlist": {
+        "NSCameraUsageDescription": "Uygulama kameranıza erişmek istiyor...",
+        "NSPhotoLibraryUsageDescription": "Uygulama fotoğraflarınıza erişmek için izin istiyor.",
+        "NSPhotoLibraryAddUsageDescription": "Uygulama fotoğraflarınıza erişmek için izin istiyor.",
+        "NSLocationWhenInUseUsageDescription": "Uygulama konumunuza erişmek istiyor..."
+      }
+    },
+    "packagerOpts": {
+      "sourceExts": [
+        "ts",
+        "tsx",
+        "js"
+      ]
+    }
+  }
+}
