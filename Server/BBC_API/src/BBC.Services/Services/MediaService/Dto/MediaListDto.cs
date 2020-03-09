@@ -7,6 +7,6 @@ namespace BBC.Services.Services.MediaService.Dto
     public class MediaListDto
     {
         public string Name { get; set; }
-        public int Id { get; set; }
+        public string Description { get; set; }
     }
 }
