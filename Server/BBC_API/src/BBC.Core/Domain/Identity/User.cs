@@ -10,7 +10,8 @@ namespace BBC.Core.Domain.Identity
     {
         public virtual string Name { get; set; }
         public virtual string SurName { get; set; }
-
+        public ICollection<LobiUser> LobiUsers { get; set; }
+        public TarifAndRecete TarifAndRecete { get; set; }
         public User()
         {
 

@@ -1,4 +1,5 @@
 ﻿using BBC.Core.Domain.Entities;
+using BBC.Core.Domain.Identity;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,6 +16,8 @@ namespace BBC.Core.Domain
         public bool IsRecete { get; set; }
         public bool IsTarif { get; set; }
         public int TemplateId { get; set; }
-        public int UserId { get; set; }
+        public ICollection<Template> Templates { get; set; }
+        public ICollection<User> Users { get; set; }
+        //public int UserId { get; set; }
     }
 }
