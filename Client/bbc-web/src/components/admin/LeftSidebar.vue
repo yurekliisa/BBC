@@ -27,11 +27,6 @@ export default {
    
       items: [
         {
-          icon: "mdi-apps",
-          title: "Home",
-          to: "/admin"
-        },
-        {
           icon: "mdi-chart-bubble",
           title: "Dashboard",
           to: "/admin/dashboard"

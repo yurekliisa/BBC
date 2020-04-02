@@ -1,17 +1,16 @@
 
-import AdminHome from "../../views/admin/pages/AdminHome.vue";
-import AdminDashboard from "../../views/admin/pages/AdminDashboard.vue";
+import Dashboard from "../../views/admin/pages/Dashboard.vue";
 import Category from "../../views/admin/pages/Category.vue";
 import Country from "../../views/admin/pages/Country.vue";
 import UserReports from "../../views/admin/pages/UserReports.vue";
 const router = [
     {
         path: "/",
-        component: AdminHome
+        component: Dashboard
     },
     {
         path: "dashboard",
-        component: AdminDashboard
+        component: Dashboard
     },
     {
         path: "category",

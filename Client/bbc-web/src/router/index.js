@@ -1,9 +1,11 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/main/Home.vue";
 
+import Layout from "../views/main/shared/Layout";
 import AdminLayout from "../views/admin/shared/AdminLayout.vue";
+
 import admin from "./admin";
+import main from "./main";
 Vue.use(VueRouter);
 
 const GuardToken = (to, from, next) => {
@@ -21,10 +23,7 @@ const router = {
   mode: "history",
   scrollBehavior: () => ({ y: 0 }),
   routes: [
-    {
-      path: "/",
-      component: Home
-    },
+  
     {
       path: "/admin",
       component: AdminLayout,
@@ -32,8 +31,14 @@ const router = {
       beforeEnter: GuardToken
     },
     {
+      path: "/",
+      component: Layout,
+      children: main.router,
+    },
+    {
       path: '*',
-      component: Home
+      component: Layout,
+      children: main.router,
     }
   ]
 }

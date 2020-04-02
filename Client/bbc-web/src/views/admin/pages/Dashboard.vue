@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <h1>AdminDashboard</h1>
+    <h1>Dashboard</h1>
   
      <v-btn @click.stop="changeFooter()" icon>
         <v-icon>mdi-application</v-icon>
@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: "AdminDashboard",
+  name: "Dashboard",
   created(){
     this.$store.commit("SET_panelText", "Dashboard");
   },

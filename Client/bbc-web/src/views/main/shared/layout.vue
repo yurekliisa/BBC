@@ -1,46 +1,48 @@
-<template> 
-<v-app>
-    <v-app-bar app color="primary" dark>
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
-
-      <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-app-bar>
-
-    <v-content>
-      <HelloWorld />
-    </v-content>
+<template>
+  <v-app>
+    <v-card class="overflow-hidden">
+      <!--ToolBar-->
+      <ToolBar />
+      <!--ToolBar-->
+      <Slider />
+      <!--Container-->
+      <v-container class="pa-0" v-bind:class="[currentRouteName === 'Home' ? 'mt-3' : 'mt-5-rem']">
+         <router-view />        
+      </v-container>
+      <!--Container-->
+    </v-card>
+    <Footer />
   </v-app>
 </template>
 
 <script>
-export default {};
+import { mapGetters, mapMutations } from "vuex";
+
+import ToolBar from "../../../components/main/ToolBar";
+import Footer from "../../../components/main/Footer";
+import Slider from "../../../components/main/Slider";
+
+export default {
+  name: "Layout",
+  components: {
+    ToolBar,
+    Slider,
+    Footer,
+  },
+ computed: {
+    currentRouteName() {
+      return this.$route.name;
+    }
+  },
+  data() {
+    return {
+      showLoader: true
+    };
+  }
+};
 </script>
 
-<style></style>
+<style lang="sass" scoped>
+.mt-5-rem
+  margin-top: 5rem !important
+</style>
