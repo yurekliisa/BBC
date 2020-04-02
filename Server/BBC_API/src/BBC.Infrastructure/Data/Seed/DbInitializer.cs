@@ -133,6 +133,18 @@ namespace BBC.Infrastructure.Data.Seed
                 }
                 #endregion
 
+                #region Content Default Value
+                var contentValue = await _dbContext.Contents.FirstOrDefaultAsync(x => x.ContentText == "Mercimek çorbası çok güzel olmuş." && x.Title == "Mercimek Çorbası");
+                if (contentValue == null)
+                {
+                    _dbContext.Contents.Add(new Content()
+                    {
+                        ContentText = "Mercimek çorbası çok güzel olmuş.",
+                        Title = "Mercimek Çorbası"
+                    });
+                }
+                #endregion
+
                 await _dbContext.SaveChangesAsync();
             }
         }

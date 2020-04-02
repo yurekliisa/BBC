@@ -11,5 +11,6 @@ namespace BBC.Core.Permission
         public const string Category_Create = "Category_Create";
         public const string Category_Edit = "Category_Edit";
         public const string Category_Delete = "Category_Delete";
+        //Permissionları ekle
     }
 }
