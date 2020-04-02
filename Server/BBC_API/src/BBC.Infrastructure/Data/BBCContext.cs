@@ -24,6 +24,7 @@ namespace BBC.Infrastructure.Data
         public DbSet<TarifAndRecete> TarifAndRecetes { get; set; }
         public DbSet<Template> Templates { get; set; }
         public DbSet<JobsApplication> JobsApplications { get; set; }
+        public DbSet<ToRCategory> ToRCategories { get; set; }
 
         public BBCContext(DbContextOptions<BBCContext> options):base(options)
         {

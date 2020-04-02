@@ -18,6 +18,7 @@ namespace BBC.Core.Domain
         public int TemplateId { get; set; }
         public ICollection<Template> Templates { get; set; }
         public ICollection<User> Users { get; set; }
+        public Content Content { get; set; }
         //public int UserId { get; set; }
     }
 }

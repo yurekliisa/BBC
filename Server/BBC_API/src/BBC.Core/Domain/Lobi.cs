@@ -10,5 +10,6 @@ namespace BBC.Core.Domain
         public string Name { get; set; }
         public DateTime CreationTime { get; set; }
         public ICollection<LobiUser> LobiUsers { get; set; }
+        public ICollection<LobiMessages> LobiMessages { get; set; }
     }
 }

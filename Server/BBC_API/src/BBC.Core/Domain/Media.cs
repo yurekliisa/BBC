@@ -9,5 +9,6 @@ namespace BBC.Core.Domain
     {
         public int ContentId { get; set; }
         public string MediaUrl { get; set; }
+        public ICollection<Content> Contents { get; set; }
     }
 }

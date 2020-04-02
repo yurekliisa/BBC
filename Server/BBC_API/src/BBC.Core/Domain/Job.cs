@@ -13,5 +13,6 @@ namespace BBC.Core.Domain
         public DateTime ModifiedTime { get; set; }
         public bool IsDeleted { get; set; }
         public string Title { get; set; }
+        public IList<JobUser> JobUsers { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BBC.Core.Domain.Entities;
+using BBC.Core.Domain.Identity;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,5 +13,6 @@ namespace BBC.Core.Domain
         public string Message { get; set; }
         public DateTime SendTime { get; set; }
         public int ToUserId { get; set; }
+        public ICollection<User> Users { get; set; }
     }
 }
