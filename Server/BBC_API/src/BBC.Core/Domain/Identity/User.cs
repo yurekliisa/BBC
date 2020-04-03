@@ -14,7 +14,7 @@ namespace BBC.Core.Domain.Identity
         public IList<JobUser> JobUsers { get; set; }
         public IList<ToRCategory> ToRCategories { get; set; }
         public ICollection<Popularity> Popularities { get; set; }
-        public ICollection<TarifAndRecete> TarifAndRecetes { get; set; }
+        //public ICollection<TarifAndRecete> TarifAndRecetes { get; set; }
         public User()
         {
 
