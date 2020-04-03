@@ -8,7 +8,7 @@ namespace BBC.Core.Domain
 {
     public class TarifAndRecete : EntityBase<int>
     {
-        private int ContentId { get; set; }
+        public int ContentId { get; set; }
         public DateTime CreationTime { get; set; }
         public DateTime DeletedTime { get; set; }
         public DateTime ModifiedTime { get; set; }
@@ -21,5 +21,6 @@ namespace BBC.Core.Domain
         public Content Content { get; set; }
         //public int UserId { get; set; }
         //Eylül -> UserID'yi burada almamız gerekir.
+        //Emre -> ICollection<User> id yi alıyor zaten.
     }
 }
