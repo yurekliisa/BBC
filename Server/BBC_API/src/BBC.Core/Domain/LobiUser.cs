@@ -11,7 +11,7 @@ namespace BBC.Core.Domain
         public int LobiId { get; set; }
         public Lobi Lobi { get; set; }
 
-        public User User { get; set; }
         public int UserId { get; set; }
+        public User User { get; set; }
     }
 }

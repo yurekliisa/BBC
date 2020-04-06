@@ -11,6 +11,8 @@ namespace BBC.Core.Domain
         public string FacebookUrl { get; set; }
         public string InstagramUrl { get; set; }
         public string TwitterUrl { get; set; }
-        public ICollection<User> Users { get; set; }
+        public int UserId { get; set; }
+        public User User { get; set; }
+
     }
 }

@@ -13,5 +13,9 @@ namespace BBC.Core.Domain
         public DateTime SendTime { get; set; }
         public int ToLobiId { get; set; }
         public ICollection<User> Users { get; set; }
+        public int LobiId { get; set; }
+        public Lobi Lobi { get; set; }
+        public int UserId { get; set; }
+        public User User { get; set; }
     }
 }

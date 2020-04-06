@@ -16,11 +16,6 @@ namespace BBC.Core.Domain
         public bool IsRecete { get; set; }
         public bool IsTarif { get; set; }
         public int TemplateId { get; set; }
-        public ICollection<Template> Templates { get; set; }
-        public ICollection<User> Users { get; set; }
-        public Content Content { get; set; }
-        //public int UserId { get; set; }
-        //Eylül -> UserID'yi burada almamız gerekir.
-        //Emre -> ICollection<User> id yi alıyor zaten.
+        public IList<TaRCategory> TaRCategories { get; set; }
     }
 }

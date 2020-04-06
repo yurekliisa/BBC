@@ -9,6 +9,6 @@ namespace BBC.Core.Domain
     {
         public string Name { get; set; }
         public bool IsDeleted { get; set; }
-        public ICollection<Content> Contents { get; set; }
+        public IList<TaRCategory> TaRCategories { get; set; }
     }
 }

@@ -13,6 +13,7 @@ namespace BBC.Core.Domain
         public string Message { get; set; }
         public DateTime SendTime { get; set; }
         public int ToUserId { get; set; }
-        public ICollection<User> Users { get; set; }
+        public int UserId { get; set; }
+        public User User { get; set; }
     }
 }

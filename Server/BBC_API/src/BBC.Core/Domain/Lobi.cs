@@ -13,3 +13,8 @@ namespace BBC.Core.Domain
         public ICollection<LobiMessages> LobiMessages { get; set; }
     }
 }
+
+/*
+ Student : LobiMessage
+ Grade : Lobi
+     */

@@ -11,9 +11,5 @@ namespace BBC.Core.Domain
         public Category Category { get; set; }
         public int TarifAndReceteId { get; set; }
         public TarifAndRecete TarifAndRecete { get; set; }
-
-        /*public int CategoryId { get; set; }
-        public int TarifAndReceteId { get; set; }
-        public int ToRId { get; set; }*/
     }
 }

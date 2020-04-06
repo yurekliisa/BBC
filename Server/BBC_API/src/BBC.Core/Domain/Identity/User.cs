@@ -10,11 +10,11 @@ namespace BBC.Core.Domain.Identity
     {
         public virtual string Name { get; set; }
         public virtual string SurName { get; set; }
+        public ICollection<JobAdvert> JobAdverts { get; set; }
         public IList<LobiUser> LobiUsers { get; set; }
-        public IList<JobUser> JobUsers { get; set; }
-        public IList<TaRCategory> ToRCategories { get; set; }
-        public ICollection<Popularity> Popularities { get; set; }
-        //public ICollection<TarifAndRecete> TarifAndRecetes { get; set; }
+        public ICollection<LobiMessages> LobiMessages { get; set; }
+        public ICollection<PrivateMessages> PrivateMessages { get; set; }
+        public ICollection<SocialMedia> SocialMedias { get; set; }
         public User()
         {
 
@@ -26,3 +26,5 @@ namespace BBC.Core.Domain.Identity
         }
     }
 }
+// Grade : User
+//Student : LobiMessage
