@@ -9,8 +9,10 @@ namespace BBC.Core.Domain
     {
         public string ContentText { get; set; }
         public string Title { get; set; }
-        public int? CategoryId { get; set; }
+        public int CategoryId { get; set; }
         public Category Category { get; set; }
+        public int TarifandReceteId { get; set; }
         public TarifAndRecete TarifAndRecete { get; set; }
+        public ICollection<Media> Medias { get; set; }
     }
 }

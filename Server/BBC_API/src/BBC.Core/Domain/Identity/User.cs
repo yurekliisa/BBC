@@ -15,6 +15,9 @@ namespace BBC.Core.Domain.Identity
         public ICollection<LobiMessages> LobiMessages { get; set; }
         public ICollection<PrivateMessages> PrivateMessages { get; set; }
         public ICollection<SocialMedia> SocialMedias { get; set; }
+        public ICollection<TarifAndRecete> TarifAndRecetes { get; set; }
+        public int PopularityId { get; set; }
+        public Popularity Popularity { get; set; }
         public User()
         {
 
@@ -26,5 +29,3 @@ namespace BBC.Core.Domain.Identity
         }
     }
 }
-// Grade : User
-//Student : LobiMessage

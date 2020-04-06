@@ -7,8 +7,8 @@ namespace BBC.Core.Domain
 {
     public class Media : EntityBase<int>
     {
-        public int ContentId { get; set; }
         public string MediaUrl { get; set; }
-        public ICollection<Content> Contents { get; set; }
+        public int ContentId { get; set; }
+        public Content Content { get; set; }
     }
 }

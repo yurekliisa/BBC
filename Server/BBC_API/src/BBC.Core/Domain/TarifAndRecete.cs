@@ -17,5 +17,11 @@ namespace BBC.Core.Domain
         public bool IsTarif { get; set; }
         public int TemplateId { get; set; }
         public IList<TaRCategory> TaRCategories { get; set; }
+        public Content Content { get; set; }
+        public int UserId { get; set; }
+        public User User { get; set; }
+        public int PopularityId { get; set; }
+        public Popularity Popularity { get; set; }
     }
 }
+
