@@ -12,7 +12,7 @@ namespace BBC.Core.Domain.Identity
         public virtual string SurName { get; set; }
         public IList<LobiUser> LobiUsers { get; set; }
         public IList<JobUser> JobUsers { get; set; }
-        public IList<ToRCategory> ToRCategories { get; set; }
+        public IList<TaRCategory> ToRCategories { get; set; }
         public ICollection<Popularity> Popularities { get; set; }
         //public ICollection<TarifAndRecete> TarifAndRecetes { get; set; }
         public User()

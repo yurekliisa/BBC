@@ -8,6 +8,6 @@ namespace BBC.Core.Domain
     public class JobsApplication : EntityBase<int>
     {
         public string Contact { get; set; }
-        public ICollection<Job> Jobs { get; set; }
+        public ICollection<JobAdvert> Jobs { get; set; }
     }
 }

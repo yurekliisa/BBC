@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BBC.Core.Domain
 {
-    public class Job : EntityBase<int>
+    public class JobAdvert : EntityBase<int>
     {
         public string Content { get; set; }
         public DateTime CreationTime { get; set; }

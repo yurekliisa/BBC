@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BBC.Core.Domain
 {
-    public class ToRCategory : EntityBase<int>
+    public class TaRCategory : EntityBase<int>
     {
         public int CategoryId { get; set; }
         public Category Category { get; set; }

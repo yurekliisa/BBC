@@ -11,10 +11,10 @@ namespace BBC.Services.Services.JobService.Dto
     {
         public JobMapping()
         {
-            CreateMap<Job, JobListDto>();
-            CreateMap<Job, EditJobDto>();
-            CreateMap<EditJobDto, Job>();
-            CreateMap<CreateJobDto, Job>();
+            CreateMap<JobAdvert, JobListDto>();
+            CreateMap<JobAdvert, EditJobDto>();
+            CreateMap<EditJobDto, JobAdvert>();
+            CreateMap<CreateJobDto, JobAdvert>();
         }
     }
 }

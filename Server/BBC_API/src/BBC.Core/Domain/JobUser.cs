@@ -9,7 +9,7 @@ namespace BBC.Core.Domain
     public class JobUser : EntityBase<int>
     {
         public int JobId { get; set; }
-        public Job Job { get; set; }
+        public JobAdvert Job { get; set; }
 
         public User User { get; set; }
         public int UserId { get; set; }

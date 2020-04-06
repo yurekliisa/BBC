@@ -13,15 +13,15 @@ namespace BBC.Services.Services.JobService
 {
     public class JobManager : BaseService, IJobService
     {
-        private readonly IRepositoryBase<BBCContext, Job, int> _jobRepository;
+        private readonly IRepositoryBase<BBCContext, JobAdvert, int> _jobRepository;
 
-        public JobManager(IRepositoryBase<BBCContext, Job, int> jobRepository)
+        public JobManager(IRepositoryBase<BBCContext, JobAdvert, int> jobRepository)
         {
             _jobRepository = jobRepository;
         }
         public async Task CreateJob(CreateJobDto input)
         {
-            var job = _mapper.Map<Job>(input);
+            var job = _mapper.Map<JobAdvert>(input);
             await _jobRepository.InsertAsync(job);
         }
 
