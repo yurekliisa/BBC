@@ -16,8 +16,8 @@ namespace BBC.Core.Domain.Identity
         public ICollection<PrivateMessages> PrivateMessages { get; set; }
         public ICollection<SocialMedia> SocialMedias { get; set; }
         public ICollection<TarifAndRecete> TarifAndRecetes { get; set; }
-        public int PopularityId { get; set; }
-        public Popularity Popularity { get; set; }
+        public ICollection<Popularity> Popularities { get; set; }
+
         public User()
         {
 

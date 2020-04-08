@@ -9,6 +9,6 @@ namespace BBC.Core.Domain
     {
         public bool IsDeleted { get; set; }
         public string TemplateData { get; set; }
-        public TarifAndRecete TarifAndRecete { get; set; }
+        //public TarifAndRecete TarifAndRecete { get; set; }
     }
 }

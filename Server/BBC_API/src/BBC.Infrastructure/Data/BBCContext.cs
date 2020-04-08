@@ -15,7 +15,7 @@ namespace BBC.Infrastructure.Data
         public DbSet<Content> Contents { get; set; }
         public DbSet<Lobi> Lobis { get; set; }
         public DbSet<JobAdvert> JobAdverts { get; set; }
-        public DbSet<JobUser> JobUsers { get; set; }
+        //public DbSet<JobUser> JobUsers { get; set; }
         public DbSet<Media> Medias { get; set; }
         public DbSet<LobiMessages> LobiMessages { get; set; }
         public DbSet<LobiUser> LobiUsers { get; set; }
@@ -23,7 +23,7 @@ namespace BBC.Infrastructure.Data
         public DbSet<PrivateMessages> PrivateMessages { get; set; }
         public DbSet<SocialMedia> SocialMedias { get; set; }
         public DbSet<TarifAndRecete> TarifAndRecetes { get; set; }
-        public DbSet<Template> Templates { get; set; }
+        //public DbSet<Template> Templates { get; set; }
         public DbSet<JobsApplication> JobsApplications { get; set; }
         public DbSet<TaRCategory> TaRCategories { get; set; }
 
