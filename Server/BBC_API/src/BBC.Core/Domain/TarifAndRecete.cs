@@ -14,11 +14,9 @@ namespace BBC.Core.Domain
         public DateTime ModifiedTime { get; set; }
         public bool IsDeleted { get; set; }
 
-        //public int TemplateId { get; set; }
 
-        [ForeignKey("ContentId")]
-        public int ContentId { get; set; }
         public Content Content { get; set; }
+
 
         [ForeignKey("UserId")]
         public int UserId { get; set; }

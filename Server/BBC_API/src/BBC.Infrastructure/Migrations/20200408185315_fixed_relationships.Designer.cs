@@ -4,14 +4,16 @@ using BBC.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BBC.Infrastructure.Migrations
 {
     [DbContext(typeof(BBCContext))]
-    partial class BBCContextModelSnapshot : ModelSnapshot
+    [Migration("20200408185315_fixed_relationships")]
+    partial class fixed_relationships
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

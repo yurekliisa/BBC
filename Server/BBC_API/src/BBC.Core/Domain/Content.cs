@@ -1,6 +1,7 @@
 ﻿using BBC.Core.Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace BBC.Core.Domain
@@ -11,8 +12,14 @@ namespace BBC.Core.Domain
         public string Title { get; set; }
         public int CategoryId { get; set; }
         public Category Category { get; set; }
+
+
+        [ForeignKey("TarifandReceteId")]
         public int TarifandReceteId { get; set; }
         public TarifAndRecete TarifAndRecete { get; set; }
+
+
         public ICollection<Media> Medias { get; set; }
+
     }
 }
