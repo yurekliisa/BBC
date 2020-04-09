@@ -10,6 +10,7 @@ namespace BBC.Core.Domain
     {
         public string Contact { get; set; }
 
+
         [ForeignKey("JobAdvertId")]
         public int JobAdvertId { get; set; }
         public JobAdvert JobAdvert { get; set; }

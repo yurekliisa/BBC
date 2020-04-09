@@ -6,7 +6,7 @@ using System.Text;
 
 namespace BBC.Core.Domain
 {
-    public class LobiUser : EntityBase<int>
+    public class LobiUser 
     {
         public int LobiId { get; set; }
         public Lobi Lobi { get; set; }

@@ -10,6 +10,8 @@ namespace BBC.Core.Domain
     {
         public string MediaUrl { get; set; }
 
+
+
         [ForeignKey("ContentId")]  //ContentId nin foreignKey olduğunu belirttik.
         public int ContentId { get; set; }
         public Content Content { get; set; }

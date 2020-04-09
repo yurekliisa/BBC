@@ -15,17 +15,23 @@ namespace BBC.Core.Domain
         public bool IsDeleted { get; set; }
 
 
+
         public Content Content { get; set; }
 
 
         [ForeignKey("UserId")]
         public int UserId { get; set; }
         public User User { get; set; }
-        
-        public IList<TaRCategory> TaRCategories { get; set; }
-        public IList<Popularity> Popularities { get; set; }
+
+        public ICollection<TaRCategory> TaRCategories { get; set; }
+        public ICollection<Popularity> Popularities { get; set; }
 
 
+        public TarifAndRecete()
+        {
+            TaRCategories = new HashSet<TaRCategory>();
+            Popularities = new HashSet<Popularity>();
+        }
     }
 }
 

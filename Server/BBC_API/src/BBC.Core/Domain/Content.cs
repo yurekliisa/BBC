@@ -21,5 +21,10 @@ namespace BBC.Core.Domain
 
         public ICollection<Media> Medias { get; set; }
 
+        public Content()
+        {
+            Medias = new HashSet<Media>();
+        }
+
     }
 }

@@ -11,6 +11,7 @@ namespace BBC.Core.Domain
     {
         public string Message { get; set; }
         public DateTime SendTime { get; set; }
+
         
         [ForeignKey("ToLobiId")]   
         public int ToLobiId { get; set; }

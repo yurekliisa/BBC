@@ -11,5 +11,11 @@ namespace BBC.Core.Domain
         public DateTime CreationTime { get; set; }
         public ICollection<LobiUser> LobiUsers { get; set; }
         public ICollection<LobiMessages> LobiMessages { get; set; }
+
+        public Lobi()
+        {
+            LobiUsers = new HashSet<LobiUser>();
+            LobiMessages = new HashSet<LobiMessages>();
+        }
     }
 }

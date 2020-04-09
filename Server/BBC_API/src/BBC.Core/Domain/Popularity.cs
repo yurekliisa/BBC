@@ -19,6 +19,7 @@ namespace BBC.Core.Domain
         public int TaRId { get; set; }
         public TarifAndRecete TarifAndRecete { get; set; }
 
+
         [ForeignKey("UserId")]
         public int UserId { get; set; }
         public User User { get; set; }

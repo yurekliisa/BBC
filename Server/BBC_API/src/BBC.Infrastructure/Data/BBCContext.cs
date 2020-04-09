@@ -1,5 +1,6 @@
 ﻿using BBC.Core.Domain;
 using BBC.Core.Domain.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -31,5 +32,36 @@ namespace BBC.Infrastructure.Data
         {
 
         }
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            #region Tarif And Recete - Category (M-M)
+            modelBuilder.Entity<TaRCategory>().HasKey(tarc => new { tarc.CategoryId, tarc.TarifAndReceteId });
+            modelBuilder.Entity<TaRCategory>()
+                .HasOne(tarc => tarc.TarifAndRecete)
+                .WithMany(tar => tar.TaRCategories)
+                .HasForeignKey(fk => fk.TarifAndReceteId);
+            modelBuilder.Entity<TaRCategory>()
+                .HasOne(tarc => tarc.Category)
+                .WithMany(tar => tar.TaRCategories)
+                .HasForeignKey(fk => fk.CategoryId);
+            #endregion
+
+            #region Lobi - User (M-M)
+            modelBuilder.Entity<LobiUser>().HasKey(tarc => new { tarc.LobiId, tarc.UserId });
+            modelBuilder.Entity<LobiUser>()
+                .HasOne(lu=> lu.User)
+                .WithMany(u => u.LobiUsers)
+                .HasForeignKey(lu => lu.UserId);
+            modelBuilder.Entity<LobiUser>()
+               .HasOne(lu => lu.Lobi)
+               .WithMany(u => u.LobiUsers)
+               .HasForeignKey(lu => lu.LobiId);
+            #endregion
+        }
+
     }
 }
