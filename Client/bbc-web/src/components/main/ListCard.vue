@@ -104,7 +104,7 @@
 
 <script>
 export default {
-  name: "ToolBar",
+  name: "ListCard",
   props: {
     item: {
       type: Object
