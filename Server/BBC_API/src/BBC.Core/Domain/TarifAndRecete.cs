@@ -1,4 +1,5 @@
 ﻿using BBC.Core.Domain.Entities;
+using BBC.Core.Domain.Entities.FullAudited;
 using BBC.Core.Domain.Identity;
 using System;
 using System.Collections.Generic;
@@ -7,15 +8,8 @@ using System.Text;
 
 namespace BBC.Core.Domain
 {
-    public class TarifAndRecete : EntityBase<int>
+    public class TarifAndRecete : FullAuditedEntity<int>
     {
-        public DateTime CreationTime { get; set; }
-        public DateTime DeletedTime { get; set; }
-        public DateTime ModifiedTime { get; set; }
-        public bool IsDeleted { get; set; }
-
-
-
         public Content Content { get; set; }
 
 

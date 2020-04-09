@@ -10,8 +10,6 @@ namespace BBC.Core.Domain
     {
         public string ContentText { get; set; }
         public string Title { get; set; }
-        public int CategoryId { get; set; }
-        public Category Category { get; set; }
 
 
         [ForeignKey("TarifandReceteId")]

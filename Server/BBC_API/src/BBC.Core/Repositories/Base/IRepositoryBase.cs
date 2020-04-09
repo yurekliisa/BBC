@@ -15,23 +15,23 @@ namespace BBC.Core.Repositories.Base
         #endregion
 
         #region Insert
-        void InsertGraph(TEntity entity, bool autoSave = false);
-        TEntity Insert(TEntity entity, bool autoSave = false);
-        Task<TEntity> InsertAsync(TEntity entity, bool autoSave = false);
+        void InsertGraph(TEntity entity, bool autoSave = true);
+        TEntity Insert(TEntity entity, bool autoSave = true);
+        Task<TEntity> InsertAsync(TEntity entity, bool autoSave = true);
         #endregion
 
         #region Update
-        TEntity Update(TEntity entity, bool autoSave = false);
-        Task<TEntity> UpdateAsync(TEntity entity, bool autoSave = false);
+        TEntity Update(TEntity entity, bool autoSave = true);
+        Task<TEntity> UpdateAsync(TEntity entity, bool autoSave = true);
         #endregion
 
         #region Delete
-        void Delete(TEntity entity, bool autoSave = false);
-        Task DeleteAsync(TEntity entity, bool autoSave = false);
-        void Delete(Expression<Func<TEntity, bool>> predicate, bool autoSave = false);
-        Task DeleteAsync(Expression<Func<TEntity, bool>> predicate, bool autoSave = false);
-        void Delete(TKey id, bool autoSave = false);
-        Task DeleteAsync(TKey id, bool autoSave = false);
+        void Delete(TEntity entity, bool autoSave = true);
+        Task DeleteAsync(TEntity entity, bool autoSave = true);
+        void Delete(Expression<Func<TEntity, bool>> predicate, bool autoSave = true);
+        Task DeleteAsync(Expression<Func<TEntity, bool>> predicate, bool autoSave = true);
+        void Delete(TKey id, bool autoSave = true);
+        Task DeleteAsync(TKey id, bool autoSave = true);
         #endregion
 
         #region GetList with includeDetails
