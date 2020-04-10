@@ -8,9 +8,12 @@ using System.Threading.Tasks;
 
 namespace BBC.Services.Services.CategoryService
 {
-    public interface ICategoryService: IBaseService
+    public interface ICategoryService: IBaseService, ITransientDI
     {
         Task<List<CategoryListDto>> GetAllCategories();
+        Task CreateCategories(CreateCategoryDto input);
+        Task EditCategories(EditCategoryDto input);
+        Task DeleteCategory(EditCategoryDto input);
         void GetData();
         void InsertData();
         void Exception();
