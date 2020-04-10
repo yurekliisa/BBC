@@ -27,6 +27,7 @@ namespace BBC.Infrastructure.Data
         //public DbSet<Template> Templates { get; set; }
         public DbSet<JobsApplication> JobsApplications { get; set; }
         public DbSet<TaRCategory> TaRCategories { get; set; }
+        public DbSet<Settings> Settings { get; set; }
 
         public BBCContext(DbContextOptions<BBCContext> options):base(options)
         {
