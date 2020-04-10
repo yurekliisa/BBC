@@ -12,7 +12,7 @@ namespace BBC.Core.Domain
         public string Comment { get; set; }
         public DateTime CreationTime { get; set; }
         public bool IsDeleted { get; set; }
-        public string Puan { get; set; }
+        public double Puan { get; set; }
 
 
         [ForeignKey("TaRId")]
