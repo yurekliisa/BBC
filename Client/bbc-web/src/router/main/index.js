@@ -19,7 +19,7 @@ const router = [
     },
     {
         path: "register",
-        componnet: Register
+        component: Register
     }
 ];
 

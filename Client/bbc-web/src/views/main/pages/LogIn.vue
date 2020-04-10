@@ -10,6 +10,7 @@
             :error-messages="emailErrors"
             @input="$v.email.$touch()"
             @blur="$v.email.$touch()"
+            solo
           >
           </v-text-field>
           <v-text-field
@@ -24,6 +25,7 @@
             @input="$v.password.$touch()"
             @blur="$v.password.$touch()"
             :error-messages="passwordErrors"
+            solo
           >
           </v-text-field>
 
@@ -34,6 +36,7 @@
             @change="$v.checkbox.$touch()"
             @blur="$v.checkbox.$touch()"
             :error-messages="checkboxErrors"
+            solo
           >
           </v-checkbox>
         </form>
