@@ -10,7 +10,7 @@ namespace BBC.Services.Services.CategoryService
 {
     public interface ICategoryService: IBaseService
     {
-        Task<List<CategoryDto>> GetAllCategories();
+        Task<List<CategoryListDto>> GetAllCategories();
         void GetData();
         void InsertData();
         void Exception();

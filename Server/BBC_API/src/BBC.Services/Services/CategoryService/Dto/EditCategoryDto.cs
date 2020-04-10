@@ -5,8 +5,9 @@ using System.Text;
 
 namespace BBC.Services.Services.CategoryService.Dto
 {
-    public class CategoryDto:BaseDto<int>
+    class EditCategoryDto : BaseDto<int>
     {
+        public int Id { get; set; }
         public string Name { get; set; }
     }
 }

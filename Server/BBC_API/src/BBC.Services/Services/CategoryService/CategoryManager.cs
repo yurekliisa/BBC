@@ -21,16 +21,16 @@ namespace BBC.Services.Services.CategoryService
             _repository = repository;
         }
 
-        public async Task<List<CategoryDto>> GetAllCategories()
+        public async Task<List<CategoryListDto>> GetAllCategories()
         {
             var categories= await _repository.GetListAsync();
-            var result = _mapper.Map<List<CategoryDto>>(categories);
+            var result = _mapper.Map<List<CategoryListDto>>(categories);
             return result;
         }
         public void GetData()
         {
             var dd = _repository.GetList();
-            var bb = _mapper.Map<List<CategoryDto>>(dd);
+            var bb = _mapper.Map<List<CategoryListDto>>(dd);
         }
 
         public void InsertData()
@@ -43,5 +43,8 @@ namespace BBC.Services.Services.CategoryService
         {
             throw new ServiceException("trial exception");
         }
+
+        //CRUD OPERATION WITH ASP.NET WEB API
+
     }
 }

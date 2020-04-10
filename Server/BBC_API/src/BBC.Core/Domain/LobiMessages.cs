@@ -1,4 +1,4 @@
-﻿using BBC.Core.Domain.Entities;
+using BBC.Core.Domain.Entities;
 using BBC.Core.Domain.Identity;
 using System;
 using System.Collections.Generic;

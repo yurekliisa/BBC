@@ -7,10 +7,10 @@ namespace BBC.Services.Services.TarifAndReceteService.Dto
 {
     public class CreateTarifAndReceteOutputDto
     {
-        public List<CategoryDto> Categories{ get; set; }
+        public List<CategoryListDto> Categories{ get; set; }
         public CreateTarifAndReceteOutputDto()
         {
-            Categories = new List<CategoryDto>();
+            Categories = new List<CategoryListDto>();
         }
     }
 }
