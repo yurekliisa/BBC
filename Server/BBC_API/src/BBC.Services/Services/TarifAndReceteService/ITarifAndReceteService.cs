@@ -11,5 +11,9 @@ namespace BBC.Services.Services.TarifAndReceteService
     public interface ITarifAndReceteService: IApplicationBaseServices<User, Role>
     {
         Task<int> CreateTaR(CreateTarifAndReceteDto input);
+        Task<List<TarifAndReceteListDto>> GetAllTarifAndRecetes();
+        Task<EditTarifAndReceteDto> GetTarifAndRecete(int Id);
+        Task EditTarifAndRecete(EditTarifAndReceteDto input);
+        Task DeleteTarifAndRecete(int Id);
     }
 }

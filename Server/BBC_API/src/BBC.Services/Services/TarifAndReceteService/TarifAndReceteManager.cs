@@ -38,5 +38,31 @@ namespace BBC.Services.Services.TarifAndReceteService
             var result = await _tarRepository.InsertAsync(tar);
             return result.Id;
         }
+
+        public async Task DeleteTarifAndRecete(int Id)
+        {
+            await _tarRepository.DeleteAsync(Id);
+        }
+
+        public async Task EditTarifAndRecete(EditTarifAndReceteDto input)
+        {
+            var tar = await _tarRepository.FindAsync(input.Id);
+            _mapper.Map(tar, input);
+            await _tarRepository.UpdateAsync(tar);
+        }
+
+        public async Task<List<TarifAndReceteListDto>> GetAllTarifAndRecetes()
+        {
+            var tar = await _tarRepository.GetListAsync();
+            var result = _mapper.Map<List<TarifAndReceteListDto>>(tar);
+            return result;
+        }
+
+        public async Task<EditTarifAndReceteDto> GetTarifAndRecete(int Id)
+        {
+            var tar = await _tarRepository.GetAsync(Id);
+            var result = _mapper.Map<EditTarifAndReceteDto>(tar);
+            return result;
+        }
     }
 }

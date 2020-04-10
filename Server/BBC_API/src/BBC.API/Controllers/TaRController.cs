@@ -39,6 +39,16 @@ namespace BBC.API.Controllers
             return Ok(result);
         }
 
+        [HttpGet]
+        [ProducesResponseType(typeof(TarifAndReceteListDto), 200)]
+        [Route("GetAllTarifAndRecetes")]
+        //Kullanıcının giriş yapması yeterli 
+        public async Task<IActionResult> GetAllTarifAndRecetes()
+        {
+            var result = await _tarifAndReceteService.GetAllTarifAndRecetes();
+            return Ok(result);
+        }
+
 
         [HttpPost]
         [ProducesResponseType(typeof(int), 200)]
