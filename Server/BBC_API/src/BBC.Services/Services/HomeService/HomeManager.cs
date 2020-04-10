@@ -72,7 +72,7 @@ namespace BBC.Services.Services.HomeService
                 .Include("TaRCategories.Category")
                 //.Where(x=>x.isDeleted != true && x.isActive== true)
                 //.OrderBy(y => y.Id)
-                OrderByDescending(y=>y.CreationTime)
+                .OrderByDescending(y=>y.CreateTime)
                 .Skip((page - 1) * 18)
                 .Take(18).ToListAsync();
                 result = query.Select(y => new TaRHomeOuputDto()
