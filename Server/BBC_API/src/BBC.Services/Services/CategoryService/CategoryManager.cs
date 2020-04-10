@@ -44,6 +44,24 @@ namespace BBC.Services.Services.CategoryService
             throw new ServiceException("trial exception");
         }
 
+        public Task CreateCategories(CreateCategoryDto input)
+        {
+            //Admin: Yeni Kategori Oluşturma
+            throw new NotImplementedException();
+        }
+
+        public Task EditCategories(EditCategoryDto input)
+        {
+            //Admin: Kategori düzenleme
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteCategory(EditCategoryDto input)
+        {
+            //Admin: Kategori silme
+            throw new NotImplementedException();
+        }
+
         //CRUD OPERATION WITH ASP.NET WEB API
 
     }

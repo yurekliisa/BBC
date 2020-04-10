@@ -29,7 +29,7 @@ export default {
         { text: "Reçete ve Tarif", to: "/events", icon: "rounded_corner" },
         { text: "İş İlanları", to: "/team", icon: "group" },
         { text: "Login", to: "/login", icon: "toc" },
-        { text: "Register", to: "/register",icon:"assignment"}
+        { text: "Register", to: "/register"}
       ]
     };
   },
