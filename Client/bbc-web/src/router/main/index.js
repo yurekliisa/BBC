@@ -1,6 +1,7 @@
 import Home from "../../views/main/pages/Home"
-import About from "../../views/main/pages/About"
+import LogIn from "../../views/main/pages/LogIn"
 import RoTDetail from "../../views/main/pages/RoTDetail"
+import Register from "../../views/main/pages/Register"
 const router = [
     {
         path: "/",
@@ -13,8 +14,12 @@ const router = [
         name:"RoTDetail"
     },
     {
-        path: "about",
-        component: About,
+        path: "login",
+        component: LogIn,
+    },
+    {
+        path: "register",
+        componnet: Register
     }
 ];
 
