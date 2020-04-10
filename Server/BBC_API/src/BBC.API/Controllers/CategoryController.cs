@@ -22,7 +22,7 @@ namespace BBC.API.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(List<CategoryDto>), 200)]
+        [ProducesResponseType(typeof(List<CategoryListDto>), 200)]
         [Route("GetAllCategories")]
         //Admine özel
         public async Task<IActionResult> GetAllCategories()

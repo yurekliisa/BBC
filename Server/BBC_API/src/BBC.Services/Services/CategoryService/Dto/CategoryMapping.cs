@@ -11,8 +11,8 @@ namespace BBC.Services.Services.CategoryService.Dto
     {
         public CategoryMapping()
         {
-            CreateMap<Category, CategoryDto>();
-            CreateMap<CategoryDto, Category>();
+            CreateMap<Category, CategoryListDto>();
+            CreateMap<CategoryListDto, Category>();
         }
     }
 }

@@ -8,7 +8,7 @@ namespace BBC.Services.Services.TarifAndReceteService.Dto
     public class CreateTarifAndReceteDto
     {
         //Categorieleri almak için
-        public ICollection<CategoryDto> Categories{ get; set; }
+        public ICollection<CategoryListDto> Categories{ get; set; }
         
         public ContentDto Content { get; set; }
     }
