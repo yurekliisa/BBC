@@ -4,7 +4,7 @@
     v-if="currentRouteName === 'Home'"
     class="mt-12"
     cycle
-    height="240px"
+    height="150px"
     hide-delimiter-background
     show-arrows-on-hover
   >
