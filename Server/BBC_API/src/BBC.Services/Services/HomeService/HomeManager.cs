@@ -1,6 +1,7 @@
 ﻿using BBC.Core.Domain;
 using BBC.Core.Repositories.Base;
 using BBC.Infrastructure.Data;
+using BBC.Services.Helper;
 using BBC.Services.Services.Common.Base;
 using BBC.Services.Services.HomeService.Dto;
 using Microsoft.EntityFrameworkCore;
@@ -33,10 +34,10 @@ namespace BBC.Services.Services.HomeService
             List<SliderOutputDto> result = new List<SliderOutputDto>();
             try
             {
-                var popularties = await GetPopularity(x=>x.TaRId).Take(12).ToListAsync();
-                foreach (var popularty in popularties)
+                var popularOnTaR = await GetPopularity(x => x.TaRId).Take(12).ToListAsync();
+                foreach (var popularty in popularOnTaR)
                 {
-                    var tar = await _tarRepository.GetQueryable().Include(y => y.Content).FirstOrDefaultAsync(x => x.Id == popularty.TaRID);
+                    var tar = await _tarRepository.GetQueryable().Include(y => y.Content).FirstOrDefaultAsync(x => x.Id == popularty.Id);
                     if (tar != null)
                         result.Add(new SliderOutputDto()
                         {
@@ -95,26 +96,112 @@ namespace BBC.Services.Services.HomeService
 
         public async Task<List<PopularTaROutputDto>> GetTaRByPopularCategory()
         {
-            var popularties = await GetPopularity(x=>x.TaRId).ToListAsync();
-            var result = await GetRandomPopularTaR(popularties);
+            var popularOnTaR = await GetPopularity(x => x.TaRId).ToListAsync();
+            var result = await GetRandomPopularTaR(popularOnTaR);
             return result;
         }
 
         public async Task<List<PopularTaROutputDto>> GetTaRByForYou()
         {
-            var popularties = await GetPopularity(x => x.UserId).ToListAsync();
-            var result = await GetRandomPopularTaR(popularties);
+            var popularOnUser = await GetPopularity(x => x.UserId).ToListAsync();
+            var result = await GetRandomPopularTaR(popularOnUser);
             return result;
         }
 
-        private IQueryable<PopularityDto> GetPopularity(Expression<Func<Popularity,int>> predicate)
+        public async Task<List<PopularChefOutputDto>> GetPopularChefs(SelectedTime time = SelectedTime.Daily)
+        {
+            List<PopularChefOutputDto> result = new List<PopularChefOutputDto>();
+            List<PopularityDto> popularOnUser = new List<PopularityDto>();
+            try
+            {
+                popularOnUser = await _popularityRepository.GetQueryable()
+                                            .Where(y => y.IsDeleted == false)
+                                            .GroupBy(x => x.UserId)//new { x.UserId, x.CreationTime }
+                                            .Select(y => new PopularityDto()
+                                            {
+                                                TotalPuan = y.Sum(x => x.Puan) / y.Count(),
+                                                Id = y.Key,//.UserId
+                                            }).OrderByDescending(y => y.TotalPuan).Take(10).ToListAsync();
+                /* switch (time)
+                 {
+                     case SelectedTime.Daily:
+                         {
+
+                         }
+                         break;
+                     case SelectedTime.Weekly:
+                         popularOnUser = await _popularityRepository.GetQueryable()
+                                            .Where(y => y.IsDeleted == false && y.CreationTime.DayOfWeek == DateTime.we.Today)
+                                            .GroupBy(x => new
+                                            {
+                                                UserId = x.UserId,
+                                                DayOfWeek = x.CreationTime.StartOfWeek(DayOfWeek.Monday)
+                                            })
+                                            .Select(y => new PopularityDto()
+                                            {
+                                                TotalPuan = y.Sum(x => x.Puan) / y.Count(),
+                                                Id = y.Key.UserId,
+                                            }).OrderByDescending(y => y.TotalPuan).Take(10).ToListAsync();
+                         break;
+                     case SelectedTime.Monthly:
+                         popularOnUser = await _popularityRepository.GetQueryable()
+                                            .Where(y => y.IsDeleted == false && y.CreationTime.Date == DateTime.Today)
+                                            .GroupBy(x => new { x.UserId, x.CreationTime })
+                                            .Select(y => new PopularityDto()
+                                            {
+                                                TotalPuan = y.Sum(x => x.Puan) / y.Count(),
+                                                Id = y.Key.UserId,
+                                            }).OrderByDescending(y => y.TotalPuan).Take(10).ToListAsync();
+                         break;
+                 }
+                 */
+                foreach (var popularty in popularOnUser)
+                {
+                    var tar = await _tarRepository.GetQueryable().Include(y => y.User).FirstOrDefaultAsync(x => x.Id == popularty.Id);
+                    if (tar != null)
+                        result.Add(new PopularChefOutputDto()
+                        {
+                            Id = tar.UserId,
+                            Photo = tar.User.Photo,
+                            FullName= tar.User.Name + " " + tar.User.SurName
+                        });
+                }
+            }
+            catch (Exception ex)
+            {
+                var message = ex.Message;
+            }
+            return result;
+        }
+
+        public async Task<List<PopularCategory>> GetPopularCategories()
+        {
+            List<PopularCategory> result = new List<PopularCategory>();
+            List<PopularityDto> popularOnTaR = new List<PopularityDto>();
+            try
+            {
+                popularOnTaR = await GetPopularity(x => x.TaRId).Take(10).ToListAsync();
+                foreach (var popularty in popularOnTaR)
+                {
+                   
+                }
+            }
+            catch (Exception ex)
+            {
+                var message = ex.Message;
+            }
+            return result;
+        }
+
+
+        private IQueryable<PopularityDto> GetPopularity(Expression<Func<Popularity, int>> predicate)
         {
             var result = _popularityRepository.GetQueryable()
                 .Where(y => y.IsDeleted == false)
                 .GroupBy(predicate).Select(y => new PopularityDto()
                 {
                     TotalPuan = y.Sum(x => x.Puan) / y.Count(),
-                    TaRID = y.Key,
+                    Id = y.Key,
                 }).OrderByDescending(y => y.TotalPuan);
 
             return result;
@@ -177,5 +264,7 @@ namespace BBC.Services.Services.HomeService
             result = result.Distinct().ToList();
             return result;
         }
+
+
     }
 }

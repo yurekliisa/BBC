@@ -5,9 +5,9 @@ using System.Text;
 
 namespace BBC.Services.Services.HomeService.Dto
 {
-    public class PopularityDto:BaseDto<int>
+    public class PopularChefOutputDto:BaseDto<int>
     {
-
-        public double TotalPuan { get; set; }
+        public string FullName { get; set; }
+        public string Photo { get; set; }
     }
 }

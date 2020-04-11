@@ -15,5 +15,8 @@ namespace BBC.Services.Services.HomeService
         Task<List<PopularTaROutputDto>> GetTaRByPopularCategory();
         Task<List<PopularTaROutputDto>> GetTaRByForYou();
 
+        Task<List<PopularChefOutputDto>> GetPopularChefs(SelectedTime time = SelectedTime.Daily);
+        Task<List<PopularCategory>> GetPopularCategories();
+
     }
 }
