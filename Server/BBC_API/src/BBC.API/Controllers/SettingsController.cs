@@ -28,6 +28,16 @@ namespace BBC.API.Controllers
             return Ok(result);
         }
 
+
+        [HttpPut]
+        [ProducesResponseType(typeof(List<EditSettingsDto>), 200)]
+        [Route("EditSettings")]
+        public async Task<IActionResult> EditSettings([FromBody] EditSettingsDto input)
+        {
+            await _settingsService.EditSettings(input);
+            return Ok();
+        }
+
         [HttpGet]
         [ProducesResponseType(typeof(List<SettingsListDto>), 200)]
         [Route("GetSettingsById")]
@@ -35,6 +45,14 @@ namespace BBC.API.Controllers
         {
             var result = await _settingsService.GetSetting(Id);
             return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("DeleteSettings")]
+        public async Task<IActionResult> Delete(int Id)
+        {
+            await _settingsService.DeleteSettings(Id);
+            return Ok();
         }
 
         [HttpPost]
