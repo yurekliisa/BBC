@@ -37,9 +37,9 @@ namespace BBC.API.Controllers
             return Ok();
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("Delete")]
-        public async Task<IActionResult> Delete([FromBody] int id)
+        public async Task<IActionResult> Delete(int id)
         {
             await _categoryService.DeleteCategory(id);
             return Ok();
