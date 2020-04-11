@@ -5,6 +5,7 @@ using BBC.Services.Helper;
 using BBC.Services.Services.Common.Base;
 using BBC.Services.Services.HomeService.Dto;
 using Microsoft.EntityFrameworkCore;
+using MoreLinq.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -122,39 +123,7 @@ namespace BBC.Services.Services.HomeService
                                                 TotalPuan = y.Sum(x => x.Puan) / y.Count(),
                                                 Id = y.Key,//.UserId
                                             }).OrderByDescending(y => y.TotalPuan).Take(10).ToListAsync();
-                /* switch (time)
-                 {
-                     case SelectedTime.Daily:
-                         {
-
-                         }
-                         break;
-                     case SelectedTime.Weekly:
-                         popularOnUser = await _popularityRepository.GetQueryable()
-                                            .Where(y => y.IsDeleted == false && y.CreationTime.DayOfWeek == DateTime.we.Today)
-                                            .GroupBy(x => new
-                                            {
-                                                UserId = x.UserId,
-                                                DayOfWeek = x.CreationTime.StartOfWeek(DayOfWeek.Monday)
-                                            })
-                                            .Select(y => new PopularityDto()
-                                            {
-                                                TotalPuan = y.Sum(x => x.Puan) / y.Count(),
-                                                Id = y.Key.UserId,
-                                            }).OrderByDescending(y => y.TotalPuan).Take(10).ToListAsync();
-                         break;
-                     case SelectedTime.Monthly:
-                         popularOnUser = await _popularityRepository.GetQueryable()
-                                            .Where(y => y.IsDeleted == false && y.CreationTime.Date == DateTime.Today)
-                                            .GroupBy(x => new { x.UserId, x.CreationTime })
-                                            .Select(y => new PopularityDto()
-                                            {
-                                                TotalPuan = y.Sum(x => x.Puan) / y.Count(),
-                                                Id = y.Key.UserId,
-                                            }).OrderByDescending(y => y.TotalPuan).Take(10).ToListAsync();
-                         break;
-                 }
-                 */
+                //Swicth-case ile gelen duruma göre
                 foreach (var popularty in popularOnUser)
                 {
                     var tar = await _tarRepository.GetQueryable().Include(y => y.User).FirstOrDefaultAsync(x => x.Id == popularty.Id);
@@ -163,7 +132,7 @@ namespace BBC.Services.Services.HomeService
                         {
                             Id = tar.UserId,
                             Photo = tar.User.Photo,
-                            FullName= tar.User.Name + " " + tar.User.SurName
+                            FullName = tar.User.Name + " " + tar.User.SurName
                         });
                 }
             }
@@ -183,8 +152,23 @@ namespace BBC.Services.Services.HomeService
                 popularOnTaR = await GetPopularity(x => x.TaRId).Take(10).ToListAsync();
                 foreach (var popularty in popularOnTaR)
                 {
-                   
+                    var categories = await _tarRepository.GetQueryable()
+                        .Include(x => x.TaRCategories)
+                        .Include("TaRCategories.Category")
+                        .Where(x => x.Id == popularty.Id)
+                        .SelectMany(x =>
+                        x.TaRCategories.Select(y => y.Category)
+                        ).Select(x => new PopularCategory()
+                        {
+                            Id = x.Id,
+                            Name = x.Name
+                        }).ToListAsync();
+                    result.AddRange(categories);
                 }
+                result = result.DistinctBy(x=>x.Id).ToList();
+
+                if (result.Count > 10)
+                    result = result.Take(10).ToList();
             }
             catch (Exception ex)
             {
@@ -261,7 +245,7 @@ namespace BBC.Services.Services.HomeService
                     }).ToListAsync();
                 result.AddRange(tar);
             }
-            result = result.Distinct().ToList();
+            result = result.DistinctBy(x=>x.Id).ToList();
             return result;
         }
 
