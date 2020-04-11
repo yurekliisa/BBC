@@ -41,5 +41,22 @@ namespace BBC.API.Controllers
             var result = await _homeService.GetHomeContent(page);
             return Ok(result);
         }
+        [HttpGet]
+        [ProducesResponseType(typeof(List<PopularTaROutputDto>), 200)]
+        [Route("PopularTaRByCategory")]
+        public async Task<IActionResult> PopularTaRByCategory()
+        {
+            var result = await _homeService.GetTaRByPopularCategory();
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(List<PopularTaROutputDto>), 200)]
+        [Route("PopularTaRByForYou")]
+        public async Task<IActionResult> PopularTaRByForYou()
+        {
+            var result = await _homeService.GetTaRByForYou();
+            return Ok(result);
+        }
     }
 }

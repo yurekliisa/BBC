@@ -12,5 +12,8 @@ namespace BBC.Services.Services.HomeService
         Task<List<SliderOutputDto>> GetSliderImages();
         Task<List<TaRHomeOuputDto>> GetHomeContent(int page);
 
+        Task<List<PopularTaROutputDto>> GetTaRByPopularCategory();
+        Task<List<PopularTaROutputDto>> GetTaRByForYou();
+
     }
 }
