@@ -46,6 +46,11 @@ export default {
           title: "UserReports",
           to: "/admin/userreports"
         },
+        {
+          icon: "mdi-chart-bubble",
+          title: "Settings",
+          to: "/admin/settings"
+        },
       ]
     };
   },
