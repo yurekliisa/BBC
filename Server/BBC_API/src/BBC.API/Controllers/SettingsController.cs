@@ -27,5 +27,26 @@ namespace BBC.API.Controllers
             var result = await _settingsService.GetAllSettings();
             return Ok(result);
         }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(List<SettingsListDto>), 200)]
+        [Route("GetSettingsById")]
+        public async Task<IActionResult> GetAllSettingsById(int Id)
+        {
+            var result = await _settingsService.GetSetting(Id);
+            return Ok(result);
+        }
+
+        [HttpPost]
+        [ProducesResponseType(200)]
+        [Route("CreateSettings")]
+        public async Task<IActionResult> CreateSettings([FromBody] CreateSettingsDto input)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState.Values.Select(x => x.Errors.SelectMany(y => y.ErrorMessage)));
+
+            await _settingsService.CreateSettings(input);
+            return Ok();
+        }
     }
 }
