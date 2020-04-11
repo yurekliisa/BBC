@@ -27,27 +27,27 @@ export default {
    
       items: [
         {
-          icon: "mdi-chart-bubble",
+          icon: "mdi-view-dashboard",
           title: "Dashboard",
           to: "/admin/dashboard"
         },
         {
-          icon: "mdi-chart-bubble",
+          icon: "mdi-format-list-bulleted",
           title: "Category",
           to: "/admin/category"
         },
         {
-          icon: "mdi-chart-bubble",
+          icon: "mdi-earth",
           title: "Country",
           to: "/admin/country"
         },
         {
-          icon: "mdi-chart-bubble",
+          icon: "mdi-account-card-details", // bu da ikonu fakat gözükmüyo
           title: "UserReports",
           to: "/admin/userreports"
         },
         {
-          icon: "mdi-chart-bubble",
+          icon: "mdi-settings-box", //mdi-settings // gözükmüyo ama ikonu bu mdi-settings-box
           title: "Settings",
           to: "/admin/settings"
         },
