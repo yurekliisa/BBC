@@ -13,7 +13,7 @@ namespace BBC.Services.Services.CategoryService
         Task<List<CategoryListDto>> GetAllCategories();
         Task CreateCategories(CreateCategoryDto input);
         Task EditCategories(EditCategoryDto input);
-        Task DeleteCategory(EditCategoryDto input);
+        Task DeleteCategory(int id);
         void GetData();
         void InsertData();
         void Exception();

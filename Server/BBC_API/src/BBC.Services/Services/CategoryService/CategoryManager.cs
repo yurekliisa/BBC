@@ -44,22 +44,24 @@ namespace BBC.Services.Services.CategoryService
             throw new ServiceException("trial exception");
         }
 
-        public Task CreateCategories(CreateCategoryDto input)
+        public async Task CreateCategories(CreateCategoryDto input)
         {
             //Admin: Yeni Kategori Oluşturma
-            throw new NotImplementedException();
+            var category = _mapper.Map<Category>(input);
+            await _repository.InsertAsync(category);
         }
 
-        public Task EditCategories(EditCategoryDto input)
+        public async Task EditCategories(EditCategoryDto input)
         {
             //Admin: Kategori düzenleme
-            throw new NotImplementedException();
+            var category = _mapper.Map<Category>(input);
+            await _repository.UpdateAsync(category);
         }
 
-        public Task DeleteCategory(EditCategoryDto input)
+        public async Task DeleteCategory(int id)
         {
             //Admin: Kategori silme
-            throw new NotImplementedException();
+            await _repository.DeleteAsync(id);
         }
 
         //CRUD OPERATION WITH ASP.NET WEB API
