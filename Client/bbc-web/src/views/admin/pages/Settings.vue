@@ -1,20 +1,20 @@
 <template>
   <v-layout warp align-center justify-center row fill-height>
     <v-flex xs12 md12>
+      <v-btn outlined color="deep-purple" dark @click="showModal()"
+        >Create Settings</v-btn
+      >
       <v-dialog v-model="dialog" persistent max-width="600px">
-        <template v-slot:activator="{ on }">
-          <v-btn outlined color="deep-purple" dark v-on="on">CREATE SETTİNGS</v-btn>
-        </template>
         <v-card>
           <v-card-title>
-            <span class="headline">New Settings</span>
+            <span class="headline">{{ title }}</span>
           </v-card-title>
           <v-card-text>
             <v-container>
               <v-row>
                 <v-col cols="12">
-                  <v-text-field v-model="newSettings" label="Key" required></v-text-field>
-                  <v-text-field v-model="newSettings" label="Value" required></v-text-field>
+                  <v-text-field v-model="setting.key" label="Key" required></v-text-field>
+                  <v-text-field v-model="setting.value" label="Value" required></v-text-field>
                 </v-col>
               </v-row>
             </v-container>
@@ -23,7 +23,7 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
-            <v-btn color="blue darken-1" text @click="addSettings()">Save</v-btn>
+            <v-btn color="blue darken-1" text @click="createOrEditSettings()">Save</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -33,7 +33,12 @@
         <template v-slot:item="row">
           <tr>
             <td style="width:200px;">
-              <v-btn class="mx-2" fab dark small color="deep-purple" @click="editSettings(row.item)">
+              <v-btn 
+              class="mx-2" 
+              fab 
+              dark 
+              small 
+              color="deep-purple" @click="selectedSettings(row.item)">
                 <v-icon dark>mdi-pencil</v-icon>
               </v-btn>
               <v-btn
@@ -56,15 +61,18 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "Settings",
   created(){
-        this.$store.commit("SET_panelText", "Settings");
+    this.fetchData();
+    this.$store.commit("SET_panelText", "Settings");
   },
   data(){
     return{
+      title: "Create ",
       currentIndex: -1,
-      newSettings: "",
+      setting: {key:"", value:"",id: 0},
       dialog: false,
       headers:[
         {
@@ -74,71 +82,99 @@ export default {
           text: "Key",
           align: "start",
           sortable: false,
-          value: "id",
+          value: "keys",
         },
         {
           text: "Value",
           align: "start",
           sortable: false,
-          value: "idValue",
+          value: "values",
         },
       ],
-      keys: [
-        {
-          id:"000001"
-        },
-        {
-          id:"000002"
-        },
-        {
-          id:"000003"
-        },
-        {
-          id:"000004"
-        },
-        {
-          id:"000005"
-        }
-      ],
-       values: [
-        {
-          idValue:"12123"
-        },
-        {
-          idValue:"12124"
-        },
-        {
-          idValue:"12125"
-        },
-        {
-          idValue:"12126"
-        },
-        {
-          idValue:"12127"
-        }
-      ]
-    };
+      settings:[]
+      };
   },
   methods: {
-    deleteSettings(item){
-      let index = this.keys.findIndex(x => x.id == item.id);
-      this.keys.splice(index, 1);
-    },
-    editSettings(item)  {
-       this.newSettings = this.keys.find(c => c.id == item.id).id;
-      this.currentIndex = this.keys.findIndex(c => c.id == item.id);
+    showModal() {
+      this.title = "Create New Settings";
+      this.settings = { key: "", value: "" };
       this.dialog = true;
     },
-    addSettings(item){
-       if (this.currentIndex != -1) {
-        this.keys[this.currentIndex].id= this.newSettings;
-        this.currentIndex = -1;
-        this.keys = [...this.keys];
-      } else {
-        this.keys.push({ id: this.newSettings });
+    selectedSettings(obj) {
+      this.settings = this.settings.find(c => c.id == obj.id);
+      this.title = "Edit Settings";
+      this.dialog = true;
+    },
+    fetchData() {
+      axios
+        .get(
+          "https://localhost:44308/api/Settings/GetAllSettings",
+          {},
+          {
+            headers: {
+              "Content-type": "application/json",
+              "Access-Control-Allow-Origin": "*"
+            }
+          }
+        )
+        .then(response => {
+          this.settings = response.data;
+          
+        });
+    },
+    deleteSettings(item){
+      axios
+        .get(
+          "https://localhost:44308/api/Settings/Delete?id=" + item.id,
+          {},
+          {
+            headers: {
+              "Content-type": "application/json",
+              "Access-Control-Allow-Origin": "*"
+            }
+          }
+        )
+        .then(response => {
+          this.fetchData();
+          });
+        },
+        createOrEditSettings(){
+      if(this.setting.id !== 0)
+      {
+        this.editSettings();
       }
+      else{
+        this.addSettings();
+      }
+    },
+    editSettings(item)  {
+       axios
+        .post("https://localhost:44308/api/Settings/Edit", this.setting)
+        .then(response => {
+          if (response.status === 200) {
+            this.fetchData();
+          }
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
       this.dialog = false;
-      this.newSettings = "";
+      this.settings = { name: "" };
+    },
+    addSettings(item){
+      axios
+        .post("https://localhost:44308/api/Settings/Create", this.setting)
+        .then(response => {
+          if (response.status === 200) {
+            this.fetchData();
+          }
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+       
+      this.dialog = false;
+      this.settings ={key:""}; //????
     }
   }
 };

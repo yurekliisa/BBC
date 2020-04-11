@@ -1,19 +1,22 @@
 <template>
   <v-layout warp align-center justify-center row fill-height>
     <v-flex xs12 md12>
+       <v-btn outlined color="deep-purple" dark @click="showModal()"
+          >Create Country</v-btn>
       <v-dialog v-model="dialog" persistent max-width="600px">
-        <template v-slot:activator="{ on }">
-          <v-btn outlined color="deep-purple" dark v-on="on">Create Country</v-btn>
-        </template>
-        <v-card>
+       <v-card>
           <v-card-title>
-            <span class="headline">New Country</span>
+            <span class="headline">{{ title }}</span>
           </v-card-title>
           <v-card-text>
             <v-container>
               <v-row>
                 <v-col cols="12">
-                  <v-text-field v-model="newCountry" label="Name*" required></v-text-field>
+                  <v-text-field 
+                  v-model="country.name" 
+                  label="Name*" 
+                  required
+                  ></v-text-field>
                 </v-col>
               </v-row>
             </v-container>
@@ -21,8 +24,10 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
-            <v-btn color="blue darken-1" text @click="addCountry()">Save</v-btn>
+            <v-btn color="blue darken-1" text @click="dialog = false"
+            >Close</v-btn>
+            <v-btn color="blue darken-1" text @click="createOrEditCountry()"
+            >Save</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -32,7 +37,12 @@
         <template v-slot:item="row">
           <tr>
             <td style="width:200px;">
-              <v-btn class="mx-2" fab dark small color="deep-purple" @click="editCountry(row.item)">
+              <v-btn class="mx-2"
+                fab 
+                dark 
+                small 
+                color="deep-purple" 
+                @click="selectedCountry(row.item)">
                 <v-icon dark>mdi-pencil</v-icon>
               </v-btn>
               <v-btn
@@ -55,6 +65,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "Country",
   created() {
@@ -62,8 +73,9 @@ export default {
   },
   data() {
     return {
+      title: "Create ",
       currentIndex: -1,
-      newCountry: "",
+      country:{name: "", id:0},
       dialog: false,
       headers: [
         {
@@ -76,58 +88,91 @@ export default {
           value: "name"
         }
       ],
-      countries: [
-        {
-          name: "Tr"
-        },
-        {
-          name: "En"
-        },
-        {
-          name: "Tr"
-        },
-        {
-          name: "En"
-        },
-        {
-          name: "Tr"
-        },
-        {
-          name: "En"
-        },
-        {
-          name: "Tr"
-        },
-        {
-          name: "En"
-        }
-      ]
+      countries: []
     };
   },
   methods: {
-    deleteCountry(item) {
-      let index = this.countries.findIndex(x => x.name == item.name);
-      this.countries.splice(index, 1);
-    },
-    editCountry(item) {
-      this.newCountry = this.countries.find(c => c.name == item.name).name;
-      this.currentIndex = this.countries.findIndex(c => c.name == item.name);
+    showModal() {
+      this.title = "Create New Country";
+      this.country = { name: "", id: 0 };
       this.dialog = true;
     },
-    addCountry() {
-      if (this.currentIndex != -1) {
-        this.countries[this.currentIndex].name= this.newCountry;
-        this.currentIndex = -1;
-        this.countries = [...this.countries];
-      } else {
-        this.countries.push({ name: this.newCountry });
+    selectedCountry(value) {
+      this.country = this.countries.find(c => c.id == value.id);
+      this.title = "Edit Country";
+      this.dialog = true;
+    },
+    fetchData() {
+      axios
+        .get(
+          "https://localhost:44308/api/Country/GetAllCountries",
+          {},
+          {
+            headers: {
+              "Content-type": "application/json",
+              "Access-Control-Allow-Origin": "*"
+            }
+          }
+        )
+        .then(response => {
+          this.countries = response.data;
+        });
+    },
+    deleteCountry(item) {
+       axios
+        .get(
+          "https://localhost:44308/api/Country/Delete?id=" + value.id,
+          {},
+          {
+            headers: {
+              "Content-type": "application/json",
+              "Access-Control-Allow-Origin": "*"
+            }
+          }
+        )
+        .then(response => {
+          this.fetchData();
+        });
+    },
+     createOrEditCountry(){
+      if(this.country.id !== 0)
+      {
+        this.editCountry();
       }
+      else{
+        this.addCountry();
+      }
+    },
+    editCountry(item) {
+      axios
+        .post("https://localhost:44308/api/Country/Edit", this.country)
+        .then(response => {
+          if (response.status === 200) {
+            this.fetchData();
+          }
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
       this.dialog = false;
-      this.newCountry = "";
+      this.countries = { name: "" };
+    },
+    addCountry() {
+     axios
+        .post("https://localhost:44308/api/Country/Create", this.country)
+        .then(response => {
+          if (response.status === 200) {
+            this.fetchData();
+          }
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+      this.dialog = false;
+      this.countries ={name:""};
     }
   }
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
