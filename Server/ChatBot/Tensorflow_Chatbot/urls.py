@@ -1,3 +1,11 @@
+<<<<<<< HEAD
+from django.urls import path, include
+from . import views
+
+urlpatterns = [
+    path('', views.index),
+    path('api', include("Tensorflow_Chatbot.Api.urls")),
+=======
 """django_app URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -18,4 +26,5 @@ from django.urls import path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+>>>>>>> master
 ]

@@ -1,3 +1,12 @@
+<<<<<<< HEAD
+
+import os
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+SECRET_KEY = 'i1u63^ba=6#vzc_0t6m_!m$)iejuq@v9!6dqq!jgzpkj=^9#t2'
+
+=======
 """
 Django settings for django_app project.
 
@@ -23,13 +32,17 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'r94o+i8w-5800+7m+s4znxcghnbtbj0)kf^d&)18a(_xp$^o$y'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+>>>>>>> master
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
 
+<<<<<<< HEAD
+=======
 # Application definition
 
+>>>>>>> master
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -43,18 +56,31 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+<<<<<<< HEAD
+    #'django.middleware.csrf.CsrfViewMiddleware',
+=======
     'django.middleware.csrf.CsrfViewMiddleware',
+>>>>>>> master
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+<<<<<<< HEAD
+ROOT_URLCONF = 'Tensorflow_Chatbot.urls'
+=======
 ROOT_URLCONF = 'django_app.urls'
+>>>>>>> master
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+<<<<<<< HEAD
+        'DIRS': ['Tensorflow_Chatbot/Views',]
+        ,
+=======
         'DIRS': [],
+>>>>>>> master
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -67,11 +93,17 @@ TEMPLATES = [
     },
 ]
 
+<<<<<<< HEAD
+WSGI_APPLICATION = 'Tensorflow_Chatbot.wsgi.application'
+
+
+=======
 WSGI_APPLICATION = 'django_app.wsgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
+>>>>>>> master
 
 DATABASES = {
     'default': {
@@ -81,9 +113,12 @@ DATABASES = {
 }
 
 
+<<<<<<< HEAD
+=======
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
+>>>>>>> master
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -100,9 +135,12 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+<<<<<<< HEAD
+=======
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
+>>>>>>> master
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -114,7 +152,16 @@ USE_L10N = True
 USE_TZ = True
 
 
+<<<<<<< HEAD
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+    '/home/mahsuni2915/Downloads/Tensorflow-Chatbot-master/static',
+]
+=======
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+>>>>>>> master
