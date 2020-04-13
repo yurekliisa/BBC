@@ -31,7 +31,7 @@ namespace BBC.Services.Services.SettingsService
         public async Task EditSettings(EditSettingsDto input)
         {
             var settings = await _settingsRepository.FindAsync(input.Id);
-            _mapper.Map(settings, input);
+            _mapper.Map(input, settings);
             await _settingsRepository.UpdateAsync(settings);
         }
 
