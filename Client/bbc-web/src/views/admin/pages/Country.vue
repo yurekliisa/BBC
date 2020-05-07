@@ -105,7 +105,7 @@ export default {
     fetchData() {
       axios
         .get(
-          "https://localhost:44308/api/Country/GetAllCountries",
+          "http://localhost:5000/api/Country/GetAllCountries",
           {},
           {
             headers: {
@@ -121,7 +121,7 @@ export default {
     deleteCountry(item) {
        axios
         .get(
-          "https://localhost:44308/api/Country/Delete?id=" + value.id,
+          "http://localhost:5000/api/Country/Delete?id=" + value.id,
           {},
           {
             headers: {
@@ -145,7 +145,7 @@ export default {
     },
     editCountry(item) {
       axios
-        .post("https://localhost:44308/api/Country/Edit", this.country)
+        .post("http://localhost:5000/api/Country/Edit", this.country)
         .then(response => {
           if (response.status === 200) {
             this.fetchData();
@@ -159,7 +159,7 @@ export default {
     },
     addCountry() {
      axios
-        .post("https://localhost:44308/api/Country/Create", this.country)
+        .post("http://localhost:5000/api/Country/Create", this.country)
         .then(response => {
           if (response.status === 200) {
             this.fetchData();

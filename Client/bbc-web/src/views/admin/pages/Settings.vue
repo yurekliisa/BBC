@@ -108,7 +108,7 @@ export default {
     fetchData() {
       axios
         .get(
-          "https://localhost:44308/api/Settings/GetAllSettings",
+          "http://localhost:5000/api/Settings/GetAllSettings",
           {},
           {
             headers: {
@@ -125,7 +125,7 @@ export default {
     deleteSettings(item){
       axios
         .get(
-          "https://localhost:44308/api/Settings/Delete?id=" + item.id,
+          "http://localhost:5000/api/Settings/Delete?id=" + item.id,
           {},
           {
             headers: {
@@ -149,7 +149,7 @@ export default {
     },
     editSettings(item)  {
        axios
-        .post("https://localhost:44308/api/Settings/Edit", this.setting)
+        .post("http://localhost:5000/api/Settings/Edit", this.setting)
         .then(response => {
           if (response.status === 200) {
             this.fetchData();
@@ -163,7 +163,7 @@ export default {
     },
     addSettings(item){
       axios
-        .post("https://localhost:44308/api/Settings/Create", this.setting)
+        .post("http://localhost:5000/api/Settings/Create", this.setting)
         .then(response => {
           if (response.status === 200) {
             this.fetchData();
