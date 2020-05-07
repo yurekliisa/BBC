@@ -121,29 +121,29 @@ namespace BBC.Infrastructure.Data.Seed
                 }
                 #endregion
 
-                #region Country Default Value
-                var trValue = await _dbContext.Countries.FirstOrDefaultAsync(x => x.Name == "Türkiye" && x.Code == "TR");
-                if(trValue == null)
-                {
-                    _dbContext.Countries.Add(new Country()
-                    {
-                        Code = "TR",
-                        Name = "Türkiye"
-                    });
-                }
-                #endregion
+                //#region Country Default Value
+                //var trValue = await _dbContext.Countries.FirstOrDefaultAsync(x => x.Name == "Türkiye" && x.Code == "TR");
+                //if(trValue == null)
+                //{
+                //    _dbContext.Countries.Add(new Country()
+                //    {
+                //        Code = "TR",
+                //        Name = "Türkiye"
+                //    });
+                //}
+                //#endregion
 
-                #region Content Default Value
-                var contentValue = await _dbContext.Contents.FirstOrDefaultAsync(x => x.ContentText == "Mercimek çorbası çok güzel olmuş." && x.Title == "Mercimek Çorbası");
-                if (contentValue == null)
-                {
-                    _dbContext.Contents.Add(new Content()
-                    {
-                        ContentText = "Mercimek çorbası çok güzel olmuş.",
-                        Title = "Mercimek Çorbası"
-                    });
-                }
-                #endregion
+                //#region Content Default Value
+                //var contentValue = await _dbContext.Contents.FirstOrDefaultAsync(x => x.ContentText == "Mercimek çorbası çok güzel olmuş." && x.Title == "Mercimek Çorbası");
+                //if (contentValue == null)
+                //{
+                //    _dbContext.Contents.Add(new Content()
+                //    {
+                //        ContentText = "Mercimek çorbası çok güzel olmuş.",
+                //        Title = "Mercimek Çorbası"
+                //    });
+                //}
+                //#endregion
 
                 await _dbContext.SaveChangesAsync();
             }
