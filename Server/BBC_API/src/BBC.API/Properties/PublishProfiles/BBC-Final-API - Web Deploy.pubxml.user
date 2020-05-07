@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAARgRHYxgEn0+Q2WTngoEYqwAAAAACAAAAAAAQZgAAAAEAACAAAADITX7hcC9XxdBxooCZXIbBjpVHRWd4LZNNbm7peMR3tAAAAAAOgAAAAAIAACAAAACYzl/mDmzaRvfxtLOERSq/Mef4IIjRxCZtETuNBcmHUoAAAACGhY/9sEWeZ/eOtb8B1gAZLTW76iredu/Avwe6Y8JQnz5meuP/QNvjNnMAp9b5G7rQiGzfvs86NlI93fxQ34OLjgW05SkmyoFksDLZR2lGJj1DDvV1QrEX3gFziuQb05dTyZz2AozJpDAPZZ6CUqtv0xD0UCYCBimFroSvyZJXzkAAAAD7wasRnDk2Dip2Vjr+SLv7t0Lvd51bn4vKgq+6S5bdYkG4NcW+qzjc7eqZwgXdhUEvdsX8E3N6S3BJHXe2tFwi</EncryptedPassword>
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="Default">
+      <Value>Server=bbc-final.database.windows.net, 1433%3bInitial Catalog=bbc-final-db%3bPersist Security Info=False%3bUser ID=bbc%3bPassword=100416!ie%3bMultipleActiveResultSets=False%3bEncrypt=True%3bTrustServerCertificate=False%3bConnection Timeout=30</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+</Project>

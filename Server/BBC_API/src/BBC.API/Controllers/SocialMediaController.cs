@@ -20,68 +20,59 @@ namespace BBC.API.Controllers
             _socialMediaService = socialMediaService;
         }
 
-        //Eylül: Buraya tekrar bakılacak!
-        //String değer almak daha mı doğru olur?
         [HttpGet]
+        [Route("GetAll")]
         public async Task<IActionResult> GetAllSocialMedia()
         {
             var socialmedias = await _socialMediaService.GetAllSocialMedias();
             return Ok(socialmedias);
         }
         [HttpGet]
-        public IActionResult Get(int Id) //string Url??
+        [Route("Get")]
+        public IActionResult Get(int Id) 
         {
-            if(Id == 0)
+            if (Id == 0)
             {
                 return BadRequest();
             }
 
             var socialMedia = _socialMediaService.GetSocialMedia(Id);
 
-            if(socialMedia == null)
+            if (socialMedia == null)
             {
                 return BadRequest();
             }
             return Ok(socialMedia);
         }
+
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] CreateSocialMediaDto model)
+        [Route("Create")]
+        public async Task<IActionResult> Create([FromBody] CreateSocialMediaDto model)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            IdentityResult result = await _socialMediaService.CreateSocialMedia(model);
-            if (result.Succeeded)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result.Errors.Select(x => x.Description));
+            await _socialMediaService.CreateSocialMedia(model);
+            return Ok();
         }
-        [HttpPut]
-        public async Task<IActionResult> Put(string Url, [FromBody] EditSocialMediaDto model)
+        [HttpPost]
+        [Route("Update")]
+        public async Task<IActionResult> Update([FromBody] EditSocialMediaDto model)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.Values.Select(x => x.Errors.FirstOrDefault().ErrorMessage));
 
-            IdentityResult result = await _socialMediaService.EditSocialMedia(Url, model);
-            if (result.Succeeded)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result.Errors.Select(x => x.Description));
+            await _socialMediaService.EditSocialMedia(model);
+            return Ok();
+
         }
         [HttpDelete]
-        public async Task<IActionResult> Delete(string Url)
-        {
-            if (!String.IsNullOrEmpty(Url))
-                return BadRequest(new string[] { "Empty parameter!" });
+        [Route("Delete")]
 
-            IdentityResult result = await _socialMediaService.DeleteSocialMedia(Url);
-            if (result.Succeeded)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result.Errors.Select(x => x.Description));
+        public async Task<IActionResult> Delete(int Id)
+        {
+            await _socialMediaService.DeleteSocialMedia(Id);
+            return Ok();
         }
     }
 }

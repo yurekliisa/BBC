@@ -41,7 +41,7 @@
           </v-checkbox>
         </form>
         <v-card-actions style="justify-content:center;">
-          <v-btn width="100" outlined color="primary">Login</v-btn>
+          <v-btn width="100" outlined color="primary">Giriş</v-btn>
         </v-card-actions>
       </v-card>
     </v-flex>

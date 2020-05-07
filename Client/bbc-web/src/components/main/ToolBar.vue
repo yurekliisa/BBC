@@ -28,8 +28,8 @@ export default {
         { text: "Ana Sayfa", to: "/", icon: "home" },
         { text: "Reçete ve Tarif", to: "/events", icon: "rounded_corner" },
         { text: "İş İlanları", to: "/team", icon: "group" },
-        { text: "Login", to: "/login", icon: "toc" },
-        { text: "Register", to: "/register"}
+        { text: "Giriş", to: "/login", icon: "toc" },
+        { text: "Kayıt Ol", to: "/register"}
       ]
     };
   },

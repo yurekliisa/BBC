@@ -61,7 +61,7 @@ namespace BBC.Services.Services.HomeService
             List<TaRHomeOuputDto> result = new List<TaRHomeOuputDto>();
             try
             {
-                var query = await _tarRepository.GetQueryable()
+                List<TarifAndRecete> query = await _tarRepository.GetQueryable()
                 .Include(x => x.Content)
                 .Include(x => x.Popularities)
                 .Include(x => x.User)
