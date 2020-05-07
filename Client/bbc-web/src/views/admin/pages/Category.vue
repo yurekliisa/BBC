@@ -115,7 +115,7 @@ export default {
     fetchData() {
       axios
         .get(
-          "http://localhost:5000/api/Category/GetAllCategories",
+          "https://localhost:5001/api/Category/GetAllCategories",
           {},
           {
             headers: {
@@ -131,7 +131,7 @@ export default {
     deleteCategory(value) {
       axios
         .get(
-          "http://localhost:5000/api/Category/Delete?id=" + value.id,
+          "https://localhost:5001/api/Category/Delete?id=" + value.id,
           {},
           {
             headers: {
@@ -155,7 +155,7 @@ export default {
     },
     editCategory() {
       axios
-        .post("http://localhost:5000/api/Category/Edit", this.category)
+        .post("https://localhost:5001/api/Category/Edit", this.category)
         .then(response => {
           if (response.status === 200) {
             this.fetchData();
@@ -169,7 +169,7 @@ export default {
     },
     addCategory() {
       axios
-        .post("http://localhost:5000/api/Category/Create", this.category)
+        .post("https://localhost:5001/api/Category/Create", this.category)
         .then(response => {
           if (response.status === 200) {
             this.fetchData();
