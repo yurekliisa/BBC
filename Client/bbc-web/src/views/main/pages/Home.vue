@@ -39,7 +39,7 @@ import ListCard from "../../../components/main/ListCard";
 import PopularTAR from "../../../components/main/PopularTAR";
 import PopularCategory from "../../../components/main/PopularCategory";
 import PopularChef from "../../../components/main/PopularChef";
-
+import axios from "axios";
 import { rotData } from "../../../assets/data/data";
 export default {
   name: "Home",
@@ -49,15 +49,34 @@ export default {
     PopularCategory,
     PopularChef,
   },
+  created() {
+    this.fetchData();
+  },
   data() {
-    const data = rotData.slice(0,18);
-    console.log(rotData);
-    console.log(data);
+    // const data = rotData.slice(0, 18);
     return {
       page: 1,
       showLoader: true,
-      eventsData: data,
+      eventsData:[],
     };
+  },
+  methods: {
+    fetchData() {
+      axios
+        .get(
+          "https://localhost:5001/api/Home/GetHomeContent?page="+this.page,
+          {},
+          {
+            headers: {
+              "Content-type": "application/json",
+              "Access-Control-Allow-Origin": "*",
+            },
+          }
+        )
+        .then((response) => {
+          this.eventsData = response.data;
+        });
+    },
   },
 };
 </script>
