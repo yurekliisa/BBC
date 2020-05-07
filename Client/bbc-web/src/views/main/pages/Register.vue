@@ -4,65 +4,56 @@
       <v-card class="mx-auto formContainer" width="700" raised>
         <form>
           <v-text-field
-              v-model="firstN"
-              label="First name"
-              required
-              :error-messages="firstNameErrors"
-              @input="$v.firstN.$touch()"
-              @blur="$v.firstN.$touch()"
-              solo
-            ></v-text-field>
-            <v-text-field
-              v-model="lastN"
-              label="Last name"
-              required
-              :error-messages="lastNameErrors"
-              @input="$v.lastN.$touch()"
-              @blur="$v.lastN.$touch()"
-              solo
-            ></v-text-field>
+            v-model="userName"
+            :error-messages="userNameErrors"
+            label="User name"
+            required
+            @input="$v.userName.$touch()"
+            @blur="$v.userName.$touch()"
+            solo
+          ></v-text-field>
+
           <v-text-field
             v-model="email"
+            :error-messages="emailErrors"
             label="E-mail"
             required
-            :error-messages="emailErrors"
             @input="$v.email.$touch()"
             @blur="$v.email.$touch()"
             solo
-          >
-          </v-text-field>
+          ></v-text-field>
+
           <v-text-field
             v-model="password"
-            :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-            :type="show ? 'text' : 'password'"
-            name="input-10-1"
+            :error-messages="passwordErrors"
+            :append-icon="showP ? 'mdi-eye' : 'mdi-eye-off'"
+            :type="showP ? 'text' : 'password'"
+            label="Password"
+            name="password"
             hint="At least 8 chracters"
             counter
-            label="Password"
-            @click:append="show = !show"
+            @click:append="showP = !showP"
             @input="$v.password.$touch()"
             @blur="$v.password.$touch()"
-            :error-messages="passwordErrors"
             solo
-          >
-          </v-text-field>
+          ></v-text-field>
+
           <v-text-field
             v-model="passwordAgain"
-            :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-            :type="show ? 'text' : 'password'"
-            name="input-10-1"
+            :error-messages="passwordAgainErrors"
+            :append-icon="showPa ? 'mdi-eye' : 'mdi-eye-off'"
+            :type="showPa ? 'text' : 'password'"
+            label="Password Again"
+            name="passwordAgain"
             hint="At least 8 chracters"
             counter
-            label="Password Again"
-            @click:append="show = !show"
+            @click:append="showPa = !showPa"
             @input="$v.passwordAgain.$touch()"
             @blur="$v.passwordAgain.$touch()"
-            :error-messages="passwordAgainErrors"
             solo
-          >
-          </v-text-field>
-          
-           <v-checkbox
+          ></v-text-field>
+
+          <v-checkbox
             v-model="checkbox"
             label="Robot Değilim"
             required
@@ -70,61 +61,63 @@
             @blur="$v.checkbox.$touch()"
             :error-messages="checkboxErrors"
             solo
-          >
-          </v-checkbox>
+          ></v-checkbox>
+
+          <v-card-actions style="justify-content:center;">
+            <v-btn
+              width="100"
+              outlined
+              color="primary"
+              @click="submit"
+              :disabled="submitStatus === 'PENDING'"
+            >
+              Register</v-btn
+            >
+          </v-card-actions>
         </form>
-         <v-card-actions style="justify-content:center;">
-          <v-btn width="100" outlined color="primary">Register</v-btn>
-        </v-card-actions>
       </v-card>
     </v-flex>
   </v-layout>
 </template>
 <script>
 import { validationMixin } from "vuelidate";
-import { required, minLength, email } from "vuelidate/lib/validators";
+import { required, minLength, email, sameAs } from "vuelidate/lib/validators";
+import axios from "axios";
 
 export default {
   mixins: [validationMixin],
   validations: {
-    password: { required, minLength: minLength(8) },
-    passwordAgain:{required, minlength: minLength(8)},
+    userName: { required },
     email: { required, email },
+    password: { required, minLength: minLength(8) },
+    passwordAgain: {
+      required,
+      minLength: minLength(8),
+      sameAsPassword: sameAs("password"),
+    },
     checkbox: {
       checked(val) {
         return val;
-      }
-    }
+      },
+    },
   },
-    data() {
+  data() {
     return {
-      show: false,
-      firstN: '',
-      lastN: '',
-      password: "",
-      passwordAgain:"",
+      showP: false,
+      showPa: false,
+      userName: "",
       email: "",
-      checkbox: false
+      password: "",
+      passwordAgain: "",
+      checkbox: false,
+      submitStatus: null,
     };
   },
-
   computed: {
-    firstNameErrors(){
+    userNameErrors() {
       const errors = [];
-      if (!this.$v.firstN) return errors;
-      !this.$v.firstN.required && errors.push("E-mail is required");
-      return errors;
-    },
-    lastNameErrors(){
-      const errors = [];
-      if (!this.$v.lastN) return errors;
-      !this.$v.lastN.required && errors.push("E-mail is required");
-      return errors;
-    },
-    checkboxErrors() {
-      const errors = [];
-      if (!this.$v.checkbox.$dirty) return errors;
-      !this.$v.checkbox.checked && errors.push("You must agree to continue!");
+      if (!this.$v.userName.$dirty) return errors;
+      !this.$v.userName.required && errors.push("User name is required");
       return errors;
     },
     emailErrors() {
@@ -137,7 +130,6 @@ export default {
     passwordErrors() {
       const errors = [];
       if (!this.$v.password.$dirty) {
-        console.log("qwe");
         return errors;
       }
       !this.$v.password.minLength &&
@@ -148,21 +140,48 @@ export default {
     passwordAgainErrors() {
       const errors = [];
       if (!this.$v.passwordAgain.$dirty) {
-        console.log("qwe");
         return errors;
       }
+      !this.$v.passwordAgain.sameAsPassword &&
+        errors.push("Şifreler aynı olmak zorundadır.");
       !this.$v.passwordAgain.minLength &&
-        errors.push("Password must be same as before you write");
+        errors.push("Password must be at most 8 characters long");
       !this.$v.passwordAgain.required && errors.push("Password is required.");
       return errors;
-      
-    }
+    },
+    checkboxErrors() {
+      const errors = [];
+      if (!this.$v.checkbox.$dirty) return errors;
+      !this.$v.checkbox.checked && errors.push("You must agree to continue!");
+      return errors;
+    },
   },
   methods: {
     submit() {
       this.$v.$touch();
-    }
-  }
+      if (this.$v.$invalid) {
+        this.submitStatus = "ERROR";
+      } else {
+        this.submitStatus = "PENDING";
+        axios
+          .post("Auth/Register", {
+            userName: this.userName,
+            email: this.email,
+            password: this.password,
+            confirmPassword: this.confirmPassword,
+          })
+          .then((response) => {
+            if (response.status === 200) {
+              this.submitStatus = "OK";
+              this.$router.push("/login");
+            }
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      }
+    },
+  },
 };
 </script>
 
@@ -177,5 +196,4 @@ export default {
     flex-direction: column
     display: flex
     padding: 2rem
-
 </style>

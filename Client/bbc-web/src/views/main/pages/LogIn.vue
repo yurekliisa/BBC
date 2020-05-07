@@ -15,34 +15,41 @@
           </v-text-field>
           <v-text-field
             v-model="password"
+            :error-messages="passwordErrors"
             :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
             :type="show ? 'text' : 'password'"
-            name="input-10-1"
+            name="password"
             hint="At least 8 chracters"
             counter
             label="Password"
             @click:append="show = !show"
             @input="$v.password.$touch()"
             @blur="$v.password.$touch()"
-            :error-messages="passwordErrors"
             solo
           >
           </v-text-field>
 
           <v-checkbox
             v-model="checkbox"
-            label="Remember me"
+            label="Robot Değilim"
             required
             @change="$v.checkbox.$touch()"
             @blur="$v.checkbox.$touch()"
             :error-messages="checkboxErrors"
             solo
-          >
-          </v-checkbox>
+          ></v-checkbox>
+
+          <v-card-actions style="justify-content:center;">
+            <v-btn
+              width="100"
+              outlined
+              color="primary"
+              @click="submit"
+              :disabled="submitStatus === 'PENDING'"
+              >Giriş</v-btn
+            >
+          </v-card-actions>
         </form>
-        <v-card-actions style="justify-content:center;">
-          <v-btn width="100" outlined color="primary">Giriş</v-btn>
-        </v-card-actions>
       </v-card>
     </v-flex>
   </v-layout>
@@ -60,15 +67,16 @@ export default {
     checkbox: {
       checked(val) {
         return val;
-      }
-    }
+      },
+    },
   },
   data() {
     return {
       show: false,
       password: "",
       email: "",
-      checkbox: false
+      checkbox: false,
+      submitStatus: null,
     };
   },
 
@@ -96,13 +104,32 @@ export default {
         errors.push("Password must be at most 8 characters long");
       !this.$v.password.required && errors.push("Password is required.");
       return errors;
-    }
+    },
   },
   methods: {
     submit() {
       this.$v.$touch();
-    }
-  }
+      if (this.$v.$invalid) {
+        this.submitStatus = "ERROR";
+      } else {
+        this.submitStatus = "PENDING";
+        axios
+          .post("Auth/Login", {
+            email: this.email,
+            password: this.password,
+          })
+          .then((response) => {
+            if (response.status === 200) {
+              this.submitStatus = "OK";
+              this.$router.push("/login");
+            }
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      }
+    },
+  },
 };
 </script>
 

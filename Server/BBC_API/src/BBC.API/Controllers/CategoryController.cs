@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BBC.API.Helper.Attribute;
 using BBC.Services.Services.CategoryService;
 using BBC.Services.Services.CategoryService.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +13,7 @@ namespace BBC.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[RequiredAuth]
     public class CategoryController : ControllerBase
     {
         private readonly ICategoryService _categoryService;
@@ -49,6 +52,7 @@ namespace BBC.API.Controllers
         [ProducesResponseType(typeof(List<CategoryListDto>), 200)]
         [Route("GetAllCategories")]
         //Admine özel
+        
         public async Task<IActionResult> GetAllCategories()
         {
             var categories = await _categoryService.GetAllCategories();

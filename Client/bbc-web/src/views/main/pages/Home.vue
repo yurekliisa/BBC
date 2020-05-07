@@ -64,7 +64,7 @@ export default {
     fetchData() {
       axios
         .get(
-          "https://localhost:5001/api/Home/GetHomeContent?page="+this.page,
+          "Home/GetHomeContent?page="+this.page,
           {},
           {
             headers: {

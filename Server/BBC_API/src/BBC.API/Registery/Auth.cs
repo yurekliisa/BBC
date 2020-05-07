@@ -1,6 +1,7 @@
 ﻿using BBC.Core.Configuration.Config;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -48,6 +49,7 @@ namespace BBC.API.Registery
                              if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
                              {
                                  context.Response.Headers.Add("Token-Expired", "true");
+                                 context.Response.StatusCode = 401;
                              }
                              return Task.CompletedTask;
                          }
