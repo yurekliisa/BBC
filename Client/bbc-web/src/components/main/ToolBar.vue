@@ -33,7 +33,7 @@ export default {
   name: "ToolBar",
   data() {
     let menu = orjMenu;
-    if (localStorage.getItem("user") == null) {
+    if (JSON.parse(localStorage.getItem("user")) == null) {
       menu = orjMenu.filter((x) => x.isAuth !== "user");
     } else {
       menu = orjMenu.filter((x) => x.isAuth !== "notUser");
@@ -61,7 +61,7 @@ export default {
     filterMenu() {
       console.log("1");
       console.log(this.$store.userInfo);
-      if (localStorage.getItem("user") == null) {
+      if (JSON.parse(localStorage.getItem("user")) == null) {
         return orjMenu.filter((x) => x.isAuth !== "user");
         console.log(menu);
       } else {

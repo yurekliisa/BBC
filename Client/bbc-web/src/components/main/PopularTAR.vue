@@ -2,14 +2,14 @@
   <div class="mt-4">
     <h1 class="homeTitle">Popular Tarifler</h1>
     <v-row>
-      <v-flex v-for="(item, i) in eventsData" :key="i">
-        <v-card :loading="item.isLoading" class="ma-1 pa-1 cardHover" >
+      <v-flex v-for="(item, i) in tarByProps" :key="i">
+        <v-card :loading="item.id" class="ma-1 pa-1 cardHover">
           <v-img
             height="100"
-            :src="item.kapakResim"
+            :src="item.mainImage"
             class="white--text align-end"
           >
-            <v-card-title style="color:white">{{ item.name }}</v-card-title>
+            <v-card-title style="color:white">{{ item.title }}</v-card-title>
           </v-img>
         </v-card>
       </v-flex>
@@ -19,15 +19,38 @@
 
 <script>
 import { rotData } from "../../assets/data/data";
+import axios from "axios";
 
 export default {
-  name: "PopularTAR",
+  /*
+  [{
+    "mainImage": "string",
+    "title": "string",
+    "id": 0
+  }]
+  */
   data() {
-    const newData = rotData.slice(0,10);
-    console.log(newData);
     return {
-      eventsData: newData,
+      tarByProps: [],
     };
+  },
+  mounted() {
+    axios
+      .get("/Home/PopularTaRByCategory", {
+        headers: {
+          "Content-type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
+      .then((result) => {
+        console.log(result);
+        if (result.status === 200) {
+          this.tarByProps = result.data;
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
 };
 </script>

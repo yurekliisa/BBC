@@ -204,6 +204,8 @@ namespace BBC.Services.Services.HomeService
                     .Include(x => x.TaRCategories)
                     .SelectMany(y => y.TaRCategories.Select(y => y.CategoryId)).ToListAsync());
             }
+            if (categortyIds.Count == 0)
+                return result;
 
             categortyIds = categortyIds.Distinct().ToList();
 

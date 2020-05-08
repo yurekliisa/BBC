@@ -116,7 +116,6 @@ export default {
       axios
         .get(
           "Category/GetAllCategories",
-          {},
           {
             headers: {
               "Content-type": "application/json",
@@ -132,7 +131,6 @@ export default {
       axios
         .get(
           "Category/Delete?id=" + value.id,
-          {},
           {
             headers: {
               "Content-type": "application/json",

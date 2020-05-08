@@ -7,9 +7,9 @@ import axios from "axios";
 export default {
   name: "App",
   created() {
-    if (localStorage.getItem("user")) {
-      console.log("2");
-      const userData = JSON.parse(localStorage.getItem("user"));
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user !== null) {
+      const userData = user;
       axios
         .get("Manage/UserInfo", {
           headers: {

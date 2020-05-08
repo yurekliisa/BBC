@@ -15,7 +15,7 @@
       <v-row>
         <v-col cols="6" sm="4" class="cardHover" v-on:click="test()">
           <v-img
-            :src="slides[i]"
+            :src="slide"
             gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)"
           >
             <v-row align="end" class="lightbox white--text pa-2 fill-height ">
@@ -31,7 +31,7 @@
           </v-img>
         </v-col>
 
-        <v-col cols="6" sm="4">
+        <v-col cols="6" sm="4" class="cardHover">
           <v-img :src="slides[i]">
             <!-- <div class="fill-height bottom-gradient"></div> -->
             <v-row align="end" class="lightbox white--text pa-2 fill-height">
@@ -47,7 +47,7 @@
           </v-img>
         </v-col>
 
-        <v-col cols="6" sm="4">
+        <v-col cols="6" sm="4" class="cardHover">
           <v-img :src="slides[i]">
             <!-- <div class="fill-height repeating-gradient"></div> -->
             <v-row align="end" class="lightbox white--text pa-2 fill-height">
