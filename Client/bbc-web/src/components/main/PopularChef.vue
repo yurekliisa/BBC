@@ -44,7 +44,39 @@
 
 <script>
 import { rotData } from "../../assets/data/data";
+import axios from "axios";
+
 export default {
+ /* [
+  {
+    "fullName": "string",
+    "photo": "string",
+    "id": 0
+  }
+]*/
   name: "PopularChef",
+  data(){
+    return{
+      recentChefs:[]
+    };
+  },
+  mounted(){
+    axios
+      .get("/Home/GetPopularChefs",{
+        headers:{
+         "Content-type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
+      .then((result)=>{
+        console.log(result)
+        if (result.status===200){
+          this.recentChefs=result.data;
+        }
+      })
+      .catch((err)=>{
+        console.log(err);
+      });
+  },
 };
 </script>

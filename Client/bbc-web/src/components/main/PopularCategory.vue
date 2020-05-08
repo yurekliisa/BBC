@@ -7,7 +7,7 @@
         <v-tabs>
           <v-tabs-slider></v-tabs-slider>
           <v-tab
-            v-for="i in ['Günlük', 'Haftalık', 'Aylık']"
+            v-for="i in recentCat"
             :key="i"
             :href="`#tab-${i}`"
           >
@@ -39,7 +39,39 @@
 
 <script>
 import { rotData } from "../../assets/data/data";
+import axios from "axios";
 export default {
+  /*
+  [
+  {
+    "name": "string",
+    "id": 0
+  }
+]
+  */
   name: "PopularCategory",
+  data(){
+    return{
+      recentCat:[],
+    };
+  },
+  mounted(){
+    axios
+      .get("/Home/GetPopularCategories",{
+        headers:{
+          "Content-type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
+      .then((result)=>{
+        console.log(result);
+        if(result.status===200){
+          this.recentCat = result.data;
+        }
+      })
+      .catch((err)=>{
+        console.log (err);
+      });
+  },
 };
 </script>
