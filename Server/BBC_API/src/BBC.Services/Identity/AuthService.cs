@@ -116,7 +116,7 @@ namespace BBC.Services.Identity
             if (await _userManager.CheckPasswordAsync(user, model.Password))
             {
                 tokenModel.HasVerifiedEmail = true;
-
+                tokenModel.UserId = user.Id;
 
                 JwtSecurityToken jwtSecurityToken = await CreateJwtToken(user);
                 tokenModel.Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);

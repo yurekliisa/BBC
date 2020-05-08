@@ -18,7 +18,6 @@ Axios.interceptors.response.use(response => {
 }, err => {
   const { config, response: { status, data } } = err;
   if (status === 401 && data.message == "Expired token" || status === 404) {
-    this.$router.push('/');
     if (localStorage.getItem('user') !== null) {
       localStorage.setItem('user', null);
     }

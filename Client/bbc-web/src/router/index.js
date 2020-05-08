@@ -9,9 +9,8 @@ import main from "./main";
 Vue.use(VueRouter);
 
 const GuardToken = (to, from, next) => {
-  //--- Check Token
-  let go = false;
-  if (go) {
+  let go = localStorage.getItem('user');
+  if (go==null) {
     next({
       path: '/',
     })

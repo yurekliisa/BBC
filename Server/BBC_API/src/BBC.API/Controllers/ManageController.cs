@@ -13,10 +13,11 @@ using BBC.Core.Domain.Identity;
 using BBC.Services.Identity.Dto.Auth;
 using BBC.Services.Identity.Interfaces;
 using BBC.Services.Identity.Dto.UserDtos;
+using BBC.API.Helper.Attribute;
 
 namespace BBC.API.Controllers
 {
-    [Authorize]
+    [RequiredAuth]
     [Produces("application/json")]
     [Route("api/[controller]")]
     public class ManageController : Controller
@@ -33,7 +34,7 @@ namespace BBC.API.Controllers
 
 
         [HttpGet]
-        [ProducesResponseType(typeof(UserDto), 200)]
+        [ProducesResponseType(typeof(UserInfoOutputDto), 200)]
         [ProducesResponseType(typeof(IEnumerable<string>), 400)]
         [Route("UserInfo")]
         public async Task<IActionResult> UserInfo()

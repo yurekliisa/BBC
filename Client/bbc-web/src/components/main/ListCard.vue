@@ -1,11 +1,11 @@
 <template>
   <v-card :loading="item.isLoading" class="ma-2 pa-1 my-2">
-    <v-img height="250" :src="item.kapakResim"></v-img>
-    <v-card-title>{{ item.name }}</v-card-title>
+    <v-img height="250" :src="item.mainImage"></v-img>
+    <v-card-title>{{ item.title }}</v-card-title>
     <v-card-text>
       <v-row align="center" class="mx-0">
         <v-rating
-          :value="item.point"
+          :value="item.puan"
           color="amber"
           dense
           half-increments
@@ -13,7 +13,7 @@
           size="14"
         ></v-rating>
         <div class="grey--text ml-4">
-          {{ item.point }} ({{ item.commentCount }})
+          {{ item.puan }} ({{ item.commentCount }})
         </div>
       </v-row>
 
@@ -28,9 +28,9 @@
           <template v-slot:activator="{ on }">
             <v-chip outlined v-on="on">
               <v-avatar left>
-                <v-img src="https://cdn.vuetifyjs.com/images/john.png"></v-img>
+                <v-img :src="item.userPhoto"></v-img>
               </v-avatar>
-              {{ item.actor.fullName }}
+              {{ item.userFullName}}
             </v-chip>
           </template>
           <v-card width="300">
@@ -38,7 +38,7 @@
               <v-list-item>
                 <v-list-item-avatar>
                   <v-img
-                    src="https://cdn.vuetifyjs.com/images/john.png"
+                   :src="item.userPhoto"
                   ></v-img>
                 </v-list-item-avatar>
                 <v-list-item-content>
@@ -69,7 +69,7 @@
           </v-card>
         </v-menu>
       </div>
-      <div>{{ item.summary }}</div>
+      <div>{{ item.shortDescription }}</div>
     </v-card-text>
 
     <v-divider class="mx-4"></v-divider>
@@ -107,9 +107,27 @@ export default {
   name: "ListCard",
   props: {
     item: {
-      type: Object
-    }
+      type: Object,
+    },
   },
+  /*
+              {
+                "mainImage": "string",
+                "title": "string",
+                "shortDescription": "string",
+                "userFullName": "string",
+                "userPhoto": "string",
+                "userId": 0,
+                "puan": 0,
+                "commentCount": 0,
+
+                "categories": [
+                  "string"
+                ],
+                "id": 0
+              }
+            ]
+  */
   methods: {
     reserve() {
       this.item.isLoading = true;
@@ -119,23 +137,12 @@ export default {
           name: "RoTDetail",
           params: {
             name: this.item.name.replace(/ /g, "-"),
-            id: this.item.id
-          }
+            id: this.item.id,
+          },
         });
       }, 2000);
     },
-    like(val) {
-      this.item.isLoading = true;
-      setTimeout(() => {
-        this.item.isLoading = false;
-        if (!val) {
-          this.item.isLike = true;
-        } else {
-          this.item.isLike = false;
-        }
-      }, 1000);
-    }
-  }
+  },
 };
 </script>
 

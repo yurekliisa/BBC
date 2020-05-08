@@ -52,9 +52,9 @@ namespace BBC.Services.Identity
             var userInfoDto = new UserInfoOutputDto
             {
                 Email = user.Email,
-                EmailConfirmed = user.EmailConfirmed,
-                LockoutEnabled = user.LockoutEnabled,
-                Roles = await _userManager.GetRolesAsync(user)
+                Id = user.Id,
+                UserName = user.UserName,
+                FullName = user.Name + " " + user.SurName
             };
 
             return userInfoDto;
@@ -291,6 +291,7 @@ namespace BBC.Services.Identity
 
                 var tokenModel = new TokenOutputDto()
                 {
+                    UserId=user.Id,
                     HasVerifiedEmail = true,
                     RefreshToken = model.RefreshToken
                 };

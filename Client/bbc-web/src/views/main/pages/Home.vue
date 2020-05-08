@@ -5,7 +5,7 @@
     <v-flex md9>
       <h1 class="homeTitle">Son Paylaşılanlar</h1>
       <v-row>
-        <v-flex md4 v-for="(item, i) in eventsData" :key="i">
+        <v-flex md4 v-for="(item, i) in tars" :key="i">
           <ListCard :item="item" />
         </v-flex>
       </v-row>
@@ -57,24 +57,20 @@ export default {
     return {
       page: 1,
       showLoader: true,
-      eventsData:[],
+      tars: [],
     };
   },
   methods: {
     fetchData() {
       axios
-        .get(
-          "Home/GetHomeContent?page="+this.page,
-          {},
-          {
-            headers: {
-              "Content-type": "application/json",
-              "Access-Control-Allow-Origin": "*",
-            },
-          }
-        )
+        .get("Home/GetHomeContent?page=" + this.page, {
+          headers: {
+            "Content-type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+        })
         .then((response) => {
-          this.eventsData = response.data;
+          this.tars = response.data;
         });
     },
   },

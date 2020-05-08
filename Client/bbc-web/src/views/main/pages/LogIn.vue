@@ -58,6 +58,7 @@
 <script>
 import { validationMixin } from "vuelidate";
 import { required, minLength, email } from "vuelidate/lib/validators";
+import axios from "axios";
 
 export default {
   mixins: [validationMixin],
@@ -97,7 +98,6 @@ export default {
     passwordErrors() {
       const errors = [];
       if (!this.$v.password.$dirty) {
-        console.log("qwe");
         return errors;
       }
       !this.$v.password.minLength &&
@@ -121,11 +121,25 @@ export default {
           .then((response) => {
             if (response.status === 200) {
               this.submitStatus = "OK";
-              this.$router.push("/login");
+              console.log(response.data.token);
+              localStorage.setItem("user", JSON.stringify(response.data));
+              //User bilgileri
+              axios
+                .get("Manage/UserInfo", {
+                  headers: {
+                    "Content-type": "application/json",
+                    "Access-Control-Allow-Origin": "*",
+                    Authorization: `Bearer ${response.data.token}`,
+                  },
+                })
+                .then((user) => {
+                  this.$store.commit("SET_USER", user.data);
+                  this.$router.push("/");
+                });
             }
           })
           .catch(function(error) {
-            console.log(error);
+            this.submitStatus = "ERROR";
           });
       }
     },
