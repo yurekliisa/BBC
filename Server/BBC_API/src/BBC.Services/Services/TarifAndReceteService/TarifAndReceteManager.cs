@@ -58,6 +58,13 @@ namespace BBC.Services.Services.TarifAndReceteService
             return result;
         }
 
+        public async Task<List<TarifAndReceteDetailListDto>> GetAllTarifAndReceteDetails()
+        {
+            var tar = await _tarRepository.GetListAsync();
+            var result = _mapper.Map<List<TarifAndReceteDetailListDto>>(tar);
+            return result;
+        }
+
         public async Task<EditTarifAndReceteDto> GetTarifAndRecete(int Id)
         {
             var tar = await _tarRepository.GetAsync(Id);
