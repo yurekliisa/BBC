@@ -15,6 +15,7 @@ namespace BBC.Services.Services.TarifAndReceteService.Dto
 
         public TarifAndReceteListDto()
         {
+            Categories = new HashSet<CategoryListDto>();
             MediaDtos = new HashSet<MediaDto>();
         }
     }
