@@ -19,7 +19,7 @@
             :value="'tab-' + i"
           >
             <v-card class="ma-1 pa-1" style="width:100%">
-              <v-flex v-for="(item, i) in [1, 2, 3, 4, 5, 6,7,8,9,10]" :key="i">
+              <v-flex v-for="(item, i) in  recentChefs" :key="i">
                 <v-list-item>
                   <v-list-item-avatar>
                     <v-img
@@ -28,7 +28,7 @@
                   </v-list-item-avatar>
                   <v-list-item-content>
                     <v-list-item-title style="text-align:center;"
-                      >Single-line item</v-list-item-title
+                      >{{item.fullName}}</v-list-item-title
                     >
                   </v-list-item-content>
                 </v-list-item>
@@ -61,7 +61,11 @@ export default {
     };
   },
   mounted(){
-    axios
+    this.fetchData();
+  },
+  methods:{
+    fetchData(){
+      axios
       .get("/Home/GetPopularChefs",{
         headers:{
          "Content-type": "application/json",
@@ -77,6 +81,7 @@ export default {
       .catch((err)=>{
         console.log(err);
       });
-  },
+    }
+  }
 };
 </script>

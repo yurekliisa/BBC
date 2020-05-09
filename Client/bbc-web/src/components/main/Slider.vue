@@ -69,7 +69,17 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
+  /*
+  [
+  {
+    "id": 0,
+    "mainImage": "string",
+    "title": "string"
+  }
+]
+*/
   name: "ToolBar",
   data() {
     return {

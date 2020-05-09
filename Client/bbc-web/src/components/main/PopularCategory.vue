@@ -7,7 +7,7 @@
         <v-tabs>
           <v-tabs-slider></v-tabs-slider>
           <v-tab
-            v-for="i in recentCat"
+            v-for="i in ['Günlük', 'Haftalık', 'Aylık']"
             :key="i"
             :href="`#tab-${i}`"
           >
@@ -19,11 +19,11 @@
             :value="'tab-' + i"
           >
             <v-card class="ma-1 pa-1" style="width:100%">
-              <v-flex v-for="(item, i) in [1, 2, 3, 4, 5, 6,7,8,9,10]" :key="i">
+              <v-flex v-for="(item, i) in recentCat" :key="i">
                 <v-list-item>                 
                   <v-list-item-content>
                     <v-list-item-title style="text-align:center;"
-                      >Single-line item</v-list-item-title
+                      >{{item.name}}</v-list-item-title
                     >
                   </v-list-item-content>
                 </v-list-item>
@@ -56,6 +56,10 @@ export default {
     };
   },
   mounted(){
+    this.fetchData();
+  },
+  methods:{
+    fetchData(){
     axios
       .get("/Home/GetPopularCategories",{
         headers:{
@@ -72,6 +76,7 @@ export default {
       .catch((err)=>{
         console.log (err);
       });
-  },
+  }
+  }
 };
 </script>
