@@ -44,6 +44,16 @@ namespace BBC.API.Controllers
             return Ok(categories);
         }
 
+        [HttpGet]
+        [ProducesResponseType(typeof(List<TarifAndReceteListDto>), 200)]
+        [Route("GetTarifAndReceteByUserId")]
+        public async Task<IActionResult> GetTarifAndReceteByUserId(int userId)
+        {
+            var users = await _userService.GetUser(userId);
+            var tarifAndRecete = await _tarifAndReceteService.GetTarifAndRecete(Convert.ToInt32(users.Id));
+            return Ok(tarifAndRecete);
+        }
+
         [HttpPost]
         [ProducesResponseType(typeof(int), 200)]
         [Route("CreateTaR")]
@@ -64,6 +74,7 @@ namespace BBC.API.Controllers
             var users = await _userService.GetUsers();
             return Ok(users);
         }
+
 
         [HttpGet]
         [ProducesResponseType(typeof(IdentityUser), 200)]
