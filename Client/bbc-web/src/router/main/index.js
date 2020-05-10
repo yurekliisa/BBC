@@ -1,21 +1,22 @@
 import Home from "../../views/main/pages/Home"
 import LogIn from "../../views/main/pages/LogIn"
-import RoTDetail from "../../views/main/pages/RoTDetail"
+import TARDetail from "../../views/main/pages/tar/TARDetail"
 import Register from "../../views/main/pages/Register"
 import Profile from '../../views/main/pages/Profile'
 import CreateTAR from "../../views/main/pages/tar/CreateTAR"
+import TAR from "../../views/main/pages/tar/TAR"
 
 const GuardToken = (to, from, next) => {
     let go = localStorage.getItem('user');
-    if (go==null) {
-      next({
-        path: '/',
-      })
+    if (go == null) {
+        next({
+            path: '/',
+        })
     }
     next();
-  }
+}
 
-  
+
 const router = [
     {
         path: "/",
@@ -23,9 +24,9 @@ const router = [
         name: "Home"
     },
     {
-        path: "RoT-Detail/:name-:id",
-        component: RoTDetail,
-        name:"RoTDetail"
+        path: "TAR-Detail/:name-:id",
+        component: TARDetail,
+        name: "TARDetail"
     },
     {
         path: "login",
@@ -36,14 +37,19 @@ const router = [
         component: Register
     },
     {
-        path:"profile/:id",
-        component:Profile,
-        name:"Profile"
+        path: "profile/:id",
+        component: Profile,
+        name: "Profile"
     },
     {
-        path:"/tar/create",
-        component:CreateTAR,
-        name:"CreateTAR"
+        path: "tar/create",
+        component: CreateTAR,
+        name: "CreateTAR"
+    },
+    {
+        path: "tar",
+        component: TAR,
+        name: "TAR"
     }
 ];
 

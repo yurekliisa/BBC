@@ -134,7 +134,7 @@ export default {
       setTimeout(() => {
         this.item.isLoading = false;
         this.$router.push({
-          name: "RoTDetail",
+          name: "TARDetail",
           params: {
             name: this.item.name.replace(/ /g, "-"),
             id: this.item.id,

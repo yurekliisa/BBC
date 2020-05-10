@@ -22,13 +22,6 @@ import { rotData } from "../../assets/data/data";
 import axios from "axios";
 
 export default {
-  /*
-  [{
-    "mainImage": "string",
-    "title": "string",
-    "id": 0
-  }]
-  */
   data() {
     return {
       tarByProps: [],

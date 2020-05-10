@@ -1,5 +1,5 @@
 <template>
-  <v-layout>
+  <v-layout :v-if="user">
     <v-flex class="customContainer">
       <v-card class="w-100 h-97">
         <v-container
@@ -83,7 +83,7 @@ export default {
   data() {
     return {
       tab: null,
-      user: {},
+      user: this.$store.getters.userInfo,
       icons: false,
       centered: true,
       grow: false,
@@ -94,7 +94,7 @@ export default {
     };
   },
   created() {
-    this.user = this.$store.getters.userInfo;
+   console.log(this.user);
   },
   methods: {
     onScroll(e) {

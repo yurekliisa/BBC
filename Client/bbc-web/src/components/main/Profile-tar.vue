@@ -5,8 +5,8 @@
         >Create TaR</v-btn
       >
     </v-row>
-    <v-row style="background-color:red;height:10000px;width:1000px">
-      <v-flex v-for="(item, i) in tarByProps" :key="i">
+    <v-row>
+      <v-flex v-for="(item, i) in tars" :key="i">
         <v-card :loading="item.isLoading" class="ma-2 pa-1 my-2">
           <v-img height="250" :src="item.mainImage"></v-img>
           <v-card-title>{{ item.title }}</v-card-title>
@@ -33,46 +33,6 @@
                 transition="scale-transition"
                 origin="top left"
               >
-                <template v-slot:activator="{ on }">
-                  <v-chip outlined v-on="on">
-                    <v-avatar left>
-                      <v-img :src="item.userPhoto"></v-img>
-                    </v-avatar>
-                    {{ item.userFullName }}
-                  </v-chip>
-                </template>
-                <v-card width="300">
-                  <v-list dark>
-                    <v-list-item>
-                      <v-list-item-avatar>
-                        <v-img :src="item.userPhoto"></v-img>
-                      </v-list-item-avatar>
-                      <v-list-item-content>
-                        <v-list-item-title>{{
-                          item.actor.fullName
-                        }}</v-list-item-title>
-                        <v-list-item-subtitle>{{
-                          item.actor.job
-                        }}</v-list-item-subtitle>
-                      </v-list-item-content>
-                      <v-list-item-action>
-                        <v-btn icon @click="item.menu = false">
-                          <v-icon>mdi-close-circle</v-icon>
-                        </v-btn>
-                      </v-list-item-action>
-                    </v-list-item>
-                  </v-list>
-                  <v-list>
-                    <v-list-item @click="() => {}">
-                      <v-list-item-action>
-                        <v-icon>mdi-briefcase</v-icon>
-                      </v-list-item-action>
-                      <v-list-item-subtitle>{{
-                        item.actor.email
-                      }}</v-list-item-subtitle>
-                    </v-list-item>
-                  </v-list>
-                </v-card>
               </v-menu>
             </div>
             <div>{{ item.shortDescription }}</div>

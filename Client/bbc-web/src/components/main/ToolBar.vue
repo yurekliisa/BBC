@@ -24,7 +24,7 @@
 <script>
 const orjMenu = [
   { text: "Ana Sayfa", to: "/", isAuth: "allow" },
-  { text: "Reçete ve Tarif", to: "/events", isAuth: "allow" },
+  { text: "Reçete ve Tarif", to: "/tar", isAuth: "allow" },
   { text: "İş İlanları", to: "/team", isAuth: "allow" },
   { text: "Giriş", to: "/login", isAuth: "notUser" },
   { text: "Kayıt Ol", to: "/register", isAuth: "notUser" },

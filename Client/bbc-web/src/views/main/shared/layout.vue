@@ -6,8 +6,11 @@
       <!--ToolBar-->
       <Slider />
       <!--Container-->
-      <v-container class="pa-0" v-bind:class="[currentRouteName === 'Home' ? 'mt-3' : 'mt-5-rem']">
-         <router-view />        
+      <v-container
+        class="pa-0"
+        v-bind:class="[currentRouteName === 'Home' ? 'mt-3' : 'mt-5-rem']"
+      >
+        <router-view />
       </v-container>
       <!--Container-->
     </v-card>
@@ -29,16 +32,16 @@ export default {
     Slider,
     Footer,
   },
- computed: {
+  computed: {
     currentRouteName() {
       return this.$route.name;
-    }
+    },
   },
   data() {
     return {
-      showLoader: true
+      showLoader: true,
     };
-  }
+  },
 };
 </script>
 

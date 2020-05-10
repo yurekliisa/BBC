@@ -43,27 +43,24 @@
       </v-card-text>
     </v-card>
 
-    <Comment v-bind:id="$route.params.id"/>
+    <Comment v-bind:id="$route.params.id" />
   </div>
 </template>
 
 <script>
-import { rotData } from "../../../assets/data/data";
-import Comment from "../../../components/main/Comment";
+import Comment from "../../../../components/main/Comment";
 export default {
-  name: "rotdetail",
-  components:{
-    Comment
+  name: "TARDetail",
+  components: {
+    Comment,
   },
   created() {
-    console.log(this.$route.params);
-    this.item = rotData.find(x => x.id === this.$route.params.id);
-    console.log(this.item);
+    //this.item = rotData.find((x) => x.id === this.$route.params.id);
   },
   data() {
     return {
       item: undefined,
-      content: `<h1>Most basic use</h1><ul><li><p>hjk</p></li><li><p>ghjkfgjh</p></li><li><p>yturt</p></li><li><p>uety</p></li><li><p>wert</p></li><li><p>wer</p></li><li><p>qwer</p></li><li><p>qwe</p></li><li><p>asf</p></li><li><p>dfg</p></li><li><p>hfdh</p></li><li><p>j</p></li></ul><hr><p>You can use the necessary extensions. The corresponding buttons are <strong>added automatically.</strong></p><p><code>&lt;tiptap-vuetify v-model="content" :extensions="extensions"/&gt;</code></p><p></p><h2>Icons</h2><p>Avaliable icons groups:</p><ol><li><p>Material Design <em>Official</em></p></li><li><p>Font Awesome (FA)</p></li><li><p>Material Design Icons (MDI)</p></li></ol><p></p><blockquote><p>This package is awesome!</p></blockquote><p></p>`
+      content: `<h1>Most basic use</h1><ul><li><p>hjk</p></li><li><p>ghjkfgjh</p></li><li><p>yturt</p></li><li><p>uety</p></li><li><p>wert</p></li><li><p>wer</p></li><li><p>qwer</p></li><li><p>qwe</p></li><li><p>asf</p></li><li><p>dfg</p></li><li><p>hfdh</p></li><li><p>j</p></li></ul><hr><p>You can use the necessary extensions. The corresponding buttons are <strong>added automatically.</strong></p><p><code>&lt;tiptap-vuetify v-model="content" :extensions="extensions"/&gt;</code></p><p></p><h2>Icons</h2><p>Avaliable icons groups:</p><ol><li><p>Material Design <em>Official</em></p></li><li><p>Font Awesome (FA)</p></li><li><p>Material Design Icons (MDI)</p></li></ol><p></p><blockquote><p>This package is awesome!</p></blockquote><p></p>`,
     };
   },
   methods: {
@@ -77,8 +74,8 @@ export default {
           this.item.isLike = false;
         }
       }, 1000);
-    }
-  }
+    },
+  },
 };
 </script>
 
