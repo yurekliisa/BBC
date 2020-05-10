@@ -82,8 +82,12 @@ namespace BBC.API.Controllers
         [ProducesResponseType(typeof(TarifAndReceteListDto), 200)]
         [Route("GetAllTarifAndRecetes")]
         //Kullanıcının giriş yapması yeterli 
-        public async Task<IActionResult> GetAllTarifAndRecetes()
+        public async Task<IActionResult> GetAllTarifAndRecetes(int page)
         {
+            if (page <= 0)
+            {
+                return BadRequest("Sayfa sayısı 0 ve 0'dan küçük olamaz");
+            }
             var result = await _tarifAndReceteService.GetAllTarifAndRecetes();
             return Ok(result);
         }
