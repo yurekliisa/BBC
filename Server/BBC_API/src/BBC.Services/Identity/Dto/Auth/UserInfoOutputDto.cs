@@ -11,5 +11,10 @@ namespace BBC.Services.Identity.Dto.Auth
         public string UserName { get; set; }
         public string FullName { get; set; }
         public string Email { get;  set; }
+        public ICollection<string> Roles { get; set; }
+        public UserInfoOutputDto()
+        {
+            Roles = new HashSet<string>();
+        }
     }
 }
