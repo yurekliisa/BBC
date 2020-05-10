@@ -57,6 +57,7 @@ namespace BBC.API.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.Values.Select(x => x.Errors.SelectMany(y => y.ErrorMessage)));
 
+            var categories = await _categoryService.GetAllCategories();
             var newId = await _tarifAndReceteService.CreateTaR(input);
             return Ok(newId);
         }
