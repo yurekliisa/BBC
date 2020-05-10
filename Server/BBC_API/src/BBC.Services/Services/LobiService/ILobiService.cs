@@ -1,5 +1,4 @@
 ﻿using BBC.Services.Services.Common.Base;
-using BBC.Services.Services.ContentService.Dto;
 using BBC.Services.Services.LobiService.Dto;
 using System;
 using System.Collections.Generic;
