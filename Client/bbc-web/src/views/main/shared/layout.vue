@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-card class="overflow-hidden">
+    <v-card class="overflow-hidden mb-70">
       <!--ToolBar-->
       <ToolBar />
       <!--ToolBar-->
@@ -45,4 +45,6 @@ export default {
 <style lang="sass" scoped>
 .mt-5-rem
   margin-top: 5rem !important
+.mb-70
+  margin-bottom: 70px
 </style>

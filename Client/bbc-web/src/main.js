@@ -9,8 +9,21 @@ import Vuelidate from "vuelidate";
 
 import './plugins/vuetify'
 import Axios from "axios";
+
+
+import { TiptapVuetifyPlugin } from "tiptap-vuetify";
+import "tiptap-vuetify/dist/main.css";
+import 'vuetify/dist/vuetify.min.css'
+import '@mdi/font/css/materialdesignicons.css'
+import '@fortawesome/fontawesome-free/css/all.css'
+
 Vue.config.productionTip = false;
 Vue.use(Vuelidate);
+Vue.use(TiptapVuetifyPlugin, {
+  vuetify,
+  // "md" (default), "fa", "mdi"
+  iconsGroup: 'mdi'// same as "iconsGroup: iconsGroup"
+})
 
 
 Axios.interceptors.response.use(response => {

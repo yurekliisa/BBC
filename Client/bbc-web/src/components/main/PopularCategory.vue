@@ -1,7 +1,7 @@
 <template>
   <div class="mt-4">
     <!--Widget 1 -->
-    <h1 class="homeTitle">Sizin İçin</h1>
+    <h1 class="homeTitle">Populer kategori</h1>
     <v-row>
       <v-flex>
         <v-tabs>
@@ -50,9 +50,9 @@ export default {
 ]
   */
   name: "PopularCategory",
-  data(){
-    return{
-      recentCat:[],
+  data() {
+    return {
+      recentCat: [],
     };
   },
   mounted(){

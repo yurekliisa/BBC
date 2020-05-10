@@ -3,6 +3,7 @@ import LogIn from "../../views/main/pages/LogIn"
 import RoTDetail from "../../views/main/pages/RoTDetail"
 import Register from "../../views/main/pages/Register"
 import Profile from '../../views/main/pages/Profile'
+import CreateTAR from "../../views/main/pages/tar/CreateTAR"
 
 const GuardToken = (to, from, next) => {
     let go = localStorage.getItem('user');
@@ -38,7 +39,11 @@ const router = [
         path:"profile/:id",
         component:Profile,
         name:"Profile"
-
+    },
+    {
+        path:"/tar/create",
+        component:CreateTAR,
+        name:"CreateTAR"
     }
 ];
 

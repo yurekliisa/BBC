@@ -28,7 +28,7 @@
           </div>
         </v-row>
 
-        <div class="my-4 subtitle-1" v-html="content"></div>
+        <div class="my-4 subtitle-1 description" v-html="content"></div>
       </v-card-text>
       <v-divider class="mx-4"></v-divider>
       <v-card-title>Kategoriler</v-card-title>
@@ -81,3 +81,14 @@ export default {
   }
 };
 </script>
+
+<style lang="sass" scoped>
+.description
+  img
+    width: 500px
+    height: 300px
+    display: flex
+    margin: auto
+    margin-top: 1rem
+    margin-bottom: 1rem
+</style>
