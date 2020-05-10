@@ -21,49 +21,12 @@ namespace BBC.API.Controllers
     public class UserController : Controller
     {
         private readonly IUserService _userService;
-        private readonly ICategoryService _categoryService;
-        private readonly ITarifAndReceteService _tarifAndReceteService;
 
         public UserController(
-            IUserService userService,
-            ICategoryService categoryService,
-            ITarifAndReceteService tarifAndReceteService
+            IUserService userService
             )
         {
             _userService = userService;
-            _categoryService = categoryService;
-            _tarifAndReceteService = tarifAndReceteService;
-        }
-
-        [HttpGet]
-        [ProducesResponseType(typeof(List<CategoryListDto>), 200)]
-        [Route("GetAllCategories")]
-        public async Task<IActionResult> GetAllCategories()
-        {
-            var categories = await _categoryService.GetAllCategories();
-            return Ok(categories);
-        }
-
-        [HttpGet]
-        [ProducesResponseType(typeof(List<TarifAndReceteListDto>), 200)]
-        [Route("GetTarifAndReceteByUserId")]
-        public async Task<IActionResult> GetTarifAndReceteByUserId(int userId)
-        {
-            var users = await _userService.GetUser(userId);
-            var tarifAndRecete = await _tarifAndReceteService.GetTarifAndRecete(Convert.ToInt32(users.Id));
-            return Ok(tarifAndRecete);
-        }
-
-        [HttpPost]
-        [ProducesResponseType(typeof(int), 200)]
-        [Route("CreateTaR")]
-        public async Task<IActionResult> CreateTaR([FromBody] CreateTarifAndReceteDto input)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState.Values.Select(x => x.Errors.SelectMany(y => y.ErrorMessage)));
-
-            var newId = await _tarifAndReceteService.CreateTaR(input);
-            return Ok(newId);
         }
 
         [HttpGet]

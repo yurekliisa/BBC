@@ -39,6 +39,5 @@ namespace BBC.Infrastructure
             app.RegisterEntities();
             app.Seed();
         }
-
     }
 }
