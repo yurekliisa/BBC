@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BBC.API.Registery;
 using BBC.Services.Identity.Interfaces;
 using BBC.Services.Services.CategoryService;
 using BBC.Services.Services.CategoryService.Dto;
 using BBC.Services.Services.TarifAndReceteService;
 using BBC.Services.Services.TarifAndReceteService.Dto;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BBC.API.Controllers
@@ -94,6 +96,26 @@ namespace BBC.API.Controllers
         {
             var result = await _tarifAndReceteService.GetAllTarifAndReceteDetails();
             return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("Delete")]
+        public async Task<IActionResult> Delete(int Id)
+        {
+            if (!String.IsNullOrEmpty(Id.ToString()))
+            {
+                return BadRequest();
+            }
+            await _tarifAndReceteService.DeleteTarifAndRecete(Id);
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("Edit")]
+        public async Task<IActionResult> Edit([FromBody] EditTarifAndReceteDto input)
+        {
+            await _tarifAndReceteService.EditTarifAndRecete(input);
+            return Ok();
         }
     }
 }
