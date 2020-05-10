@@ -16,10 +16,12 @@
             </v-text-field>
           </v-col>
           <v-col cols="12">
-            <tiptap-vuetify
-              v-model="data.description"
-              :extensions="extensions"
-            />
+            <div class="description">
+              <tiptap-vuetify
+                v-model="data.description"
+                :extensions="extensions"
+              />
+            </div>
           </v-col>
           <v-col cols="12">
             <v-select
@@ -118,6 +120,7 @@ export default {
     value: ["foo", "bar", "fizz", "buzz"],
     submitStatus: null,
     data: {
+      description: "",
       id: 0,
     },
   }),
@@ -157,3 +160,14 @@ export default {
   },
 };
 </script>
+
+<style lang="sass">
+.description
+  img
+    width: 450px
+    height: 300px
+    display: flex
+    margin: auto
+    margin-top: 1rem
+    margin-bottom: 1rem
+</style>
