@@ -24,7 +24,7 @@ namespace BBC.Services.Services.TarifAndReceteService
 
         public async Task<int> CreateTaR(CreateTarifAndReceteDto input)
         {
-            //var user = await GetCurrentUserAsync();
+            var user = await GetCurrentUserAsync();
             var tar = _mapper.Map<TarifAndRecete>(input);
             foreach (var category in input.Categories)
             {
@@ -33,7 +33,7 @@ namespace BBC.Services.Services.TarifAndReceteService
                     CategoryId = category.Id
                 });
             }
-            tar.UserId = 1;//user.Id;
+            tar.UserId = user.Id;
             tar.Content.Medias = _mapper.Map<ICollection<Media>>(input.Content.MediaDtos);
             var result = await _tarRepository.InsertAsync(tar);
             return result.Id;

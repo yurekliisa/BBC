@@ -8,6 +8,10 @@ using System.Collections.Generic;
 using BBC.Core.Domain.Identity;
 using BBC.Services.Identity.Interfaces;
 using BBC.Services.Identity.Dto.UserDtos;
+using BBC.Services.Services.CategoryService;
+using BBC.Services.Services.CategoryService.Dto;
+using BBC.Services.Services.TarifAndReceteService;
+using BBC.Services.Services.TarifAndReceteService.Dto;
 
 namespace BBC.API.Controllers
 {
@@ -17,12 +21,39 @@ namespace BBC.API.Controllers
     public class UserController : Controller
     {
         private readonly IUserService _userService;
+        private readonly ICategoryService _categoryService;
+        private readonly ITarifAndReceteService _tarifAndReceteService;
 
         public UserController(
-            IUserService userService
+            IUserService userService,
+            ICategoryService categoryService,
+            ITarifAndReceteService tarifAndReceteService
             )
         {
             _userService = userService;
+            _categoryService = categoryService;
+            _tarifAndReceteService = tarifAndReceteService;
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(List<CategoryListDto>), 200)]
+        [Route("GetAllCategories")]
+        public async Task<IActionResult> GetAllCategories()
+        {
+            var categories = await _categoryService.GetAllCategories();
+            return Ok(categories);
+        }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(int), 200)]
+        [Route("CreateTaR")]
+        public async Task<IActionResult> CreateTaR([FromBody] CreateTarifAndReceteDto input)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState.Values.Select(x => x.Errors.SelectMany(y => y.ErrorMessage)));
+
+            var newId = await _tarifAndReceteService.CreateTaR(input);
+            return Ok(newId);
         }
 
         [HttpGet]
