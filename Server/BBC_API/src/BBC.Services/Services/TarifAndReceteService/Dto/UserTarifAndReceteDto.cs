@@ -6,12 +6,13 @@ using System.Text;
 
 namespace BBC.Services.Services.TarifAndReceteService.Dto
 {
-    public class EditTarifAndReceteDto : BaseDto<int>
+    public class UserTarifAndReceteDto : BaseDto<int>
     {
         public ICollection<CategoryListDto> Categories { get; set; }
         public ContentDto Content { get; set; }
-        public string Title { get; set; }
-        public string ContentText { get; set; }
-
+        public UserTarifAndReceteDto()
+        {
+            Categories = new HashSet<CategoryListDto>();
+        }
     }
 }

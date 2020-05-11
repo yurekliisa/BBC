@@ -44,7 +44,7 @@ namespace BBC.API.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(List<EditTarifAndReceteDto>), 200)]
+        [ProducesResponseType(typeof(List<UserTarifAndReceteDto>), 200)]
         [Route("GetTarifAndReceteByUserId")]
         public async Task<IActionResult> GetTarifAndReceteByUserId(int userId)
         {
@@ -105,7 +105,7 @@ namespace BBC.API.Controllers
         [HttpPost]
         [Route("Edit")]
         [RequiredAuth]
-        public async Task<IActionResult> Edit([FromBody] EditTarifAndReceteDto input)
+        public async Task<IActionResult> Edit([FromBody] UserTarifAndReceteDto input)
         {
             await _tarifAndReceteService.EditTarifAndRecete(input);
             return Ok();

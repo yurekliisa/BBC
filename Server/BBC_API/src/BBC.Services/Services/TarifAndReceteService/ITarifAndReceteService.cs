@@ -13,9 +13,9 @@ namespace BBC.Services.Services.TarifAndReceteService
     {
         Task<List<TaRHomeOuputDto>> GetTarifAndRecetes(int page);
         Task<List<TarifAndReceteDetailDto>> GetAllTarifAndReceteDetails();
-        Task<List<EditTarifAndReceteDto>> GetTarifAndReceteByUserId(int Id);
+        Task<List<UserTarifAndReceteDto>> GetTarifAndReceteByUserId(int Id);
         Task<int> CreateTaR(CreateTarifAndReceteDto input);
-        Task EditTarifAndRecete(EditTarifAndReceteDto input);
+        Task EditTarifAndRecete(UserTarifAndReceteDto input);
         Task DeleteTarifAndRecete(int Id);
     }
 }

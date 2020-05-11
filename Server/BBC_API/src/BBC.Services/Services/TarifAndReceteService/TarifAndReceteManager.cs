@@ -3,6 +3,7 @@ using BBC.Core.Domain.Identity;
 using BBC.Core.Repositories.Base;
 using BBC.Infrastructure.Data;
 using BBC.Services.Services.Base;
+using BBC.Services.Services.CategoryService.Dto;
 using BBC.Services.Services.HomeService.Dto;
 using BBC.Services.Services.TarifAndReceteService.Dto;
 using Microsoft.AspNetCore.Hosting;
@@ -89,13 +90,13 @@ namespace BBC.Services.Services.TarifAndReceteService
             var result = await _tarRepository.InsertAsync(tar);
             return result.Id;
         }
-      
+
         public async Task DeleteTarifAndRecete(int Id)
         {
             await _tarRepository.DeleteAsync(Id);
         }
 
-        public async Task EditTarifAndRecete(EditTarifAndReceteDto input)
+        public async Task EditTarifAndRecete(UserTarifAndReceteDto input)
         {
             var tar = await _tarRepository.FindAsync(input.Id);
             _mapper.Map(tar, input);
@@ -139,10 +140,32 @@ namespace BBC.Services.Services.TarifAndReceteService
             return result;
         }
 
-        public async Task<List<EditTarifAndReceteDto>> GetTarifAndReceteByUserId(int Id)
+        public async Task<List<UserTarifAndReceteDto>> GetTarifAndReceteByUserId(int Id)
         {
-            var tar = await _tarRepository.GetQueryable().Where(x => x.UserId == Id).ToListAsync();
-            var result = _mapper.Map<List<EditTarifAndReceteDto>>(tar);
+            var query = _tarRepository.GetQueryable()
+                .Include(x => x.Content)
+                .Include(x => x.Popularities)
+                .Include(x => x.User)
+                .Include(x => x.TaRCategories)
+                .Include("TaRCategories.Category")
+                .Where(x => x.UserId == Id)
+                .OrderByDescending(y => y.CreateTime).AsQueryable();
+            var result = await query.Select(y => new UserTarifAndReceteDto()
+            {
+                Id = y.Id,
+                Content = new ContentDto()
+                {
+                    ContentText = y.Content.ContentText,
+                    MainImage = y.Content.MainImage,
+                    ShortDescription = y.Content.ShortDescription,
+                    Title = y.Content.Title,
+                },
+                Categories = y.TaRCategories.Select(y => new CategoryListDto()
+                {
+                    Id = y.CategoryId,
+                    Name = y.Category.Name,
+                }).ToList(),
+            }).ToListAsync();
             return result;
         }
 
