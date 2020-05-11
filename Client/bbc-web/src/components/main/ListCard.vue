@@ -103,7 +103,7 @@ export default {
         this.$router.push({
           name: "TARDetail",
           params: {
-            name: this.item.name.replace(/ /g, "-"),
+            name: this.item.title.replace(/ /g, "-"),
             id: this.item.id,
           },
         });
