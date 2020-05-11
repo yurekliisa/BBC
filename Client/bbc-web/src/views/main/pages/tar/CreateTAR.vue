@@ -141,16 +141,23 @@ export default {
     contentText: "",
   }),
   mounted() {
-    axios
-      .get("/TaR/GetAllCategories", {
+    let userData = JSON.parse(localStorage.getItem("user"));
+    if(userData){
+      axios
+      .get("/TaR/Create", {
         headers: {
           "Content-type": "application/json",
           "Access-Control-Allow-Origin": "*",
+          Authorization: `Bearer ${userData.token}`,
         },
       })
       .then((categories) => {
-        this.categories = categories.data;
+        if(categories.status === 200)
+        {
+          this.categories = categories.data.categories;
+        }
       });
+    }
   },
   computed: {
     titleErrors() {
@@ -192,7 +199,6 @@ export default {
       data.append("Content.MainImage", this.mainImage);
       data.append("Content.ContentText", this.contentText);
       data.append("Content.shortDescription", this.shortDescription);
-      console.log(data);
       this.$v.$touch();
       if (this.$v.$invalid) {
         this.submitStatus = "ERROR";
@@ -203,11 +209,12 @@ export default {
             headers: {
               "Content-type": "multipart/form-data",
               "Access-Control-Allow-Origin": "*",
+              Authorization: `Bearer ${this.$store.getters.userInfo.token}`,
             },
           })
           .then((response) => {
             if (response.status === 200) {
-              console.log(response);
+              this.$router.push('/');
             }
           })
           .catch(function(error) {

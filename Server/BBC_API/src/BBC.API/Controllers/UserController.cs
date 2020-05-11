@@ -16,7 +16,7 @@ using BBC.Services.Identity.Dto.Auth;
 
 namespace BBC.API.Controllers
 {
-    [Authorize]
+
     [Produces("application/json")]
     [Route("api/[controller]")]
     public class UserController : Controller
@@ -44,11 +44,11 @@ namespace BBC.API.Controllers
         [ProducesResponseType(typeof(UserProfileDto), 200)]
         [ProducesResponseType(typeof(IEnumerable<string>), 400)]
         [Route("Get/{Id}")]
-        public IActionResult Get(int Id)
+        public async Task<IActionResult> Get(int Id)
         {
             if (Id == 0)
                 return BadRequest(new string[] { "Empty parameter!" });
-            var user = _userService.GetUser(Id);
+            var user = await _userService.GetUser(Id);
 
             if (user == null)
             {

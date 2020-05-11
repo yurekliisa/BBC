@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BBC.Services.Services.TarifAndReceteService.Dto
 {
-    public class TarifAndReceteDetailListDto
+    public class TarifAndReceteDetailDto
     {
         public ICollection<CategoryListDto> Categories { get; set; }
         public ContentDto Content { get; set; }
@@ -14,7 +14,7 @@ namespace BBC.Services.Services.TarifAndReceteService.Dto
         public double Puan { get; set; }
         public ICollection<CommentDto> CommentDtos { get; set; }
 
-        public TarifAndReceteDetailListDto()
+        public TarifAndReceteDetailDto()
         {
             Categories = new HashSet<CategoryListDto>();
             CommentDtos = new HashSet<CommentDto>();

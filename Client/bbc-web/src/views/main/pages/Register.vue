@@ -2,6 +2,9 @@
   <v-layout>
     <v-flex justify-center class="customContainer">
       <v-card class="mx-auto formContainer" width="700" raised>
+        <v-col cols="12">
+          <h1 style="text-align:center">Kayıt Ol</h1>
+        </v-col>
         <form>
           <v-text-field
             v-model="userName"
@@ -30,7 +33,7 @@
             :type="showP ? 'text' : 'password'"
             label="Password"
             name="password"
-            hint="At least 8 chracters"
+            hint="At least 6 chracters"
             counter
             @click:append="showP = !showP"
             @input="$v.password.$touch()"
@@ -45,13 +48,69 @@
             :type="showPa ? 'text' : 'password'"
             label="Password Again"
             name="passwordAgain"
-            hint="At least 8 chracters"
+            hint="At least 6 chracters"
             counter
             @click:append="showPa = !showPa"
             @input="$v.passwordAgain.$touch()"
             @blur="$v.passwordAgain.$touch()"
             solo
           ></v-text-field>
+
+          <v-text-field
+            v-model="phone"
+            :error-messages="phoneErrors"
+            label="Phone Number"
+            required
+            @input="$v.phone.$touch()"
+            @blur="$v.phone.$touch()"
+            solo
+          ></v-text-field>
+
+          <v-text-field
+            v-model="name"
+            :error-messages="nameErrors"
+            label="Name"
+            required
+            @input="$v.name.$touch()"
+            @blur="$v.name.$touch()"
+            solo
+          ></v-text-field>
+
+          <v-text-field
+            v-model="surname"
+            :error-messages="surnameErrors"
+            label="Surname"
+            required
+            @input="$v.surname.$touch()"
+            @blur="$v.surname.$touch()"
+            solo
+          ></v-text-field>
+          <v-col cols="12">
+            <v-menu
+              ref="menu1"
+              v-model="menu1"
+              :close-on-content-click="false"
+              transition="scale-transition"
+              offset-y
+              max-width="290px"
+              min-width="290px"
+            >
+              <template v-slot:activator="{ on }">
+                <v-text-field
+                  v-model="dateFormatted"
+                  label="Date"
+                  persistent-hint
+                  @blur="birthday = parseDate(dateFormatted)"
+                  v-on="on"
+                ></v-text-field>
+              </template>
+              <v-date-picker
+                v-model="birthday"
+                no-title
+                @input="menu1 = false"
+              ></v-date-picker>
+            </v-menu>
+          </v-col>
 
           <v-checkbox
             v-model="checkbox"
@@ -88,11 +147,14 @@ export default {
   mixins: [validationMixin],
   validations: {
     userName: { required },
+    phone: { required },
+    name: { required },
+    surname: { required },
     email: { required, email },
-    password: { required, minLength: minLength(8) },
+    password: { required, minLength: minLength(6) },
     passwordAgain: {
       required,
-      minLength: minLength(8),
+      minLength: minLength(6),
       sameAsPassword: sameAs("password"),
     },
     checkbox: {
@@ -103,9 +165,16 @@ export default {
   },
   data() {
     return {
+      birthday: new Date().toISOString().substr(0, 10),
+      dateFormatted: this.formatDate(new Date().toISOString().substr(0, 10)),
+      menu1: false,
+      menu2: false,
       showP: false,
       showPa: false,
       userName: "",
+      surname: "",
+      name: "",
+      phone: "",
       email: "",
       password: "",
       passwordAgain: "",
@@ -114,10 +183,31 @@ export default {
     };
   },
   computed: {
+    computedDateFormatted() {
+      return this.formatDate(this.date);
+    },
     userNameErrors() {
       const errors = [];
       if (!this.$v.userName.$dirty) return errors;
       !this.$v.userName.required && errors.push("User name is required");
+      return errors;
+    },
+    phoneErrors() {
+      const errors = [];
+      if (!this.$v.phone.$dirty) return errors;
+      !this.$v.phone.required && errors.push("Phone is required");
+      return errors;
+    },
+    nameErrors() {
+      const errors = [];
+      if (!this.$v.name.$dirty) return errors;
+      !this.$v.name.required && errors.push("Name is required");
+      return errors;
+    },
+    surnameErrors() {
+      const errors = [];
+      if (!this.$v.surname.$dirty) return errors;
+      !this.$v.surname.required && errors.push("Surname is required");
       return errors;
     },
     emailErrors() {
@@ -133,7 +223,7 @@ export default {
         return errors;
       }
       !this.$v.password.minLength &&
-        errors.push("Password must be at most 8 characters long");
+        errors.push("Password must be at most 6 characters long");
       !this.$v.password.required && errors.push("Password is required.");
       return errors;
     },
@@ -145,7 +235,7 @@ export default {
       !this.$v.passwordAgain.sameAsPassword &&
         errors.push("Şifreler aynı olmak zorundadır.");
       !this.$v.passwordAgain.minLength &&
-        errors.push("Password must be at most 8 characters long");
+        errors.push("Password must be at most 6 characters long");
       !this.$v.passwordAgain.required && errors.push("Password is required.");
       return errors;
     },
@@ -156,30 +246,55 @@ export default {
       return errors;
     },
   },
+  watch: {
+    date(val) {
+      this.dateFormatted = this.formatDate(this.date);
+    },
+  },
   methods: {
+    formatDate(date) {
+      if (!date) return null;
+
+      const [year, month, day] = date.split("-");
+      return `${month}/${day}/${year}`;
+    },
+    parseDate(date) {
+      if (!date) return null;
+
+      const [month, day, year] = date.split("/");
+      return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+    },
     submit() {
       this.$v.$touch();
+
       if (this.$v.$invalid) {
         this.submitStatus = "ERROR";
       } else {
         this.submitStatus = "PENDING";
+        let data = {
+          userName: this.userName,
+          email: this.email,
+          password: this.password,
+          confirmPassword: this.passwordAgain,
+          phoneNumber: this.phone,
+          name: this.name,
+          surName: this.surname,
+          birthday: this.birthday,
+        };
         axios
-          .post("Auth/Register", {
-            userName: this.userName,
-            email: this.email,
-            password: this.password,
-            confirmPassword: this.confirmPassword,
-          })
+          .post("Auth/Register", data)
           .then((response) => {
             if (response.status === 200) {
               this.submitStatus = "OK";
               this.$router.push("/login");
+            } else {
+              this.submitStatus = "ERROR";
             }
           })
           .catch(function(error) {
             console.log(error);
           });
-      }
+      } 
     },
   },
 };

@@ -108,6 +108,7 @@ namespace BBC.Services.Identity
             {
                 tokenModel.HasVerifiedEmail = true;
                 tokenModel.UserId = user.Id;
+                tokenModel.UserName = user.UserName;
 
                 JwtSecurityToken jwtSecurityToken = await CreateJwtToken(user);
                 tokenModel.Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);

@@ -322,6 +322,7 @@ namespace BBC.Services.Identity
                 var tokenModel = new TokenOutputDto()
                 {
                     UserId = user.Id,
+                    UserName =user.UserName,
                     HasVerifiedEmail = true,
                     RefreshToken = model.RefreshToken
                 };

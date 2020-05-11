@@ -1,5 +1,5 @@
 <template>
-  <v-layout :v-if="user">
+  <v-layout v-if="user.id">
     <v-flex class="customContainer">
       <v-card class="w-100 h-97">
         <v-container
@@ -14,8 +14,16 @@
             style="height: auto"
           >
           </v-row>
+          <v-col cols="12" v-if="id == $store.getters.userInfo.userId">
+            <v-btn text color="deep-purple accent-4">Profilini Düzenle</v-btn>
+          </v-col>
           <v-list-item>
-            <v-list-item-avatar color="grey"></v-list-item-avatar>
+            <v-list-item-avatar color="grey" v-if="user.photo">
+              <v-img
+                height="250"
+                :src="'https://localhost:44308' + user.photo"
+              ></v-img>
+            </v-list-item-avatar>
             <v-list-item-content>
               <v-list-item-title class="headline">{{
                 user.userName
@@ -74,6 +82,7 @@
 <script>
 import ProfileDashboard from "../../../components/main/Profile-dashboard";
 import ProfileTAR from "../../../components/main/Profile-tar";
+import axios from "axios";
 export default {
   name: "profile",
   components: {
@@ -83,18 +92,25 @@ export default {
   data() {
     return {
       tab: null,
-      user: this.$store.getters.userInfo,
+      id: null,
+      user: {},
       icons: false,
       centered: true,
       grow: false,
       prevIcon: false,
       nextIcon: false,
       offsetTop: 0,
+      isYourProfile: false,
       tabs: ["Özet", "Tarif ve Reçeteler", "İletişim"],
     };
   },
-  created() {
-   console.log(this.user);
+  mounted() {
+    this.id = this.$route.params["id"];
+    axios.get("User/Get/" + this.id).then((res) => {
+      if (res.status === 200) {
+        this.user = res.data;
+      }
+    });
   },
   methods: {
     onScroll(e) {

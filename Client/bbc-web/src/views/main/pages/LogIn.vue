@@ -63,7 +63,7 @@ import axios from "axios";
 export default {
   mixins: [validationMixin],
   validations: {
-    password: { required, minLength: minLength(8) },
+    password: { required, minLength: minLength(6) },
     email: { required, email },
     checkbox: {
       checked(val) {
@@ -101,7 +101,7 @@ export default {
         return errors;
       }
       !this.$v.password.minLength &&
-        errors.push("Password must be at most 8 characters long");
+        errors.push("Password must be at most 6 characters long");
       !this.$v.password.required && errors.push("Password is required.");
       return errors;
     },
@@ -121,21 +121,9 @@ export default {
           .then((response) => {
             if (response.status === 200) {
               this.submitStatus = "OK";
-              console.log(response.data.token);
               localStorage.setItem("user", JSON.stringify(response.data));
-              //User bilgileri
-              axios
-                .get("Manage/UserInfo", {
-                  headers: {
-                    "Content-type": "application/json",
-                    "Access-Control-Allow-Origin": "*",
-                    Authorization: `Bearer ${response.data.token}`,
-                  },
-                })
-                .then((user) => {
-                  this.$store.commit("SET_USER", user.data);
-                  this.$router.push("/");
-                });
+              this.$store.commit("SET_USER",response.data);
+              this.$router.push("/");
             }
           })
           .catch(function(error) {

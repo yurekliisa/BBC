@@ -24,7 +24,7 @@ namespace BBC.Services.Identity.Dto.Auth
         public virtual string Name { get; set; }
         public virtual string SurName { get; set; }
         public virtual DateTime Birthday { get; set; }
-       
+
 
     }
 }

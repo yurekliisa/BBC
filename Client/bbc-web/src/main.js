@@ -32,7 +32,7 @@ Axios.interceptors.response.use(response => {
   const { config, response: { status, data } } = err;
   if (status === 401 && data.message == "Expired token" || status === 404) {
     if (localStorage.getItem('user') !== null) {
-      localStorage.setItem('user', null);
+      localStorage.removeItem('user');
     }
   }
 })

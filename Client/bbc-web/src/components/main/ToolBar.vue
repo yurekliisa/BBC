@@ -38,7 +38,7 @@ export default {
     } else {
       menu = orjMenu.filter((x) => x.isAuth !== "notUser");
       menu.push({
-        text: this.$store.getters.userInfo?.userName,
+        text: "register",
         to: "/register",
         isAuth: "user",
       });
@@ -50,25 +50,25 @@ export default {
   watch: {
     "$store.getters.userInfo": {
       handler(newValue) {
-        console.log("setlendi");
         this.links = this.filterMenu();
-        console.log(this.links);
       },
       immediate: true,
     },
   },
+  // mounted() {
+  //   this.filterMenu();
+  //   console.log(this.$store.getters.userInfo);
+  // },
   methods: {
     filterMenu() {
-      console.log("1");
-      console.log(this.$store.userInfo);
-      if (JSON.parse(localStorage.getItem("user")) == null) {
+      let userData = this.$store.getters.userInfo;//
+      if (userData.userId == undefined) {
         return orjMenu.filter((x) => x.isAuth !== "user");
-        console.log(menu);
       } else {
         const menu = orjMenu.filter((x) => x.isAuth !== "notUser");
         menu.push({
-          text: this.$store.getters.userInfo.userName,
-          to: "/profile/"+this.$store.getters.userInfo.id,
+          text: userData.userName,
+          to: "/profile/" + userData.userId,
           isAuth: "user",
         });
         return menu;

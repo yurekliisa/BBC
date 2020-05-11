@@ -6,9 +6,11 @@ using BBC.Services.Services.Base;
 using BBC.Services.Services.TarifAndReceteService.Dto;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BBC.Services.Services.TarifAndReceteService
@@ -28,7 +30,7 @@ namespace BBC.Services.Services.TarifAndReceteService
 
         public async Task<int> CreateTaR(CreateTarifAndReceteDto input)
         {
-            //var user = await GetCurrentUserAsync();
+            var user = await GetCurrentUserAsync();
             var tar = _mapper.Map<TarifAndRecete>(input);
             foreach (var id in input.Categories)
             {
@@ -37,7 +39,7 @@ namespace BBC.Services.Services.TarifAndReceteService
                     CategoryId = id
                 });
             }
-            tar.UserId = 1;//user.Id;
+            tar.UserId = user.Id;
             var newMediaName = await saveFile(input.Content.MainImage);
             if (newMediaName != null)
             {
@@ -85,17 +87,17 @@ namespace BBC.Services.Services.TarifAndReceteService
             return result;
         }
 
-        public async Task<List<TarifAndReceteDetailListDto>> GetAllTarifAndReceteDetails()
+        public async Task<List<TarifAndReceteDetailDto>> GetAllTarifAndReceteDetails()
         {
             var tar = await _tarRepository.GetListAsync();
-            var result = _mapper.Map<List<TarifAndReceteDetailListDto>>(tar);
+            var result = _mapper.Map<List<TarifAndReceteDetailDto>>(tar);
             return result;
         }
 
-        public async Task<EditTarifAndReceteDto> GetTarifAndRecete(int Id)
+        public async Task<List<EditTarifAndReceteDto>> GetTarifAndRecete(int Id)
         {
-            var tar = await _tarRepository.GetAsync(Id);
-            var result = _mapper.Map<EditTarifAndReceteDto>(tar);
+            var tar = await _tarRepository.GetQueryable().Where(x => x.UserId == Id).ToListAsync();
+            var result = _mapper.Map<List<EditTarifAndReceteDto>>(tar);
             return result;
         }
     }

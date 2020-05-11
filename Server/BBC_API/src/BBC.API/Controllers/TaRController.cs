@@ -19,28 +19,24 @@ namespace BBC.API.Controllers
     [ApiController]
     public class TaRController : ControllerBase
     {
-        private readonly IUserService _userService;
         private readonly ITarifAndReceteService _tarifAndReceteService;
         private readonly ICategoryService _categoryService;
         public TaRController(
             ITarifAndReceteService tarifAndReceteService,
-            ICategoryService categoryService,
-            IUserService userService
+            ICategoryService categoryService
             )
         {
-            _userService = userService;
             _tarifAndReceteService = tarifAndReceteService;
             _categoryService = categoryService;
         }
 
        
         [HttpGet]
-        [ProducesResponseType(typeof(List<TarifAndReceteListDto>), 200)]
+        [ProducesResponseType(typeof(List<EditTarifAndReceteDto>), 200)]
         [Route("GetTarifAndReceteByUserId")]
         public async Task<IActionResult> GetTarifAndReceteByUserId(int userId)
         {
-            var users = await _userService.GetUser(userId);
-            var tarifAndRecete = await _tarifAndReceteService.GetTarifAndRecete(Convert.ToInt32(users.Id));
+            var tarifAndRecete = await _tarifAndReceteService.GetTarifAndRecete(userId);
             return Ok(tarifAndRecete);
         }
 
@@ -85,7 +81,7 @@ namespace BBC.API.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(TarifAndReceteDetailListDto), 200)]
+        [ProducesResponseType(typeof(TarifAndReceteDetailDto), 200)]
         [Route("GetAllTarifAndReceteDetails")]
         public async Task<IActionResult> GetAllTarifAndReceteDetails()
         {
