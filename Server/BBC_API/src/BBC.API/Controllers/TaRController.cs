@@ -51,16 +51,6 @@ namespace BBC.API.Controllers
             var tarifAndRecete = await _tarifAndReceteService.GetTarifAndReceteByUserId(userId);
             return Ok(tarifAndRecete);
         }
-    
-        
-        [HttpGet]
-        [ProducesResponseType(typeof(TarifAndReceteDetailDto), 200)]
-        [Route("GetAllTarifAndReceteDetails")]
-        public async Task<IActionResult> GetAllTarifAndReceteDetails()
-        {
-            var result = await _tarifAndReceteService.GetAllTarifAndReceteDetails();
-            return Ok(result);
-        }
        
         [HttpPost]
         [ProducesResponseType(typeof(int), 200)]
@@ -90,8 +80,6 @@ namespace BBC.API.Controllers
         }
 
         [HttpGet]
-<<<<<<< Updated upstream
-=======
         [ProducesResponseType(typeof(TarifAndReceteListDto), 200)]
         [Route("GetAllTarifAndRecetes")]
         public async Task<IActionResult> GetAllTarifAndRecetes(int page)
@@ -108,7 +96,7 @@ namespace BBC.API.Controllers
         [ProducesResponseType(typeof(TarifAndReceteDetailDto), 200)]
 <<<<<<< Updated upstream
         [Route("GetTarifAndReceteDetails")]
-        public async Task<IActionResult> GetAllTarifAndReceteDetails(int tarId)
+        public async Task<IActionResult> GetTarifAndReceteDetails(int tarId)
         {
             var result = await _tarifAndReceteService.GetTarifAndReceteDetails(tarId);
 =======
@@ -121,7 +109,6 @@ namespace BBC.API.Controllers
         }
 
         [HttpGet]
->>>>>>> Stashed changes
         [Route("Delete")]
         [RequiredAuth]
         public async Task<IActionResult> Delete(int Id)

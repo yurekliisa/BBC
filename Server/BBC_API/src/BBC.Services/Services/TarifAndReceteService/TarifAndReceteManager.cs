@@ -102,10 +102,6 @@ namespace BBC.Services.Services.TarifAndReceteService
             _mapper.Map(tar, input);
             await _tarRepository.UpdateAsync(tar);
         }
-
-<<<<<<< Updated upstream
-        public async Task<List<TarifAndReceteDetailDto>> GetAllTarifAndReceteDetails()
-=======
         public async Task<List<TarifAndReceteListDto>> GetAllTarifAndRecetes()
         {
             var tar = await _tarRepository.GetListAsync();
@@ -114,7 +110,6 @@ namespace BBC.Services.Services.TarifAndReceteService
         }
 
         public async Task<TarifAndReceteDetailDto> GetTarifAndReceteDetails(int tarId)
->>>>>>> Stashed changes
         {
             TarifAndReceteDetailDto result = new TarifAndReceteDetailDto();
             try

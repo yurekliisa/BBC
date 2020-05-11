@@ -11,19 +11,12 @@ namespace BBC.Services.Services.TarifAndReceteService
 {
     public interface ITarifAndReceteService: IApplicationBaseServices<User, Role>
     {
-<<<<<<< Updated upstream
         Task<List<TaRHomeOuputDto>> GetTarifAndRecetes(int page);
-        Task<List<TarifAndReceteDetailDto>> GetAllTarifAndReceteDetails();
         Task<List<UserTarifAndReceteDto>> GetTarifAndReceteByUserId(int Id);
         Task<int> CreateTaR(CreateTarifAndReceteDto input);
         Task EditTarifAndRecete(UserTarifAndReceteDto input);
-=======
-        Task<int> CreateTaR(CreateTarifAndReceteDto input);
         Task<List<TarifAndReceteListDto>> GetAllTarifAndRecetes();
         Task<TarifAndReceteDetailDto> GetTarifAndReceteDetails(int tarId);
-        Task<List<EditTarifAndReceteDto>> GetTarifAndRecete(int Id);
-        Task EditTarifAndRecete(EditTarifAndReceteDto input);
->>>>>>> Stashed changes
         Task DeleteTarifAndRecete(int Id);
         Task Comment(CommentDto comment, CommentDto TaRId);
     }
