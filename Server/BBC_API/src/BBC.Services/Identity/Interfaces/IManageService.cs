@@ -1,6 +1,7 @@
 ﻿using BBC.Core.Domain.Identity;
 using BBC.Services.Identity.Dto.Auth;
 using BBC.Services.Services.Base;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -20,5 +21,6 @@ namespace BBC.Services.Identity.Interfaces
         Task<IdentityResult> ResetAuthenticator();
         Task<ShowRecoveryCodesOutputDto> GenerateRecoveryCodes();
         Task<TokenOutputDto> RefreshToken(TokenInputDto model);
+        Task UserProfilePhoto(IFormFile file);
     }
 }

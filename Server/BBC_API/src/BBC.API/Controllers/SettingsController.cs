@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BBC.API.Helper.Attribute;
 using BBC.Services.Services.SettingsService;
 using BBC.Services.Services.SettingsService.Dto;
 using Microsoft.AspNetCore.Http;
@@ -11,6 +12,7 @@ namespace BBC.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [RequiredAuth]
     public class SettingsController : ControllerBase
     {
         private readonly ISettingsService _settingsService;

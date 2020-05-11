@@ -12,6 +12,7 @@ using BBC.Services.Services.CategoryService;
 using BBC.Services.Services.CategoryService.Dto;
 using BBC.Services.Services.TarifAndReceteService;
 using BBC.Services.Services.TarifAndReceteService.Dto;
+using BBC.Services.Identity.Dto.Auth;
 
 namespace BBC.API.Controllers
 {
@@ -30,9 +31,9 @@ namespace BBC.API.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<IdentityUser>), 200)]
-        [Route("Get")]
-        public async Task<IActionResult> Get()
+        [ProducesResponseType(typeof(IEnumerable<UserListDto>), 200)]
+        [Route("GetUsers")]
+        public async Task<IActionResult> GetUsers()
         {
             var users = await _userService.GetUsers();
             return Ok(users);
@@ -40,7 +41,7 @@ namespace BBC.API.Controllers
 
 
         [HttpGet]
-        [ProducesResponseType(typeof(IdentityUser), 200)]
+        [ProducesResponseType(typeof(UserProfileDto), 200)]
         [ProducesResponseType(typeof(IEnumerable<string>), 400)]
         [Route("Get/{Id}")]
         public IActionResult Get(int Id)
@@ -58,23 +59,6 @@ namespace BBC.API.Controllers
         }
 
 
-        [HttpPost]
-        [ProducesResponseType(typeof(IdentityResult), 200)]
-        [ProducesResponseType(typeof(IEnumerable<string>), 400)]
-        [Route("InsertWithRole")]
-        public async Task<IActionResult> Post([FromBody]CreateUserDto model)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState.Values.Select(x => x.Errors.FirstOrDefault().ErrorMessage));
-
-            IdentityResult result = await _userService.CreateUser(model);
-            if (result.Succeeded)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result.Errors.Select(x => x.Description));
-        }
-
 
         [HttpPut]
         [ProducesResponseType(typeof(IdentityResult), 200)]
@@ -88,7 +72,7 @@ namespace BBC.API.Controllers
             IdentityResult result = await _userService.EditUser(Id, model);
             if (result.Succeeded)
             {
-                return Ok(result);
+                return Ok();
             }
             return BadRequest(result.Errors.Select(x => x.Description));
         }
@@ -106,7 +90,7 @@ namespace BBC.API.Controllers
             IdentityResult result = await _userService.Delete(Id);
             if (result.Succeeded)
             {
-                return Ok(result);
+                return Ok();
             }
             return BadRequest(result.Errors.Select(x => x.Description));
         }

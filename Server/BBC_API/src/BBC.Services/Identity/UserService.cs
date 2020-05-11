@@ -1,4 +1,5 @@
 ﻿using BBC.Core.Domain.Identity;
+using BBC.Services.Identity.Dto.Auth;
 using BBC.Services.Identity.Dto.UserDtos;
 using BBC.Services.Identity.Interfaces;
 using BBC.Services.Services.Base;
@@ -15,44 +16,23 @@ namespace BBC.Services.Identity
 {
     public class UserService : ApplicationBaseServices<User, Role>, IUserService
     {
-        public async Task<List<UserDto>> GetUsers()
+        public async Task<List<UserListDto>> GetUsers()
         {
             IQueryable<User> roles = await Task.Run(() =>
             {
                 return _userManager.Users;
             });
-            var result = _mapper.Map<List<UserDto>>(roles);
+            var result = _mapper.Map<List<UserListDto>>(roles);
             return result;
         }
 
-        public async Task<UserDto> GetUser(int Id)
+        public async Task<UserProfileDto> GetUser(int Id)
         {
             var user = await _userManager.Users.FirstOrDefaultAsync(user => user.Id == Id);
             if (user == null)
                 return null;
 
-            var result = _mapper.Map<UserDto>(user);
-            return result;
-        }
-
-        public async Task<IdentityResult> CreateUser(CreateUserDto model)
-        {
-            User user = _mapper.Map<User>(model);
-
-            Role role = await _roleManager.FindByIdAsync(model.ApplicationRoleId);
-            if (role == null)
-            {
-                return IdentityResult.Failed(new IdentityError[]
-                   {
-                    new IdentityError()
-                    {
-                        Code="Role",
-                        Description = "Not Found Role"
-                    }
-                   });
-            }
-
-            IdentityResult result = await _userManager.CreateAsync(user, model.Password);
+            var result = _mapper.Map<UserProfileDto>(user);
             return result;
         }
 

@@ -5,11 +5,14 @@ using BBC.Services.Helper;
 using BBC.Services.Identity.Dto.Auth;
 using BBC.Services.Identity.Interfaces;
 using BBC.Services.Services.Base;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
@@ -25,17 +28,20 @@ namespace BBC.Services.Identity
         private readonly ConfigClientApp _client;
         private readonly ConfigQRCode _qr;
         private readonly ConfigJWT _jwt;
-
         private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
+        private readonly IHostingEnvironment _hostingEnvironment;
 
         public ManageService(
             UrlEncoder urlEncoder,
             IEmailService emailService,
             ConfigClientApp client,
             ConfigQRCode qr,
-            ConfigJWT jwt
+            ConfigJWT jwt,
+                        IHostingEnvironment hostingEnvironment
+
             )
         {
+            _hostingEnvironment = hostingEnvironment;
             _urlEncoder = urlEncoder;
             _emailService = emailService;
             _client = client;
@@ -59,6 +65,29 @@ namespace BBC.Services.Identity
             };
 
             return userInfoDto;
+        }
+
+        public async Task UserProfilePhoto(IFormFile file)
+        {
+            var user = await GetCurrentUserAsync();
+            if (user == null)
+                return;
+
+            if (file.Length > 0)
+            {
+                if (!Directory.Exists(_hostingEnvironment.WebRootPath + "\\User"))
+                {
+                    Directory.CreateDirectory(_hostingEnvironment.WebRootPath + "\\User\\");
+                }
+                var newName = "\\Upload\\" + Guid.NewGuid() + ".jpeg";
+                using (FileStream fileStream = System.IO.File.Create(_hostingEnvironment.WebRootPath + newName))
+                {
+                    file.CopyTo(fileStream);
+                    await fileStream.FlushAsync();
+                }
+                user.Photo = newName;
+                await _userManager.UpdateAsync(user);
+            }
         }
 
         public async Task<EnableAuthenticatorInputDto> EnableAuthenticator()
@@ -89,7 +118,7 @@ namespace BBC.Services.Identity
             }
 
             var passwordValidator = new PasswordValidator<User>();
-            var result = await passwordValidator.ValidateAsync(_userManager, null, model.NewPassword);
+            var result = await passwordValidator.ValidateAsync(_userManager, user, model.NewPassword);
 
             if (result.Succeeded)
             {
@@ -292,7 +321,7 @@ namespace BBC.Services.Identity
 
                 var tokenModel = new TokenOutputDto()
                 {
-                    UserId=user.Id,
+                    UserId = user.Id,
                     HasVerifiedEmail = true,
                     RefreshToken = model.RefreshToken
                 };

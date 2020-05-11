@@ -1,4 +1,5 @@
 ﻿using BBC.Core.Domain.Identity;
+using BBC.Services.Identity.Dto.Auth;
 using BBC.Services.Identity.Dto.UserDtos;
 using BBC.Services.Services.Base;
 using Microsoft.AspNetCore.Identity;
@@ -11,9 +12,8 @@ namespace BBC.Services.Identity.Interfaces
 {
     public interface IUserService : IApplicationBaseServices<User, Role>
     {
-        Task<List<UserDto>> GetUsers();
-        Task<UserDto> GetUser(int Id);
-        Task<IdentityResult> CreateUser(CreateUserDto model);
+        Task<List<UserListDto>> GetUsers();
+        Task<UserProfileDto> GetUser(int Id);
         Task<IdentityResult> EditUser(string Id, EditUserDto model);
         Task<IdentityResult> Delete(string Id);
 

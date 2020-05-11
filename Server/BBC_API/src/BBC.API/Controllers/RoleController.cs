@@ -7,10 +7,11 @@ using System.Collections.Generic;
 using System.Linq;
 using BBC.Services.Identity.Interfaces;
 using BBC.Services.Identity.Dto.RoleDtos;
+using BBC.API.Helper.Attribute;
 
 namespace BBC.API.Controllers
 {
-    [Authorize]
+    [RequiredAuth]
     [Produces("application/json")]
     [Route("api/[controller]")]
     public class RoleController : Controller

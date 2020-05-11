@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using BBC.Core.Dependency;
 using BBC.Core.Kernel;
+using BBC.Core.Permission;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,8 @@ namespace BBC.Core.Registery
             builder.Register(c => new Configuration.ConfigEmail()).SingleInstance();
             builder.Register(c => new Configuration.ConfigClientApp()).SingleInstance();
             builder.Register(c => new Configuration.ConfigQRCode()).SingleInstance();
+            builder.Register(c => new Permissions()).SingleInstance();
+            
             /*
              * // TODO : Not working
             builder.RegisterAssemblyTypes()
@@ -44,3 +47,4 @@ namespace BBC.Core.Registery
         }
     }
 }
+

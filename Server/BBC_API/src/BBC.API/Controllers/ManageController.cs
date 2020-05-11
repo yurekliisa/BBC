@@ -14,6 +14,7 @@ using BBC.Services.Identity.Dto.Auth;
 using BBC.Services.Identity.Interfaces;
 using BBC.Services.Identity.Dto.UserDtos;
 using BBC.API.Helper.Attribute;
+using Microsoft.AspNetCore.Http;
 
 namespace BBC.API.Controllers
 {
@@ -37,6 +38,7 @@ namespace BBC.API.Controllers
         [ProducesResponseType(typeof(UserInfoOutputDto), 200)]
         [ProducesResponseType(typeof(IEnumerable<string>), 400)]
         [Route("UserInfo")]
+        [AllowAnonymous]
         public async Task<IActionResult> UserInfo()
         {
             var user = await _manageService.UserInfo();
@@ -48,7 +50,22 @@ namespace BBC.API.Controllers
             return Ok(user);
         }
 
+        [HttpGet]
+        [ProducesResponseType(typeof(UserInfoOutputDto), 200)]
+        [ProducesResponseType(typeof(IEnumerable<string>), 400)]
+        [Route("UploadUserProfilePhoto")]
+        public async Task<IActionResult> UploadUserProfilePhoto([FromForm] IFormFile file)
+        {
+            await _manageService.UserProfilePhoto(file);
 
+            var user = await _manageService.UserInfo();
+            if (user == null)
+            {
+                return BadRequest(new string[] { "Could not find user!" });
+            }
+
+            return Ok(user);
+        }
 
 
         [HttpGet]

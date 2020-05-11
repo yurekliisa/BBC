@@ -13,7 +13,7 @@ namespace BBC.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-   // [RequiredAuth]
+    [RequiredAuth]
     public class CategoryController : ControllerBase
     {
         private readonly ICategoryService _categoryService;
@@ -26,6 +26,7 @@ namespace BBC.API.Controllers
 
         [HttpPost]
         [Route("Create")]
+        [RequiredAuth]
         public async Task<IActionResult> Create([FromBody] CreateCategoryDto input)
         {
             await _categoryService.CreateCategories(input);
@@ -34,6 +35,7 @@ namespace BBC.API.Controllers
 
         [HttpPost]
         [Route("Edit")]
+        [RequiredAuth]
         public async Task<IActionResult> Edit([FromBody] EditCategoryDto input)
         {
             await _categoryService.EditCategories(input);
@@ -42,6 +44,7 @@ namespace BBC.API.Controllers
 
         [HttpGet]
         [Route("Delete")]
+        [RequiredAuth]
         public async Task<IActionResult> Delete(int id)
         {
             await _categoryService.DeleteCategory(id);
@@ -51,8 +54,7 @@ namespace BBC.API.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(List<CategoryListDto>), 200)]
         [Route("GetAllCategories")]
-        //Admine özel
-        
+        [RequiredAuth]
         public async Task<IActionResult> GetAllCategories()
         {
             var categories = await _categoryService.GetAllCategories();

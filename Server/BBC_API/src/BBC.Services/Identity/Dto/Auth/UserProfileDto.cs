@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace BBC.Services.Identity.Dto.UserDtos
+namespace BBC.Services.Identity.Dto.Auth
 {
-    public class EditUserDto
+    public class UserProfileDto
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
+        public string Email { get; set; }
         public string UserName { get; set; }
         public string PhoneNumber { get; set; }
         public virtual string Name { get; set; }

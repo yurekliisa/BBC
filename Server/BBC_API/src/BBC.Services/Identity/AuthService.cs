@@ -42,32 +42,23 @@ namespace BBC.Services.Identity
             _jwt = jwt;
         }
 
-        public async Task<IdentityResult> ConfirmEmail(ConfirmEmailInputDto model)
-        {
-            var user = await _userManager.FindByIdAsync(model.UserId);
-            if (user == null)
-            {
-                return IdentityResult.Failed(new IdentityError[]
-                {
-                    new IdentityError()
-                    {
-                        Code="User",
-                        Description = "Not Found User"
-                    }
-                });
-            }
-            var result = await _userManager.ConfirmEmailAsync(user, model.Code);
-            return result;
-        }
-
         public async Task<IdentityResult> Register(RegisterInputDto model)
         {
+            var user = new User
+            {
+                UserName = model.UserName,
+                Email = model.Email,
+                PhoneNumber = model.PhoneNumber,
+                Name = model.Name,
+                SurName = model.SurName,
+                Birthday = model.Birthday,
+                Photo= "\\User\\anonymous.jpeg"
+            };
 
-            var user = new User { UserName = model.Email, Email = model.Email };
             var result = await _userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
-                result = await _userManager.AddToRoleAsync(user, "UserTest");
+                result = await _userManager.AddToRoleAsync(user, "User");
                 if (result.Succeeded)
                 {
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -233,7 +224,6 @@ namespace BBC.Services.Identity
                 signingCredentials: signingCredentials);
             return jwtSecurityToken;
         }
-        // TODO : Get roles token olustururkende getiriliyo ikisini burda tek obje donus sekilde yazilcak
         public virtual async Task<List<Claim>> GetUserPermissions(User user)
         {
             List<Claim> userPermissions = new List<Claim>();
@@ -247,5 +237,23 @@ namespace BBC.Services.Identity
 
             return userPermissions;
         }
+        public async Task<IdentityResult> ConfirmEmail(ConfirmEmailInputDto model)
+        {
+            var user = await _userManager.FindByIdAsync(model.UserId);
+            if (user == null)
+            {
+                return IdentityResult.Failed(new IdentityError[]
+                {
+                    new IdentityError()
+                    {
+                        Code="User",
+                        Description = "Not Found User"
+                    }
+                });
+            }
+            var result = await _userManager.ConfirmEmailAsync(user, model.Code);
+            return result;
+        }
+
     }
 }

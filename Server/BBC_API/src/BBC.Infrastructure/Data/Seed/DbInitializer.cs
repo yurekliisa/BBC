@@ -33,14 +33,14 @@ namespace BBC.Infrastructure.Data.Seed
                 #region Full Permission 
 
                 //--- Role
-                Role aRole = await _dbContext.Roles.FirstOrDefaultAsync(x => x.Name == "AdminTest");
+                Role aRole = await _dbContext.Roles.FirstOrDefaultAsync(x => x.Name == "Admin");
                 if (aRole == null)
                 {
 
                     Role adminRole = new Role()
                     {
-                        Name = "AdminTest",
-                        NormalizedName = "AdminTest"
+                        Name = "Admin",
+                        NormalizedName = "Admin"
                     };
 
                     IdentityResult adminRoleCheck = await _roleManager.CreateAsync(adminRole);
@@ -62,32 +62,32 @@ namespace BBC.Infrastructure.Data.Seed
 
                 }
                 //--- Account
-                User aUser = await _dbContext.Users.FirstOrDefaultAsync(x => x.UserName == "AdminTest");
+                User aUser = await _dbContext.Users.FirstOrDefaultAsync(x => x.UserName == "Admin");
                 if (aUser == null)
                 {
                     User adminAccount = new User()
                     {
                         Email = "yurekliisa@admin.com",
-                        UserName = "AdminTest"
+                        UserName = "Admin"
                     };
                     IdentityResult userCheck = await _userManager.CreateAsync(adminAccount, "123!QweQwe");
 
                     if (userCheck.Succeeded)
                     {
-                        IdentityResult addRole = await _userManager.AddToRoleAsync(adminAccount, "AdminTest");
+                        IdentityResult addRole = await _userManager.AddToRoleAsync(adminAccount, "Admin");
                     }
                 }
                 #endregion
 
                 #region Not Full Permission
                 //--- Role
-                Role uRole = await _dbContext.Roles.FirstOrDefaultAsync(x => x.Name == "UserTest");
+                Role uRole = await _dbContext.Roles.FirstOrDefaultAsync(x => x.Name == "User");
                 if (uRole == null)
                 {
                     Role userRole = new Role()
                     {
-                        Name = "UserTest",
-                        NormalizedName = "UserTest"
+                        Name = "User",
+                        NormalizedName = "User"
                     };
 
                     IdentityResult userRoleCheck = await _roleManager.CreateAsync(userRole);
@@ -104,19 +104,19 @@ namespace BBC.Infrastructure.Data.Seed
                 }
 
                 //--- Account
-                User uUser = await _dbContext.Users.FirstOrDefaultAsync(x => x.UserName == "UserTest");
+                User uUser = await _dbContext.Users.FirstOrDefaultAsync(x => x.UserName == "User");
                 if (uUser == null)
                 {
                     User userAccount = new User()
                     {
                         Email = "yurekliisa@user.com",
-                        UserName = "UserTest"
+                        UserName = "User"
                     };
                     IdentityResult userAccountCheck = await _userManager.CreateAsync(userAccount, "123!QweQwe");
 
                     if (userAccountCheck.Succeeded)
                     {
-                        await _userManager.AddToRoleAsync(userAccount, "UserTest");
+                        await _userManager.AddToRoleAsync(userAccount, "User");
                     }
                 }
                 #endregion
