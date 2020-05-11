@@ -8,6 +8,7 @@ namespace BBC.Services.Services.TarifAndReceteService.Dto
 {
     public class TarifAndReceteDetailDto : BaseDto<int>
     {
+        public int tarId { get; set; }
         public ContentDto Content { get; set; }
         public string Title { get; set; }
         public string ContentText { get; set; }
@@ -18,7 +19,6 @@ namespace BBC.Services.Services.TarifAndReceteService.Dto
         public string UserFullName { get; set; }
         public string UserPhoto { get; set; }
         public int UserId { get; set; }
-        public int CommentCount { get; set; }
         public List<string> Categories { get; set; }
 
         public TarifAndReceteDetailDto()

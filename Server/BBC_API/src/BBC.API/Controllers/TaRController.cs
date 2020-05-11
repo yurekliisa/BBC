@@ -90,6 +90,31 @@ namespace BBC.API.Controllers
         }
 
         [HttpGet]
+<<<<<<< Updated upstream
+=======
+        [ProducesResponseType(typeof(TarifAndReceteListDto), 200)]
+        [Route("GetAllTarifAndRecetes")]
+        public async Task<IActionResult> GetAllTarifAndRecetes(int page)
+        {
+            if (page <= 0)
+            {
+                return BadRequest("Sayfa sayısı 0 ve 0'dan küçük olamaz");
+            }
+            var result = await _tarifAndReceteService.GetAllTarifAndRecetes();
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(TarifAndReceteDetailDto), 200)]
+        [Route("GetTarifAndReceteDetails")]
+        public async Task<IActionResult> GetAllTarifAndReceteDetails(int tarId)
+        {
+            var result = await _tarifAndReceteService.GetTarifAndReceteDetails(tarId);
+            return Ok(result);
+        }
+
+        [HttpGet]
+>>>>>>> Stashed changes
         [Route("Delete")]
         [RequiredAuth]
         public async Task<IActionResult> Delete(int Id)

@@ -103,23 +103,30 @@ namespace BBC.Services.Services.TarifAndReceteService
             await _tarRepository.UpdateAsync(tar);
         }
 
+<<<<<<< Updated upstream
         public async Task<List<TarifAndReceteDetailDto>> GetAllTarifAndReceteDetails()
+=======
+        public async Task<List<TarifAndReceteListDto>> GetAllTarifAndRecetes()
         {
-            List<TarifAndReceteDetailDto> result = new List<TarifAndReceteDetailDto>();
+            var tar = await _tarRepository.GetListAsync();
+            var result = _mapper.Map<List<TarifAndReceteListDto>>(tar);
+            return result;
+        }
+
+        public async Task<TarifAndReceteDetailDto> GetTarifAndReceteDetails(int tarId)
+>>>>>>> Stashed changes
+        {
+            TarifAndReceteDetailDto result = new TarifAndReceteDetailDto();
             try
             {
-                List<TarifAndRecete> query = await _tarRepository.GetQueryable()
+                var query = _tarRepository.GetQueryable()
                 .Include(x => x.Content)
                 .Include(x => x.Popularities)
                 .Include(x => x.User)
                 .Include(x => x.TaRCategories)
                 .Include("TaRCategories.Category")
-                //.Where(x=>x.isDeleted != true && x.isActive== true)
-                //.OrderBy(y => y.Id)
-                .OrderByDescending(y => y.CreateTime).ToListAsync();
-                result = query.Select(y => new TarifAndReceteDetailDto()
+                .Select(y => new TarifAndReceteDetailDto()
                 {
-                    Id = y.Id,
                     Title = y.Content.Title,
                     ShortDescription = y.Content.ShortDescription,
                     MainImage = y.Content.MainImage,
@@ -127,9 +134,13 @@ namespace BBC.Services.Services.TarifAndReceteService
                     UserFullName = y.User.UserName + " " + y.User.SurName,
                     UserPhoto = y.User.Photo,
                     Puan = y.Popularities.Count > 0 ? (y.Popularities.Sum(x => x.Puan) / y.Popularities.Count()) : 0,
-                    CommentCount = y.Popularities.Count(x => x.Comment != null),
+                    CommentDtos = y.Popularities.Select(x => new CommentDto() {
+                        Comment = x.Comment
+
+                    }).ToList(),
                     Categories = y.TaRCategories.Select(y => y.Category.Name).ToList(),
-                }).ToList();
+                }).FirstOrDefault(x => x.Id == tarId);
+                result = query;
 
             }
             catch (Exception ex)
