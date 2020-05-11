@@ -24,6 +24,5 @@ namespace BBC.Core.Domain
         {
             Medias = new HashSet<Media>();
         }
-
     }
 }

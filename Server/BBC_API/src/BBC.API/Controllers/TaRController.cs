@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BBC.API.Registery;
 using BBC.Services.Identity.Interfaces;
 using BBC.Services.Services.CategoryService;
 using BBC.Services.Services.CategoryService.Dto;
 using BBC.Services.Services.TarifAndReceteService;
 using BBC.Services.Services.TarifAndReceteService.Dto;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BBC.API.Controllers
@@ -57,6 +59,7 @@ namespace BBC.API.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.Values.Select(x => x.Errors.SelectMany(y => y.ErrorMessage)));
 
+            var categories = await _categoryService.GetAllCategories();
             var newId = await _tarifAndReceteService.CreateTaR(input);
             return Ok(newId);
         }
@@ -79,8 +82,12 @@ namespace BBC.API.Controllers
         [ProducesResponseType(typeof(TarifAndReceteListDto), 200)]
         [Route("GetAllTarifAndRecetes")]
         //Kullanıcının giriş yapması yeterli 
-        public async Task<IActionResult> GetAllTarifAndRecetes()
+        public async Task<IActionResult> GetAllTarifAndRecetes(int page)
         {
+            if (page <= 0)
+            {
+                return BadRequest("Sayfa sayısı 0 ve 0'dan küçük olamaz");
+            }
             var result = await _tarifAndReceteService.GetAllTarifAndRecetes();
             return Ok(result);
         }
@@ -93,6 +100,26 @@ namespace BBC.API.Controllers
         {
             var result = await _tarifAndReceteService.GetAllTarifAndReceteDetails();
             return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("Delete")]
+        public async Task<IActionResult> Delete(int Id)
+        {
+            if (!String.IsNullOrEmpty(Id.ToString()))
+            {
+                return BadRequest();
+            }
+            await _tarifAndReceteService.DeleteTarifAndRecete(Id);
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("Edit")]
+        public async Task<IActionResult> Edit([FromBody] EditTarifAndReceteDto input)
+        {
+            await _tarifAndReceteService.EditTarifAndRecete(input);
+            return Ok();
         }
     }
 }

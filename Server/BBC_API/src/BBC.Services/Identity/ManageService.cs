@@ -48,13 +48,14 @@ namespace BBC.Services.Identity
             var user = await GetCurrentUserAsync();
             if (user == null)
                 return null;
-
+            var roles = await _userManager.GetRolesAsync(user);
             var userInfoDto = new UserInfoOutputDto
             {
                 Email = user.Email,
                 Id = user.Id,
                 UserName = user.UserName,
-                FullName = user.Name + " " + user.SurName
+                FullName = user.Name + " " + user.SurName,
+                Roles = roles
             };
 
             return userInfoDto;

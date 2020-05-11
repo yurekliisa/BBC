@@ -9,10 +9,7 @@ namespace BBC.Core.Domain
     public class Media : EntityBase<int>
     {
         public string MediaUrl { get; set; }
-
-
-
-        [ForeignKey("ContentId")]  //ContentId nin foreignKey olduğunu belirttik.
+        [ForeignKey("ContentId")]
         public int ContentId { get; set; }
         public Content Content { get; set; }
     }
