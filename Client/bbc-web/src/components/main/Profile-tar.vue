@@ -64,14 +64,38 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "ProfileTAR",
   props: ["id"],
   data() {
     return {
-      tars: {},
+      tars: [],
     };
   },
+  mounted(){
+    this.fetchdata();
+  },
+  methods:{
+    fetchdata() {
+      axios
+        .get("TaR/GetTarifAndReceteByUserId?userId=" + this.id ,{
+          headers:{
+             "Content-type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          }
+        })
+        .then((result)=>{
+          console.log(result)
+          if (result.status===200){
+            this.tars = result.data;
+          }
+        })
+        .catch((err)=>{
+          console.log(err);
+        });
+    }
+  }
 };
 </script>
 
