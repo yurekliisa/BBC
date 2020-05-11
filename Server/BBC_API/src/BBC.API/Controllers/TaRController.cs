@@ -129,5 +129,13 @@ namespace BBC.API.Controllers
             await _tarifAndReceteService.EditTarifAndRecete(input);
             return Ok();
         }
+        [HttpPost]
+        [Route("Comments")]
+        public async Task<IActionResult> Comment(CommentDto Id)
+        {
+            //YANLIŞ YAPTIM
+            await _tarifAndReceteService.Comment(Id);
+            return Ok();
+        }
     }
 }
