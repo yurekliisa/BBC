@@ -17,6 +17,9 @@ using Microsoft.Extensions.Logging;
 using System.Reflection;
 using System.Collections.Generic;
 using BBC.API.Middlewares;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace BBC.API
 {
@@ -72,7 +75,21 @@ namespace BBC.API
             {
                 app.UseDeveloperExceptionPage();
             }
-          
+
+            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot", "Upload")),
+                RequestPath = new PathString("/Upload")
+            });
+
+            app.UseDirectoryBrowser(new DirectoryBrowserOptions()
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot", "Upload")),
+                RequestPath = new PathString("/Upload")
+            });
 
             IoCManager.Container = app.ApplicationServices.GetAutofacRoot();
 
@@ -85,6 +102,7 @@ namespace BBC.API
 
             app.UseErrorHandlingMiddleware();
 
+            
 
             app.UseEndpoints(endpoints =>
             {

@@ -8,11 +8,11 @@ namespace BBC.Services.Services.TarifAndReceteService.Dto
     public class CreateTarifAndReceteDto
     {
         //Categorieleri almak için
-        public List<int> CategoryId{ get; set; }
+        public List<int> Categories{ get; set; }
 
         public CreateTarifAndReceteDto()
         {
-            CategoryId = new List<int>();
+            Categories = new List<int>();
         }
         
         public ContentDto Content { get; set; }

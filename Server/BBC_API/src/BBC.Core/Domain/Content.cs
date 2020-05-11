@@ -16,13 +16,6 @@ namespace BBC.Core.Domain
         [ForeignKey("TarifandReceteId")]
         public int TarifandReceteId { get; set; }
         public TarifAndRecete TarifAndRecete { get; set; }
-
-
-        public ICollection<Media> Medias { get; set; }
-
-        public Content()
-        {
-            Medias = new HashSet<Media>();
-        }
+        
     }
 }

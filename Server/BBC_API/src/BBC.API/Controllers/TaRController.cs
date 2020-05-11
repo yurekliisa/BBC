@@ -54,12 +54,11 @@ namespace BBC.API.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(int), 200)]
         [Route("CreateTaR")]
-        public async Task<IActionResult> CreateTaR([FromBody] CreateTarifAndReceteDto input)
+        public async Task<IActionResult> CreateTaR([FromForm] CreateTarifAndReceteDto input)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.Values.Select(x => x.Errors.SelectMany(y => y.ErrorMessage)));
 
-            var categories = await _categoryService.GetAllCategories();
             var newId = await _tarifAndReceteService.CreateTaR(input);
             return Ok(newId);
         }

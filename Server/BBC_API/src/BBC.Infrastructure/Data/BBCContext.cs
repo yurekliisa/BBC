@@ -17,7 +17,6 @@ namespace BBC.Infrastructure.Data
         public DbSet<Lobi> Lobis { get; set; }
         public DbSet<JobAdvert> JobAdverts { get; set; }
         //public DbSet<JobUser> JobUsers { get; set; }
-        public DbSet<Media> Medias { get; set; }
         public DbSet<LobiMessages> LobiMessages { get; set; }
         public DbSet<LobiUser> LobiUsers { get; set; }
         public DbSet<Popularity> Popularities { get; set; }

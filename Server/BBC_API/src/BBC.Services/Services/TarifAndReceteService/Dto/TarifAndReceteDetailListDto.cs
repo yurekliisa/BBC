@@ -13,13 +13,11 @@ namespace BBC.Services.Services.TarifAndReceteService.Dto
         public string ContentText { get; set; }
         public double Puan { get; set; }
         public ICollection<CommentDto> CommentDtos { get; set; }
-        public ICollection<MediaDto> MediaDtos { get; set; }
 
         public TarifAndReceteDetailListDto()
         {
             Categories = new HashSet<CategoryListDto>();
             CommentDtos = new HashSet<CommentDto>();
-            MediaDtos = new HashSet<MediaDto>();
         }
     }
 }

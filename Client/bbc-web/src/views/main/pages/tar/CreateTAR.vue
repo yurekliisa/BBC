@@ -1,32 +1,46 @@
 <template>
   <v-layout>
     <v-flex>
-      <v-card class="mx-auto px-5 py-5" raised :v-if="data.id">
+      <v-card class="mx-auto px-5 py-5" raised>
+        <v-col cols="12">
+          <h1 style="text-align:center">Reçete ve Tarif Oluşturma</h1>
+        </v-col>
         <form>
           <v-col cols="12">
             <v-text-field
-              v-model="data.title"
+              v-model="title"
               label="Tarif ve Reçete Başlık"
               required
               :error-messages="titleErrors"
-              @input="$v.titleErrors.$touch()"
-              @blur="$v.titleErrors.$touch()"
+              @input="$v.title.$touch()"
+              @blur="$v.title.$touch()"
+              solo
+            >
+            </v-text-field>
+          </v-col>
+          <v-col cols="12">
+            <v-text-field
+              v-model="shortDescription"
+              label="İçeriği özetlermisiniz"
+              required
+              :error-messages="shortDescriptionErrors"
+              @input="$v.shortDescription.$touch()"
+              @blur="$v.shortDescription.$touch()"
               solo
             >
             </v-text-field>
           </v-col>
           <v-col cols="12">
             <div class="description">
-              <tiptap-vuetify
-                v-model="data.description"
-                :extensions="extensions"
-              />
+              <tiptap-vuetify v-model="contentText" :extensions="extensions" />
             </div>
           </v-col>
           <v-col cols="12">
             <v-select
-              v-model="value"
-              :items="items"
+              v-model="selectedCategories"
+              :items="categories"
+              item-text="name"
+              item-value="id"
               chips
               label="Kategori"
               multiple
@@ -37,7 +51,7 @@
             <v-file-input
               accept="image/*"
               label="Kapak resmi"
-              v-model="data.mainImage"
+              v-model="mainImage"
             ></v-file-input>
           </v-col>
           <v-card-actions style="justify-content:center;">
@@ -81,6 +95,7 @@ import { validationMixin } from "vuelidate";
 import { required, minLength, email } from "vuelidate/lib/validators";
 import axios from "axios";
 import DomParser from "dom-parser";
+import FormData from "form-data";
 
 export default {
   name: "Create-TAR",
@@ -88,6 +103,7 @@ export default {
   mixins: [validationMixin],
   validations: {
     title: { required },
+    shortDescription: { required },
   },
   data: () => ({
     extensions: [
@@ -116,19 +132,38 @@ export default {
       Paragraph,
       HardBreak,
     ],
-    items: ["foo", "bar", "fizz", "buzz"],
-    value: ["foo", "bar", "fizz", "buzz"],
+    categories: [],
     submitStatus: null,
-    data: {
-      description: "",
-      id: 0,
-    },
+    title: "",
+    shortDescription: "",
+    mainImage: undefined,
+    selectedCategories: [],
+    contentText: "",
   }),
+  mounted() {
+    axios
+      .get("/TaR/GetAllCategories", {
+        headers: {
+          "Content-type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
+      .then((categories) => {
+        this.categories = categories.data;
+      });
+  },
   computed: {
     titleErrors() {
       const errors = [];
       if (!this.$v.title.$dirty) return errors;
-      !this.$v.title.required && errors.push("E-mail is required");
+      !this.$v.title.required && errors.push("Title is required");
+      return errors;
+    },
+    shortDescriptionErrors() {
+      const errors = [];
+      if (!this.$v.shortDescription.$dirty) return errors;
+      !this.$v.shortDescription.required &&
+        errors.push("shortDescription is required");
       return errors;
     },
   },
@@ -147,13 +182,37 @@ export default {
         let attributeObject = item.attributes.find((x) => x.name === "src");
       });
     },
-    submit() {
-      console.log(this.data);
+    submit(event) {
+      let data = new FormData();
+      for (let i = 0; i < this.selectedCategories.length; i++) {
+        const element = this.selectedCategories[i];
+        data.append("Categories[" + i + "]", element);
+      }
+      data.append("Content.Title", this.title);
+      data.append("Content.MainImage", this.mainImage);
+      data.append("Content.ContentText", this.contentText);
+      data.append("Content.shortDescription", this.shortDescription);
+      console.log(data);
       this.$v.$touch();
       if (this.$v.$invalid) {
         this.submitStatus = "ERROR";
       } else {
         this.submitStatus = "PENDING";
+        axios
+          .post("/TaR/CreateTaR", data, {
+            headers: {
+              "Content-type": "multipart/form-data",
+              "Access-Control-Allow-Origin": "*",
+            },
+          })
+          .then((response) => {
+            if (response.status === 200) {
+              console.log(response);
+            }
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
         this.submitStatus = "OK";
       }
     },

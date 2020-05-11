@@ -4,39 +4,66 @@ using BBC.Core.Repositories.Base;
 using BBC.Infrastructure.Data;
 using BBC.Services.Services.Base;
 using BBC.Services.Services.TarifAndReceteService.Dto;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace BBC.Services.Services.TarifAndReceteService
 {
-    public class TarifAndReceteManager : ApplicationBaseServices<User,Role>, ITarifAndReceteService
+    public class TarifAndReceteManager : ApplicationBaseServices<User, Role>, ITarifAndReceteService
     {
-        private readonly IRepositoryBase<BBCContext,TarifAndRecete,int> _tarRepository;
+        private readonly IRepositoryBase<BBCContext, TarifAndRecete, int> _tarRepository;
+        private readonly IHostingEnvironment _hostingEnvironment;
         public TarifAndReceteManager(
-            IRepositoryBase<BBCContext, TarifAndRecete, int> tarRepository
+            IRepositoryBase<BBCContext, TarifAndRecete, int> tarRepository,
+            IHostingEnvironment hostingEnvironment
             )
         {
             _tarRepository = tarRepository;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         public async Task<int> CreateTaR(CreateTarifAndReceteDto input)
         {
-            var user = await GetCurrentUserAsync();
+            //var user = await GetCurrentUserAsync();
             var tar = _mapper.Map<TarifAndRecete>(input);
-            foreach (var category in input.Categories)
+            foreach (var id in input.Categories)
             {
                 tar.TaRCategories.Add(new TaRCategory()
                 {
-                    CategoryId = category.Id
+                    CategoryId = id
                 });
             }
-            tar.UserId = user.Id;
-            tar.Content.Medias = _mapper.Map<ICollection<Media>>(input.Content.MediaDtos);
+            tar.UserId = 1;//user.Id;
+            var newMediaName = await saveFile(input.Content.MainImage);
+            if (newMediaName != null)
+            {
+                tar.Content.MainImage = newMediaName;
+            }
             var result = await _tarRepository.InsertAsync(tar);
             return result.Id;
+        }
+        private async Task<string> saveFile(IFormFile file)
+        {
+
+            if (file.Length > 0)
+            {
+                if (!Directory.Exists(_hostingEnvironment.WebRootPath + "\\Upload"))
+                {
+                    Directory.CreateDirectory(_hostingEnvironment.WebRootPath + "\\Upload\\");
+                }
+                var newName = "\\Upload\\" + Guid.NewGuid() + ".jpeg";
+                using (FileStream fileStream = System.IO.File.Create(_hostingEnvironment.WebRootPath + newName))
+                {
+                    file.CopyTo(fileStream);
+                    await fileStream.FlushAsync();
+                    return newName;
+                }
+            }
+            return null;
         }
 
         public async Task DeleteTarifAndRecete(int Id)
