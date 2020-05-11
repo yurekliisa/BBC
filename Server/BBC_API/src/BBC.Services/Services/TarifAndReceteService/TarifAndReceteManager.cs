@@ -3,6 +3,7 @@ using BBC.Core.Domain.Identity;
 using BBC.Core.Repositories.Base;
 using BBC.Infrastructure.Data;
 using BBC.Services.Services.Base;
+using BBC.Services.Services.HomeService.Dto;
 using BBC.Services.Services.TarifAndReceteService.Dto;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -89,8 +90,38 @@ namespace BBC.Services.Services.TarifAndReceteService
 
         public async Task<List<TarifAndReceteDetailDto>> GetAllTarifAndReceteDetails()
         {
-            var tar = await _tarRepository.GetListAsync();
-            var result = _mapper.Map<List<TarifAndReceteDetailDto>>(tar);
+            List<TarifAndReceteDetailDto> result = new List<TarifAndReceteDetailDto>();
+            try
+            {
+                List<TarifAndRecete> query = await _tarRepository.GetQueryable()
+                .Include(x => x.Content)
+                .Include(x => x.Popularities)
+                .Include(x => x.User)
+                .Include(x => x.TaRCategories)
+                .Include("TaRCategories.Category")
+                //.Where(x=>x.isDeleted != true && x.isActive== true)
+                //.OrderBy(y => y.Id)
+                .OrderByDescending(y => y.CreateTime).ToListAsync();
+                result = query.Select(y => new TarifAndReceteDetailDto()
+                {
+                    Id = y.Id,
+                    Title = y.Content.Title,
+                    ShortDescription = y.Content.ShortDescription,
+                    MainImage = y.Content.MainImage,
+                    UserId = y.UserId,
+                    UserFullName = y.User.UserName + " " + y.User.SurName,
+                    UserPhoto = y.User.Photo,
+                    Puan = y.Popularities.Count > 0 ? (y.Popularities.Sum(x => x.Puan) / y.Popularities.Count()) : 0,
+                    CommentCount = y.Popularities.Count(x => x.Comment != null),
+                    Categories = y.TaRCategories.Select(y => y.Category.Name).ToList(),
+                }).ToList();
+
+            }
+            catch (Exception ex)
+            {
+                var message = ex.Message;
+            }
+
             return result;
         }
 
