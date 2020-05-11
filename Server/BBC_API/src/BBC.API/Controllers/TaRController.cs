@@ -106,10 +106,17 @@ namespace BBC.API.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(TarifAndReceteDetailDto), 200)]
+<<<<<<< Updated upstream
         [Route("GetTarifAndReceteDetails")]
         public async Task<IActionResult> GetAllTarifAndReceteDetails(int tarId)
         {
             var result = await _tarifAndReceteService.GetTarifAndReceteDetails(tarId);
+=======
+        [Route("GetAllTarifAndReceteDetails")]
+        public async Task<IActionResult> GetAllTarifAndReceteDetails()
+        {
+            var result = await _tarifAndReceteService.GetAllTarifAndReceteDetails();
+>>>>>>> Stashed changes
             return Ok(result);
         }
 

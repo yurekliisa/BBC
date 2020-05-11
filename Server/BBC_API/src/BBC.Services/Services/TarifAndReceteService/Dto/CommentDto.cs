@@ -6,6 +6,7 @@ namespace BBC.Services.Services.TarifAndReceteService.Dto
 {
     public class CommentDto
     {
+        public int TaRId { get; set; }
         public string Comment { get; set; }
     }
 }

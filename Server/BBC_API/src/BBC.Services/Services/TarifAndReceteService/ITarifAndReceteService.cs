@@ -25,5 +25,6 @@ namespace BBC.Services.Services.TarifAndReceteService
         Task EditTarifAndRecete(EditTarifAndReceteDto input);
 >>>>>>> Stashed changes
         Task DeleteTarifAndRecete(int Id);
+        Task Comment(CommentDto comment, CommentDto TaRId);
     }
 }
