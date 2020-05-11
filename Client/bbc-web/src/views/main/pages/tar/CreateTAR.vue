@@ -142,21 +142,20 @@ export default {
   }),
   mounted() {
     let userData = JSON.parse(localStorage.getItem("user"));
-    if(userData){
+    if (userData) {
       axios
-      .get("/TaR/Create", {
-        headers: {
-          "Content-type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-          Authorization: `Bearer ${userData.token}`,
-        },
-      })
-      .then((categories) => {
-        if(categories.status === 200)
-        {
-          this.categories = categories.data.categories;
-        }
-      });
+        .get("/TaR/Create", {
+          headers: {
+            "Content-type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            Authorization: `Bearer ${userData.token}`,
+          },
+        })
+        .then((categories) => {
+          if (categories.status === 200) {
+            this.categories = categories.data.categories;
+          }
+        });
     }
   },
   computed: {
@@ -214,7 +213,7 @@ export default {
           })
           .then((response) => {
             if (response.status === 200) {
-              this.$router.push('/');
+              this.$router.push("/");
             }
           })
           .catch(function(error) {

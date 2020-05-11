@@ -15,6 +15,6 @@ namespace BBC.Services.Services.TarifAndReceteService.Dto
             Categories = new List<int>();
         }
         
-        public ContentDto Content { get; set; }
+        public CreateContentDto Content { get; set; }
     }
 }

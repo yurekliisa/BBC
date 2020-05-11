@@ -7,6 +7,7 @@ using BBC.API.Registery;
 using BBC.Services.Identity.Interfaces;
 using BBC.Services.Services.CategoryService;
 using BBC.Services.Services.CategoryService.Dto;
+using BBC.Services.Services.HomeService.Dto;
 using BBC.Services.Services.TarifAndReceteService;
 using BBC.Services.Services.TarifAndReceteService.Dto;
 using Microsoft.AspNetCore.Http;
@@ -30,16 +31,37 @@ namespace BBC.API.Controllers
             _categoryService = categoryService;
         }
 
-       
+        [HttpGet]
+        [ProducesResponseType(typeof(List<TaRHomeOuputDto>), 200)]
+        [Route("GetTaR")]
+        public async Task<IActionResult> GetTaR(int page)
+        {
+            if (page <= 0)
+                return BadRequest("Sayfa Sayısı 0 ve 0'dan küçük olamaz");
+
+            var result = await _tarifAndReceteService.GetTarifAndRecetes(page);
+            return Ok(result);
+        }
+
         [HttpGet]
         [ProducesResponseType(typeof(List<EditTarifAndReceteDto>), 200)]
         [Route("GetTarifAndReceteByUserId")]
         public async Task<IActionResult> GetTarifAndReceteByUserId(int userId)
         {
-            var tarifAndRecete = await _tarifAndReceteService.GetTarifAndRecete(userId);
+            var tarifAndRecete = await _tarifAndReceteService.GetTarifAndReceteByUserId(userId);
             return Ok(tarifAndRecete);
         }
-
+    
+        
+        [HttpGet]
+        [ProducesResponseType(typeof(TarifAndReceteDetailDto), 200)]
+        [Route("GetAllTarifAndReceteDetails")]
+        public async Task<IActionResult> GetAllTarifAndReceteDetails()
+        {
+            var result = await _tarifAndReceteService.GetAllTarifAndReceteDetails();
+            return Ok(result);
+        }
+       
         [HttpPost]
         [ProducesResponseType(typeof(int), 200)]
         [Route("CreateTaR")]
@@ -64,28 +86,6 @@ namespace BBC.API.Controllers
             {
                 Categories = categories
             };
-            return Ok(result);
-        }
-
-        [HttpGet]
-        [ProducesResponseType(typeof(TarifAndReceteListDto), 200)]
-        [Route("GetAllTarifAndRecetes")]
-        public async Task<IActionResult> GetAllTarifAndRecetes(int page)
-        {
-            if (page <= 0)
-            {
-                return BadRequest("Sayfa sayısı 0 ve 0'dan küçük olamaz");
-            }
-            var result = await _tarifAndReceteService.GetAllTarifAndRecetes();
-            return Ok(result);
-        }
-
-        [HttpGet]
-        [ProducesResponseType(typeof(TarifAndReceteDetailDto), 200)]
-        [Route("GetAllTarifAndReceteDetails")]
-        public async Task<IActionResult> GetAllTarifAndReceteDetails()
-        {
-            var result = await _tarifAndReceteService.GetAllTarifAndReceteDetails();
             return Ok(result);
         }
 
