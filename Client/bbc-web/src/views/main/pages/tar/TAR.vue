@@ -43,16 +43,20 @@ export default {
   methods: {
     fetchData() {
       axios
-        .get("Home/GetHomeContent?page=" + this.page, {
+        .get("/TaR/GetAllTarifAndRecetes", {
           headers: {
             "Content-type": "application/json",
             "Access-Control-Allow-Origin": "*",
           },
         })
         .then((response) => {
+          if (response.status=== 200)
           this.tars = response.data;
+        })
+        .catch((err)=>{
+          console.log(err);
         });
-    },
-  },
+    }
+  }
 };
 </script>
