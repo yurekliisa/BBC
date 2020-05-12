@@ -9,7 +9,7 @@
       <v-card-title>{{ data.title }}</v-card-title>
       <v-card-text>
         <v-row align="center" class="mx-0">
-          <v-chip outlined>
+          <v-chip outlined to="/">
             <v-avatar left v-if="data.userPhoto">
               <v-img :src="'https://localhost:44308/' + data.userPhoto"></v-img>
             </v-avatar>
@@ -46,7 +46,7 @@
         </v-chip-group>
       </v-card-text>
     </v-card>
-    <div v-if="data.commentDtos && data.id">{{data.id}}
+    <div v-if="data.commentDtos && data.id">
     <Comment :comments="data.commentDtos" :tarId="data.id"/>
     </div>
   </div>

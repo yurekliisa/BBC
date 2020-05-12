@@ -1,32 +1,39 @@
 <template>
   <div>
-    <div v-if="false">
+    <div v-if="true">
       <v-card class="ma-2 pa-1 my-2">
         <v-list three-line>
-          <template v-for="(item, index) in items">
-            <v-subheader
-              v-if="item.header"
-              :key="item.header"
-              v-text="item.header"
-            ></v-subheader>
-
-            <v-divider
-              v-else-if="item.divider"
-              :key="index"
-              :inset="item.inset"
-            ></v-divider>
-
-            <v-list-item v-else :key="item.title">
-              <v-list-item-avatar>
-                <v-img :src="item.avatar"></v-img>
-              </v-list-item-avatar>
+          <v-subheader
+            class="text--primary"
+            style="justify-content:center;font-size:22px"
+            >YORUMLAR</v-subheader
+          >
+          <template v-for="(comment, index) in comments">
+            <v-list-item :key="index">
+              <router-link :to="'/profile/' + comment.userId">
+                <v-list-item-avatar>
+                  <v-img
+                    :src="'https://localhost:44308/' + comment.userPhoto"
+                  ></v-img>
+                </v-list-item-avatar>
+              </router-link>
 
               <v-list-item-content>
-                <v-list-item-title v-html="item.title"></v-list-item-title>
-                <v-list-item-subtitle
-                  v-html="item.subtitle"
-                ></v-list-item-subtitle>
+                <v-list-item-title>{{ comment.userName }}</v-list-item-title>
+                <v-list-item-subtitle class="text--primary">{{
+                  comment.comment
+                }}</v-list-item-subtitle>
               </v-list-item-content>
+
+              <v-list-item-action>
+                <v-list-item-action-text
+                  v-text="comment.commentDate"
+                ></v-list-item-action-text>
+
+                <v-list-item-action-text>
+                  <v-rating v-model="comment.puan"></v-rating>
+                </v-list-item-action-text>
+              </v-list-item-action>
             </v-list-item>
           </template>
         </v-list>
@@ -38,7 +45,7 @@
       v-if="!isComment && $store.getters.userInfo.userId"
     >
       <v-btn outlined color="primary" @click="isComment = !isComment"
-        >Comment</v-btn
+        >Yorum Yap</v-btn
       >
     </div>
     <div class="mx-2 my-2" v-if="isComment">
@@ -95,10 +102,14 @@ export default {
   props: ["comments", "tarId"],
   data() {
     return {
+      header: "Yorumlar",
       comment: "",
       puan: 5,
       isComment: false,
     };
+  },
+  mounted() {
+    console.log(this.comments);
   },
   methods: {
     insertComment() {

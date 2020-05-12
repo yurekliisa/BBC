@@ -23,7 +23,6 @@
       <v-chip outlined>
         <v-avatar left>
           <v-img
-            height="250"
             :src="'https://localhost:44308/' + item.userPhoto"
           ></v-img>
         </v-avatar>

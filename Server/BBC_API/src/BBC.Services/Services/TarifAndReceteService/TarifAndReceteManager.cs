@@ -45,7 +45,7 @@ namespace BBC.Services.Services.TarifAndReceteService
                 .Include(x => x.Popularities)
                 .Include(x => x.User)
                 .Include(x => x.TaRCategories)
-                .Include("TaRCategories.Category")             
+                .Include("TaRCategories.Category")
                 .OrderByDescending(y => y.CreateTime)
                 .Skip((page - 1) * 18)
                 .Take(18).ToListAsync();
@@ -78,7 +78,7 @@ namespace BBC.Services.Services.TarifAndReceteService
             try
             {
 
-            var tar = _mapper.Map<TarifAndRecete>(input);
+                var tar = _mapper.Map<TarifAndRecete>(input);
                 foreach (var id in input.Categories)
                 {
                     tar.TaRCategories.Add(new TaRCategory()
@@ -124,7 +124,7 @@ namespace BBC.Services.Services.TarifAndReceteService
             .Include(x => x.Popularities)
             .Include(x => x.User)
             .Include(x => x.TaRCategories)
-            .Include("TaRCategories.Category")            
+            .Include("TaRCategories.Category")
             .OrderByDescending(y => y.CreateTime)
             .Skip((page - 1) * 18)
             .Take(18).ToListAsync();
@@ -167,16 +167,17 @@ namespace BBC.Services.Services.TarifAndReceteService
                     result.UserId = data.UserId;
                     result.UserFullName = data.User.UserName + " " + data.User.SurName;
                     result.UserPhoto = data.User.Photo;
-                   result.CommentCount = data.Popularities.Count;
+                    result.CommentCount = data.Popularities.Count;
                     result.Puan = data.Popularities.Count > 0 ? (data.Popularities.Sum(x => x.Puan) / data.Popularities.Count()) : 0;
                     result.CommentDtos = data.Popularities.Where(x => !String.IsNullOrEmpty(x.Comment)).Select(x => new CommentDto()
                     {
                         Comment = x.Comment,
-                        CommentDate = x.CreationTime,
+                        CommentDate = x.CreationTime.ToString("dd-MM-yyyy"),
                         Puan = x.Puan,
                         UserId = x.UserId,
                         UserName = x.User.UserName,
-                        UserPhoto = x.User.Photo
+                        UserPhoto = x.User.Photo,
+                        TaRId=(int)x.TarifAndReceteId
                     }).ToList();
                     result.Categories = data.TaRCategories.Select(y => y.Category.Name).ToList();
                 }
@@ -247,7 +248,7 @@ namespace BBC.Services.Services.TarifAndReceteService
                 .Select(y => new CommentDto()
                 {
                     Comment = y.Comment,
-                    CommentDate = y.CreationTime,
+                    CommentDate = y.CreationTime.ToString("dd-MM-yyyy"),
                     Puan = y.Puan,
                     TaRId = (int)y.TarifAndReceteId,
                     UserId = y.UserId,
