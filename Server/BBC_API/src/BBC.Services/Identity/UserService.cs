@@ -75,5 +75,10 @@ namespace BBC.Services.Identity
 
             return result;
         }
+
+        public Task<UserListDto> Report()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

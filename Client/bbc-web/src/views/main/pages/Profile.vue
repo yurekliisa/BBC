@@ -14,23 +14,67 @@
             style="height: auto"
           >
           </v-row>
-          <v-col cols="12" v-if="id == $store.getters.userInfo.userId">
-            <v-btn text color="deep-purple accent-4">Profilini Düzenle</v-btn>
-          </v-col>
+
           <v-list-item>
             <v-list-item-avatar color="grey" v-if="user.photo">
-              <v-img
-                height="250"
-                :src="'https://localhost:44308' + user.photo"
-              ></v-img>
+              <v-img :src="'https://localhost:44308' + user.photo"></v-img>
             </v-list-item-avatar>
             <v-list-item-content>
-              <v-list-item-title class="headline">{{
-                user.userName
-              }}</v-list-item-title>
-              <v-list-item-subtitle>{{ user.email }}</v-list-item-subtitle>
+              <v-list-item-title class="headline"
+                >{{ user.name }} {{ user.surName }}</v-list-item-title
+              >
+              <v-list-item-subtitle>{{ user.userName }}</v-list-item-subtitle>
+            </v-list-item-content>
+            <v-list-item-action v-if="id == $store.getters.userInfo.userId">
+              <v-list-item-action-text>
+                <v-btn text color="deep-purple accent-4">
+                  <v-icon color="indigo">mdi-account-settings-outline</v-icon>Profilini Düzenle</v-btn
+                >
+              </v-list-item-action-text>
+            </v-list-item-action>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon color="indigo">mdi-email</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-subtitle>EMail</v-list-item-subtitle>
+              <v-list-item-title>{{ user.email }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
+
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon color="indigo">mdi-phone</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-subtitle>Mobile</v-list-item-subtitle>
+              <v-list-item-title>{{ user.phoneNumber }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon color="indigo">mdi-calendar-account</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-subtitle>Birthday</v-list-item-subtitle>
+              <v-list-item-title>{{ user.birthday }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-divider inset></v-divider>
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title class="headline" style="text-align:center">{{
+                user.about
+              }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
           <v-card-text>
             <v-row justify="space-around">
               <v-tabs
@@ -109,6 +153,7 @@ export default {
     axios.get("User/Get/" + this.id).then((res) => {
       if (res.status === 200) {
         this.user = res.data;
+        console.log(res.data);
       }
     });
   },
