@@ -278,5 +278,42 @@ namespace BBC.Services.Services.TarifAndReceteService
             return null;
         }
 
+        public async Task<UserTarifAndReceteDto> GetTarifAndReceteForEdit(int tarId)
+        {
+            UserTarifAndReceteDto result = new UserTarifAndReceteDto();
+            try
+            {
+                var data = await _tarRepository.GetQueryable()
+                .Include(x => x.Content)
+               .Include(x => x.Popularities)
+                .Include(x => x.User)
+                .Include(x => x.TaRCategories)
+                .Include("TaRCategories.Category")
+                .Include("Popularities.User")
+                .FirstOrDefaultAsync(x => x.Id == tarId);
+                if (data != null)
+                {
+                    result.Id = data.Id;
+                    result.Content = new ContentDto();
+                    result.Content.ContentText = data.Content.ContentText;
+                    result.Content.Title = data.Content.Title;
+                    result.Content.MainImage = data.Content.MainImage;
+                    result.Content.ShortDescription = data.Content.ShortDescription;
+                    result.Categories = data.TaRCategories.Select(y => new CategoryListDto()
+                    {
+                        Id = y.CategoryId,
+                        Name = y.Category.Name
+                    }).ToList();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                var message = ex.Message;
+            }
+
+            return result;
+
+        }
     }
 }

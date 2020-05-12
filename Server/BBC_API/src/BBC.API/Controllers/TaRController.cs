@@ -51,7 +51,7 @@ namespace BBC.API.Controllers
             var tarifAndRecete = await _tarifAndReceteService.GetTarifAndReceteByUserId(userId);
             return Ok(tarifAndRecete);
         }
-       
+
         [HttpPost]
         [ProducesResponseType(typeof(int), 200)]
         [Route("CreateTaR")]
@@ -124,7 +124,17 @@ namespace BBC.API.Controllers
             await _tarifAndReceteService.EditTarifAndRecete(input);
             return Ok();
         }
-       
+
+        [HttpGet]
+        [ProducesResponseType(typeof(UserTarifAndReceteDto), 200)]
+        [Route("Edit")]
+        [RequiredAuth]
+        public async Task<IActionResult> Edit(int tarId)
+        {
+            var result = await _tarifAndReceteService.GetTarifAndReceteForEdit(tarId);
+            return Ok(result);
+        }
+
         [HttpPost]
         [ProducesResponseType(200)]
         [Route("Comments")]
