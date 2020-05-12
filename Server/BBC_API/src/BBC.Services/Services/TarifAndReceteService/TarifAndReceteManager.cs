@@ -74,22 +74,31 @@ namespace BBC.Services.Services.TarifAndReceteService
         public async Task<int> CreateTaR(CreateTarifAndReceteDto input)
         {
             var user = await GetCurrentUserAsync();
+            try
+            {
+
             var tar = _mapper.Map<TarifAndRecete>(input);
-            foreach (var id in input.Categories)
-            {
-                tar.TaRCategories.Add(new TaRCategory()
+                foreach (var id in input.Categories)
                 {
-                    CategoryId = id
-                });
+                    tar.TaRCategories.Add(new TaRCategory()
+                    {
+                        CategoryId = id
+                    });
+                }
+                tar.UserId = user.Id;
+                var newMediaName = await saveFile(input.Content.MainImage);
+                if (newMediaName != null)
+                {
+                    tar.Content.MainImage = newMediaName;
+                }
+                var result = await _tarRepository.InsertAsync(tar);
+                return result.Id;
             }
-            tar.UserId = user.Id;
-            var newMediaName = await saveFile(input.Content.MainImage);
-            if (newMediaName != null)
+            catch (Exception ex)
             {
-                tar.Content.MainImage = newMediaName;
+                var b = ex.Message;
             }
-            var result = await _tarRepository.InsertAsync(tar);
-            return result.Id;
+            return 0;
         }
 
         public async Task DeleteTarifAndRecete(int Id)
@@ -159,7 +168,7 @@ namespace BBC.Services.Services.TarifAndReceteService
                     result.UserPhoto = data.User.Photo;
                    result.CommentCount = data.Popularities.Count;
                     result.Puan = data.Popularities.Count > 0 ? (data.Popularities.Sum(x => x.Puan) / data.Popularities.Count()) : 0;
-                    result.CommentDtos = data.Popularities.Where(x => String.IsNullOrEmpty(x.Comment)).Select(x => new CommentDto()
+                    result.CommentDtos = data.Popularities.Where(x => !String.IsNullOrEmpty(x.Comment)).Select(x => new CommentDto()
                     {
                         Comment = x.Comment,
                         CommentDate = x.CreationTime,

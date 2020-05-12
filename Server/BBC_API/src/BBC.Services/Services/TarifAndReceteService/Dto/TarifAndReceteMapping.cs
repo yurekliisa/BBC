@@ -12,6 +12,7 @@ namespace BBC.Services.Services.TarifAndReceteService.Dto
         public TarifAndReceteMapping()
         {
             CreateMap<ContentDto,Content>();
+            CreateMap<CreateContentDto, Content>();
             CreateMap<CreateTarifAndReceteDto, TarifAndRecete>();
             CreateMap<TarifAndRecete, TarifAndReceteListDto>();
             CreateMap<TarifAndRecete, TarifAndReceteDetailDto>();
