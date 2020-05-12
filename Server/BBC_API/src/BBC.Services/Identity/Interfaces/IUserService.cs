@@ -16,6 +16,7 @@ namespace BBC.Services.Identity.Interfaces
         Task<UserProfileDto> GetUser(int Id);
         Task<IdentityResult> EditUser(string Id, EditUserDto model);
         Task<IdentityResult> Delete(string Id);
+        Task<UserListDto> Report();
 
     }
 }

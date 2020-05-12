@@ -39,6 +39,14 @@ namespace BBC.API.Controllers
             return Ok(users);
         }
 
+        [HttpGet]
+        [ProducesResponseType(200)]
+        [Route("UserReport")]
+        public async Task<IActionResult> UserReport()
+        {
+            var report = _userService.Report();
+            return Ok(report);
+        }
 
         [HttpGet]
         [ProducesResponseType(typeof(UserProfileDto), 200)]
