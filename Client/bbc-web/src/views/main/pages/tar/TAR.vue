@@ -1,7 +1,7 @@
 <template>
   <v-layout wrap align-start justify-center row fill-height class="mb-4">
     <v-flex md12>
-      <h1 class="homeTitle">Son Paylaşılanlar</h1>
+      <h1 class="homeTitle">Tarif ve Reçeteler</h1>
       <v-row>
         <v-flex md4 v-for="(item, i) in tars" :key="i">
           <ListCard :item="item" />
@@ -43,7 +43,7 @@ export default {
   methods: {
     fetchData() {
       axios
-        .get("/TaR/GetAllTarifAndRecetes", {
+        .get("/TaR/GetAllTarifAndRecetes?page="+this.page, {
           headers: {
             "Content-type": "application/json",
             "Access-Control-Allow-Origin": "*",

@@ -88,23 +88,16 @@ namespace BBC.API.Controllers
             {
                 return BadRequest("Sayfa sayısı 0 ve 0'dan küçük olamaz");
             }
-            var result = await _tarifAndReceteService.GetAllTarifAndRecetes();
+            var result = await _tarifAndReceteService.GetAllTarifAndRecetes(page);
             return Ok(result);
         }
 
         [HttpGet]
         [ProducesResponseType(typeof(TarifAndReceteDetailDto), 200)]
-<<<<<<< Updated upstream
         [Route("GetTarifAndReceteDetails")]
         public async Task<IActionResult> GetTarifAndReceteDetails(int tarId)
         {
             var result = await _tarifAndReceteService.GetTarifAndReceteDetails(tarId);
-=======
-        [Route("GetAllTarifAndReceteDetails")]
-        public async Task<IActionResult> GetAllTarifAndReceteDetails()
-        {
-            var result = await _tarifAndReceteService.GetAllTarifAndReceteDetails();
->>>>>>> Stashed changes
             return Ok(result);
         }
 
@@ -129,12 +122,13 @@ namespace BBC.API.Controllers
             await _tarifAndReceteService.EditTarifAndRecete(input);
             return Ok();
         }
+       
         [HttpPost]
         [Route("Comments")]
-        public async Task<IActionResult> Comment(CommentDto Id)
+        [RequiredAuth]
+        public async Task<IActionResult> Comment([FromBody] CommentDto input)
         {
-            //YANLIŞ YAPTIM
-            await _tarifAndReceteService.Comment(Id);
+            await _tarifAndReceteService.Comment(input);
             return Ok();
         }
     }

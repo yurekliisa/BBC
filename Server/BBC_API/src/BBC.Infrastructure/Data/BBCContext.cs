@@ -19,9 +19,9 @@ namespace BBC.Infrastructure.Data
         //public DbSet<JobUser> JobUsers { get; set; }
         public DbSet<LobiMessages> LobiMessages { get; set; }
         public DbSet<LobiUser> LobiUsers { get; set; }
-        public DbSet<Popularity> Popularities { get; set; }
         public DbSet<PrivateMessages> PrivateMessages { get; set; }
         public DbSet<SocialMedia> SocialMedias { get; set; }
+        public DbSet<Popularity> Popularities{ get; set; }
         public DbSet<TarifAndRecete> TarifAndRecetes { get; set; }
         //public DbSet<Template> Templates { get; set; }
         public DbSet<JobsApplication> JobsApplications { get; set; }

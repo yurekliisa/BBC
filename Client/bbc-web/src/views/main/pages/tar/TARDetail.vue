@@ -1,20 +1,23 @@
 <template>
-  <div v-if="item !== undefined">
-    <v-card class="ma-2 pa-1 my-2" v-if="item !== undefined"
-      ><!--:loading="item.isLoading"-->
-      <v-img height="250" :src="item.kapakResim"></v-img>
-      <v-card-title>{{ item.name }}</v-card-title>
+  <div v-if="data !== undefined">
+    <v-card class="ma-2 pa-1 my-2" v-if="data">
+      <v-img
+        v-if="data.mainImage"
+        height="250"
+        :src="'https://localhost:44308/' + data.mainImage"
+      ></v-img>
+      <v-card-title>{{ data.title }}</v-card-title>
       <v-card-text>
         <v-row align="center" class="mx-0">
           <v-chip outlined>
-            <v-avatar left>
-              <v-img src="https://cdn.vuetifyjs.com/images/john.png"></v-img>
+            <v-avatar left v-if="data.userPhoto">
+              <v-img :src="'https://localhost:44308/' + data.userPhoto"></v-img>
             </v-avatar>
-            {{ item.actor.fullName }}
+            {{ data.userFullName }}
           </v-chip>
           <v-spacer />
           <v-rating
-            :value="item.point"
+            :value="data.puan"
             color="amber"
             dense
             half-increments
@@ -22,56 +25,89 @@
             size="14"
           ></v-rating>
           <div class="grey--text ml-4">
-            {{ item.point }}
+            {{ data.puan }}
             <v-icon class="ml-7 mr-2">mdi-comment-outline</v-icon
-            >{{ item.commentCount }}
+            >{{ data.commentCount }}
           </div>
         </v-row>
 
-        <div class="my-4 subtitle-1 description" v-html="content"></div>
+        <div
+          class="my-4 subtitle-1 description"
+          v-html="data.contentText"
+        ></div>
       </v-card-text>
       <v-divider class="mx-4"></v-divider>
       <v-card-title>Kategoriler</v-card-title>
       <v-card-text>
-        <v-chip-group
-          v-model="item.anaUrun"
-          active-class="deep-purple accent-4 white--text"
-          column
-        >
-          <v-chip v-for="(urun, j) in item.urunler" :key="j">{{ urun }}</v-chip>
+        <v-chip-group active-class="deep-purple accent-4 white--text" column>
+          <v-chip v-for="(urun, j) in data.categories" :key="j">{{
+            urun
+          }}</v-chip>
         </v-chip-group>
       </v-card-text>
     </v-card>
-
-    <Comment v-bind:id="$route.params.id" />
+    <div v-if="data.commentDtos && data.id">{{data.id}}
+    <Comment :comments="data.commentDtos" :tarId="data.id"/>
+    </div>
   </div>
 </template>
 
 <script>
 import Comment from "../../../../components/main/Comment";
+import axios from "axios";
+
 export default {
   name: "TARDetail",
   components: {
     Comment,
   },
   created() {
-    //this.item = rotData.find((x) => x.id === this.$route.params.id);
+    console.log(this.$route.params.id);
   },
   data() {
     return {
-      item: undefined,
-      content: `<h1>Most basic use</h1><ul><li><p>hjk</p></li><li><p>ghjkfgjh</p></li><li><p>yturt</p></li><li><p>uety</p></li><li><p>wert</p></li><li><p>wer</p></li><li><p>qwer</p></li><li><p>qwe</p></li><li><p>asf</p></li><li><p>dfg</p></li><li><p>hfdh</p></li><li><p>j</p></li></ul><hr><p>You can use the necessary extensions. The corresponding buttons are <strong>added automatically.</strong></p><p><code>&lt;tiptap-vuetify v-model="content" :extensions="extensions"/&gt;</code></p><p></p><h2>Icons</h2><p>Avaliable icons groups:</p><ol><li><p>Material Design <em>Official</em></p></li><li><p>Font Awesome (FA)</p></li><li><p>Material Design Icons (MDI)</p></li></ol><p></p><blockquote><p>This package is awesome!</p></blockquote><p></p>`,
+      data: {},
+      /*
+      {
+  "title": "string",
+  "contentText": "string",
+  "puan": 0,
+  "commentDtos": [
+    {
+      "taRId": 0,
+      "comment": "string",
+      "puan": 0
+    }
+  ],
+  "mainImage": "string",
+  "shortDescription": "string",
+  "userFullName": "string",
+  "userPhoto": "string",
+  "userId": 0,  
+  "id": 0
+}
+      */
     };
+  },
+  mounted() {
+    axios
+      .get("TaR/GetTarifAndReceteDetails?tarId=" + this.$route.params.id)
+      .then((res) => {
+        if (res.status === 200) {
+          this.data = res.data;
+          console.log(this.data);
+        }
+      });
   },
   methods: {
     like(val) {
-      this.item.isLoading = true;
+      this.data.isLoading = true;
       setTimeout(() => {
-        this.item.isLoading = false;
+        this.data.isLoading = false;
         if (!val) {
-          this.item.isLike = true;
+          this.data.isLike = true;
         } else {
-          this.item.isLike = false;
+          this.data.isLike = false;
         }
       }, 1000);
     },

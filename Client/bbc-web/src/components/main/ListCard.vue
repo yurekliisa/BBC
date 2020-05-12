@@ -1,6 +1,9 @@
 <template>
   <v-card :loading="item.isLoading" class="ma-2 pa-1 my-2">
-    <v-img height="250" :src="'https://localhost:44308/'+item.mainImage"></v-img>
+    <v-img
+      height="250"
+      :src="'https://localhost:44308/' + item.mainImage"
+    ></v-img>
     <v-card-title>{{ item.title }}</v-card-title>
     <v-card-text>
       <v-row align="center" class="mx-0">
@@ -17,24 +20,16 @@
         </div>
       </v-row>
 
-      <div class="my-4 subtitle-1">
-        <v-menu
-          v-model="item.menu"
-          bottom
-          right
-          transition="scale-transition"
-          origin="top left"
-        >
-          <template v-slot:activator="{ on }">
-            <v-chip outlined v-on="on">
-              <v-avatar left>
-              </v-avatar>
-              {{ item.userFullName }}
-            </v-chip>
-          </template>
-        </v-menu>
-      </div>
-      <div>{{ item.shortDescription }}</div>
+      <v-chip outlined>
+        <v-avatar left>
+          <v-img
+            height="250"
+            :src="'https://localhost:44308/' + item.userPhoto"
+          ></v-img>
+        </v-avatar>
+        {{ item.userFullName }}
+      </v-chip>
+      <div style="margin-top:1rem">{{ item.shortDescription }}</div>
     </v-card-text>
 
     <v-divider class="mx-4"></v-divider>
@@ -46,23 +41,13 @@
         active-class="deep-purple accent-4 white--text"
         column
       >
-        <v-chip v-for="(urun, j) in item.urunler" :key="j">{{ urun }}</v-chip>
+        <v-chip v-for="(urun, j) in item.categories" :key="j">{{ urun }}</v-chip>
       </v-chip-group>
     </v-card-text>
     <v-card-actions>
       <v-btn text color="deep-purple accent-4" @click="reserve()"
         >Devamını Oku</v-btn
       >
-      <v-spacer></v-spacer>
-      <v-btn icon v-if="!item.isLike" @click="like(false)">
-        <v-icon>mdi-heart</v-icon>
-      </v-btn>
-      <v-btn icon v-if="item.isLike" @click="like(true)">
-        <v-icon color="red">mdi-heart</v-icon>
-      </v-btn>
-      <v-btn icon>
-        <v-icon>mdi-share-variant</v-icon>
-      </v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -75,26 +60,6 @@ export default {
       type: Object,
     },
   },
-  /*
-  
-                <v-img :src="item.userPhoto"></v-img>
-              {
-                "mainImage": "string",
-                "title": "string",
-                "shortDescription": "string",
-                "userFullName": "string",
-                "userPhoto": "string",
-                "userId": 0,
-                "puan": 0,
-                "commentCount": 0,
-
-                "categories": [
-                  "string"
-                ],
-                "id": 0
-              }
-            ]
-  */
   methods: {
     reserve() {
       this.item.isLoading = true;
@@ -103,7 +68,7 @@ export default {
         this.$router.push({
           name: "TARDetail",
           params: {
-            name: this.item.title.replace(/ /g, "-"),
+            name: this.item.title.replace(/ /g, "&"),
             id: this.item.id,
           },
         });

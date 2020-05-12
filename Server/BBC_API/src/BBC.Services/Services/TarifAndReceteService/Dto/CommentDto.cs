@@ -8,5 +8,11 @@ namespace BBC.Services.Services.TarifAndReceteService.Dto
     {
         public int TaRId { get; set; }
         public string Comment { get; set; }
+        public double Puan{ get; set; }
+        public int UserId { get; set; }
+        public string UserPhoto { get; set; }
+        public string UserName { get; set; }
+        public DateTime CommentDate { get; set; }
+
     }
 }

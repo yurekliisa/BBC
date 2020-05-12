@@ -7,6 +7,18 @@
   <ItemGroup>
     <Compile Remove="Migrations\20200408185134_fixed_relationships.cs" />
     <Compile Remove="Migrations\20200408185134_fixed_relationships.Designer.cs" />
+    <Compile Remove="Migrations\20200512022547_update-fk-name.cs" />
+    <Compile Remove="Migrations\20200512022547_update-fk-name.Designer.cs" />
+    <Compile Remove="Migrations\20200512022907_update_fk_popularity.cs" />
+    <Compile Remove="Migrations\20200512022907_update_fk_popularity.Designer.cs" />
+    <Compile Remove="Migrations\20200512023040_remove_popularity.cs" />
+    <Compile Remove="Migrations\20200512023040_remove_popularity.Designer.cs" />
+    <Compile Remove="Migrations\20200512023643_add-popularities.cs" />
+    <Compile Remove="Migrations\20200512023643_add-popularities.Designer.cs" />
+    <Compile Remove="Migrations\20200512024234_remove_fk.cs" />
+    <Compile Remove="Migrations\20200512024234_remove_fk.Designer.cs" />
+    <Compile Remove="Migrations\20200512024303_remove_fk.cs" />
+    <Compile Remove="Migrations\20200512024303_remove_fk.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

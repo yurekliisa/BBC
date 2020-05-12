@@ -20,14 +20,17 @@ namespace BBC.Services.Services.TarifAndReceteService
     public class TarifAndReceteManager : ApplicationBaseServices<User, Role>, ITarifAndReceteService
     {
         private readonly IRepositoryBase<BBCContext, TarifAndRecete, int> _tarRepository;
+        private readonly IRepositoryBase<BBCContext, Popularity, int> _popularityRepository;
         private readonly IHostingEnvironment _hostingEnvironment;
         public TarifAndReceteManager(
             IRepositoryBase<BBCContext, TarifAndRecete, int> tarRepository,
+            IRepositoryBase<BBCContext, Popularity, int> popularityRepository,
             IHostingEnvironment hostingEnvironment
             )
         {
             _tarRepository = tarRepository;
             _hostingEnvironment = hostingEnvironment;
+            _popularityRepository = popularityRepository;
         }
 
         public async Task<List<TaRHomeOuputDto>> GetTarifAndRecetes(int page)
@@ -102,10 +105,36 @@ namespace BBC.Services.Services.TarifAndReceteService
             _mapper.Map(tar, input);
             await _tarRepository.UpdateAsync(tar);
         }
-        public async Task<List<TarifAndReceteListDto>> GetAllTarifAndRecetes()
+
+        public async Task<List<TarifAndReceteListDto>> GetAllTarifAndRecetes(int page)
         {
             var tar = await _tarRepository.GetListAsync();
-            var result = _mapper.Map<List<TarifAndReceteListDto>>(tar);
+            //Include Join yapar
+            List<TarifAndReceteListDto> result = new List<TarifAndReceteListDto>();
+            List<TarifAndRecete> query = await _tarRepository.GetQueryable()
+            .Include(x => x.Content)
+            .Include(x => x.Popularities)
+            .Include(x => x.User)
+            .Include(x => x.TaRCategories)
+            .Include("TaRCategories.Category")
+            //.Where(x=>x.isDeleted != true && x.isActive== true)
+            //.OrderBy(y => y.Id)
+            .OrderByDescending(y => y.CreateTime)
+            .Skip((page - 1) * 18)
+            .Take(18).ToListAsync();
+            result = query.Select(y => new TarifAndReceteListDto()
+            {
+                Id = y.Id,
+                Title = y.Content.Title,
+                ShortDescription = y.Content.ShortDescription,
+                MainImage = y.Content.MainImage,
+                UserId = y.UserId,
+                UserFullName = y.User.UserName + " " + y.User.SurName,
+                UserPhoto = y.User.Photo,
+                Puan = y.Popularities.Count > 0 ? (y.Popularities.Sum(x => x.Puan) / y.Popularities.Count()) : 0,
+                CommentCount = y.Popularities.Count(x => x.Comment != null),
+                Categories = y.TaRCategories.Select(y => y.Category.Name).ToList(),
+            }).ToList();
             return result;
         }
 
@@ -114,28 +143,38 @@ namespace BBC.Services.Services.TarifAndReceteService
             TarifAndReceteDetailDto result = new TarifAndReceteDetailDto();
             try
             {
-                var query = _tarRepository.GetQueryable()
+                var data = await _tarRepository.GetQueryable()
                 .Include(x => x.Content)
                 .Include(x => x.Popularities)
                 .Include(x => x.User)
                 .Include(x => x.TaRCategories)
                 .Include("TaRCategories.Category")
-                .Select(y => new TarifAndReceteDetailDto()
-                {
-                    Title = y.Content.Title,
-                    ShortDescription = y.Content.ShortDescription,
-                    MainImage = y.Content.MainImage,
-                    UserId = y.UserId,
-                    UserFullName = y.User.UserName + " " + y.User.SurName,
-                    UserPhoto = y.User.Photo,
-                    Puan = y.Popularities.Count > 0 ? (y.Popularities.Sum(x => x.Puan) / y.Popularities.Count()) : 0,
-                    CommentDtos = y.Popularities.Select(x => new CommentDto() {
-                        Comment = x.Comment
+                //.Include("Popularities.User")
 
-                    }).ToList(),
-                    Categories = y.TaRCategories.Select(y => y.Category.Name).ToList(),
-                }).FirstOrDefault(x => x.Id == tarId);
-                result = query;
+                .FirstOrDefaultAsync(x => x.Id == tarId);
+                if (data != null)
+                {
+                    result.Id = data.Id;
+                    result.Title = data.Content.Title;
+                    result.ShortDescription = data.Content.ShortDescription;
+                    result.ContentText = data.Content.ContentText;
+                    result.MainImage = data.Content.MainImage;
+                    result.UserId = data.UserId;
+                    result.UserFullName = data.User.UserName + " " + data.User.SurName;
+                    result.UserPhoto = data.User.Photo;
+                    result.CommentCount = data.Popularities.Count;
+                    result.Puan = data.Popularities.Count > 0 ? (data.Popularities.Sum(x => x.Puan) / data.Popularities.Count()) : 0;
+                    result.CommentDtos = data.Popularities.Where(x => String.IsNullOrEmpty(x.Comment)).Select(x => new CommentDto()
+                    {
+                        Comment = x.Comment,
+                        CommentDate = x.CreationTime,
+                        Puan = x.Puan,
+                        UserId = x.UserId,
+                        UserName = x.User.UserName,
+                        UserPhoto = x.User.Photo
+                    }).ToList();
+                    result.Categories = data.TaRCategories.Select(y => y.Category.Name).ToList();
+                }
 
             }
             catch (Exception ex)
@@ -145,7 +184,6 @@ namespace BBC.Services.Services.TarifAndReceteService
 
             return result;
         }
-
         public async Task<List<UserTarifAndReceteDto>> GetTarifAndReceteByUserId(int Id)
         {
             var query = _tarRepository.GetQueryable()
@@ -165,6 +203,8 @@ namespace BBC.Services.Services.TarifAndReceteService
                     MainImage = y.Content.MainImage,
                     ShortDescription = y.Content.ShortDescription,
                     Title = y.Content.Title,
+                    CommentCount = y.Popularities.Count,
+                    Puan = y.Popularities.Count > 0 ? (y.Popularities.Sum(x => x.Puan) / y.Popularities.Count()) : 0,
                 },
                 Categories = y.TaRCategories.Select(y => new CategoryListDto()
                 {
@@ -173,6 +213,25 @@ namespace BBC.Services.Services.TarifAndReceteService
                 }).ToList(),
             }).ToListAsync();
             return result;
+        }
+
+
+        public async Task Comment(CommentDto input)
+        {
+            var user = await GetCurrentUserAsync();
+
+            await _popularityRepository.InsertAsync(new Popularity()
+            {
+                Comment = input.Comment,
+                CreationTime = DateTime.Now,
+                IsDeleted = false,
+                Puan = input.Puan,
+                TarifAndReceteId = input.TaRId,
+
+                UserId = user.Id
+            });
+
+            await _popularityRepository.SaveChangesAsync();
         }
 
         private async Task<string> saveFile(IFormFile file)

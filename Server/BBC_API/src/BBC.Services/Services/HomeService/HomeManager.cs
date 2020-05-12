@@ -35,7 +35,7 @@ namespace BBC.Services.Services.HomeService
             List<SliderOutputDto> result = new List<SliderOutputDto>();
             try
             {
-                var popularOnTaR = await GetPopularity(x => x.TaRId).Take(12).ToListAsync();
+                var popularOnTaR = await GetPopularity(x => x.TarifAndReceteId).Take(12).ToListAsync();
                 foreach (var popularty in popularOnTaR)
                 {
                     var tar = await _tarRepository.GetQueryable().Include(y => y.Content).FirstOrDefaultAsync(x => x.Id == popularty.Id);
@@ -97,7 +97,7 @@ namespace BBC.Services.Services.HomeService
 
         public async Task<List<PopularTaROutputDto>> GetTaRByPopularCategory()
         {
-            var popularOnTaR = await GetPopularity(x => x.TaRId).ToListAsync();
+            var popularOnTaR = await GetPopularity(x => x.TarifAndReceteId).ToListAsync();
             var result = await GetRandomPopularTaR(popularOnTaR);
             return result;
         }
@@ -149,7 +149,7 @@ namespace BBC.Services.Services.HomeService
             List<PopularityDto> popularOnTaR = new List<PopularityDto>();
             try
             {
-                popularOnTaR = await GetPopularity(x => x.TaRId).Take(10).ToListAsync();
+                popularOnTaR = await GetPopularity(x => x.TarifAndReceteId).Take(10).ToListAsync();
                 foreach (var popularty in popularOnTaR)
                 {
                     var categories = await _tarRepository.GetQueryable()

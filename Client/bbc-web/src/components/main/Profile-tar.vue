@@ -7,13 +7,13 @@
     </v-row>
     <v-row>
       <v-flex v-for="(item, i) in tars" :key="i">
-        <v-card :loading="item.isLoading" class="ma-2 pa-1 my-2">
-          <v-img height="250" :src="item.mainImage"></v-img>
-          <v-card-title>{{ item.title }}</v-card-title>
+        <v-card :loading="item.isLoading" class="ma-2 pa-1 my-2" >
+          <v-img height="250" :src="'https://localhost:44308/'+item.content.mainImage"></v-img>
+          <v-card-title>{{ item.content.title }}</v-card-title>
           <v-card-text>
             <v-row align="center" class="mx-0">
               <v-rating
-                :value="item.puan"
+                :value="item.content.puan"
                 color="amber"
                 dense
                 half-increments
@@ -21,34 +21,20 @@
                 size="14"
               ></v-rating>
               <div class="grey--text ml-4">
-                {{ item.puan }} ({{ item.commentCount }})
+                {{ item.content.puan }} ({{ item.content.commentCount }})
               </div>
             </v-row>
-
-            <div class="my-4 subtitle-1">
-              <v-menu
-                v-model="item.menu"
-                bottom
-                right
-                transition="scale-transition"
-                origin="top left"
-              >
-              </v-menu>
-            </div>
-            <div>{{ item.shortDescription }}</div>
+            <div style="margin-top:1rem">{{ item.content.shortDescription }}</div>
           </v-card-text>
-
           <v-divider class="mx-4"></v-divider>
-          <v-card-title>Malzemeler</v-card-title>
-
+          <v-card-title>Kategoriler</v-card-title>
           <v-card-text>
             <v-chip-group
-              v-model="item.anaUrun"
               active-class="deep-purple accent-4 white--text"
               column
             >
-              <v-chip v-for="(urun, j) in item.urunler" :key="j">{{
-                urun
+              <v-chip v-for="(urun, j) in item.categories" :key="j">{{
+                urun.name
               }}</v-chip>
             </v-chip-group>
           </v-card-text>
@@ -73,29 +59,29 @@ export default {
       tars: [],
     };
   },
-  mounted(){
+  mounted() {
     this.fetchdata();
   },
-  methods:{
+  methods: {
     fetchdata() {
       axios
-        .get("TaR/GetTarifAndReceteByUserId?userId=" + this.id ,{
-          headers:{
-             "Content-type": "application/json",
+        .get("TaR/GetTarifAndReceteByUserId?userId=" + this.id, {
+          headers: {
+            "Content-type": "application/json",
             "Access-Control-Allow-Origin": "*",
-          }
+          },
         })
-        .then((result)=>{
-          console.log(result)
-          if (result.status===200){
+        .then((result) => {
+          console.log(result);
+          if (result.status === 200) {
             this.tars = result.data;
           }
         })
-        .catch((err)=>{
+        .catch((err) => {
           console.log(err);
         });
-    }
-  }
+    },
+  },
 };
 </script>
 

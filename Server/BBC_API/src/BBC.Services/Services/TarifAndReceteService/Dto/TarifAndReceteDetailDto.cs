@@ -8,11 +8,10 @@ namespace BBC.Services.Services.TarifAndReceteService.Dto
 {
     public class TarifAndReceteDetailDto : BaseDto<int>
     {
-        public int tarId { get; set; }
-        public ContentDto Content { get; set; }
         public string Title { get; set; }
         public string ContentText { get; set; }
         public double Puan { get; set; }
+        public int CommentCount { get; set; }
         public ICollection<CommentDto> CommentDtos { get; set; }
         public string MainImage { get; set; }
         public string ShortDescription { get; set; }
