@@ -20,7 +20,7 @@
           >
             <v-card class="ma-1 pa-1" style="width:100%">
               <v-flex v-for="(item, i) in  recentChefs" :key="i">
-                <v-list-item>
+                <v-list-item :to="'/profile/'+item.id" style="cursor:pointer">
                   <v-list-item-avatar>
                     <v-img
                       :src="'https://localhost:44308/'+item.photo"
@@ -64,6 +64,8 @@ export default {
     this.fetchData();
   },
   methods:{
+    
+    
     fetchData(){
       axios
       .get("/Home/GetPopularChefs",{
