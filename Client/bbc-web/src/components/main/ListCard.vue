@@ -19,15 +19,17 @@
           {{ item.puan }} ({{ item.commentCount }})
         </div>
       </v-row>
-
-      <v-chip outlined>
-        <v-avatar left>
-          <v-img
-            :src="'https://localhost:44308/' + item.userPhoto"
-          ></v-img>
-        </v-avatar>
-        {{ item.userFullName }}
-      </v-chip>
+      <router-link
+        :to="'/profile/' + item.userId"
+        style="text-decoration:none;"
+      >
+        <v-chip outlined style="cursor:pointer;">
+          <v-avatar left>
+            <v-img :src="'https://localhost:44308/' + item.userPhoto"></v-img>
+          </v-avatar>
+          <span>{{ item.userFullName }}</span>
+        </v-chip>
+      </router-link>
       <div style="margin-top:1rem">{{ item.shortDescription }}</div>
     </v-card-text>
 
@@ -40,7 +42,9 @@
         active-class="deep-purple accent-4 white--text"
         column
       >
-        <v-chip v-for="(urun, j) in item.categories" :key="j">{{ urun }}</v-chip>
+        <v-chip v-for="(urun, j) in item.categories" :key="j">{{
+          urun
+        }}</v-chip>
       </v-chip-group>
     </v-card-text>
     <v-card-actions>

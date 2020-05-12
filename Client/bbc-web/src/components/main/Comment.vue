@@ -86,17 +86,6 @@
 <script>
 import axios from "axios";
 
-//  "commentDtos": [
-//     {
-//       "taRId": 0,
-//       "comment": "string",
-//       "puan": 0,
-//       "userId": 0,
-//       "userPhoto": "string",
-//       "userName": "string",
-//       "commentDate": "2020-05-12T01:49:04.231Z"
-//     }
-//   ],
 export default {
   name: "Comment",
   props: ["comments", "tarId"],
@@ -119,8 +108,6 @@ export default {
         puan: this.puan,
         userId: this.$store.getters.userInfo.userId,
       };
-      console.log(data);
-      debugger;
       axios
         .post("TaR/Comments", data, {
           headers: {
@@ -130,9 +117,8 @@ export default {
           },
         })
         .then((result) => {
-          console.log(result);
           if (result.status === 200) {
-            this.isComment = !this.isComment;
+            axios.get("TaR/GetAllComments?tarId="+this.tarId)
           }
         })
         .catch((err) => {
