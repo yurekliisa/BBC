@@ -3,10 +3,10 @@
     <h1 class="homeTitle">Popular Tarifler</h1>
     <v-row>
       <v-flex v-for="(item, i) in tarByProps" :key="i">
-        <v-card :loading="item.id" class="ma-1 pa-1 cardHover">
+        <v-card  class="ma-1 pa-1 cardHover">
           <v-img
             height="100"
-            :src="item.mainImage"
+            :src="'https://localhost:44308/'+item.mainImage"
             class="white--text align-end"
           >
             <v-card-title style="color:white">{{ item.title }}</v-card-title>

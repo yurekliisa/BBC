@@ -20,11 +20,11 @@
           >
             <v-card class="ma-1 pa-1" style="width:100%">
               <v-flex v-for="(item, i) in recentCat" :key="i">
-                <v-list-item>                 
+                <v-list-item>
                   <v-list-item-content>
-                    <v-list-item-title style="text-align:center;"
-                      >{{item.name}}</v-list-item-title
-                    >
+                   <v-list-item-title style="text-align:center;">
+                     {{item.name}}
+                     </v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
               </v-flex>

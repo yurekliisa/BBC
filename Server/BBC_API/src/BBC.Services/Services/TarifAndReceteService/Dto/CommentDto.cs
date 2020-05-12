@@ -12,7 +12,7 @@ namespace BBC.Services.Services.TarifAndReceteService.Dto
         public int UserId { get; set; }
         public string UserPhoto { get; set; }
         public string UserName { get; set; }
-        public DateTime CommentDate { get; set; }
+        public string CommentDate { get; set; }
 
     }
 }

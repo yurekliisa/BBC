@@ -1,7 +1,9 @@
 ﻿using BBC.Core.Domain;
+using BBC.Core.Domain.Identity;
 using BBC.Core.Repositories.Base;
 using BBC.Infrastructure.Data;
 using BBC.Services.Helper;
+using BBC.Services.Services.Base;
 using BBC.Services.Services.Common.Base;
 using BBC.Services.Services.HomeService.Dto;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace BBC.Services.Services.HomeService
 {
-    public class HomeManager : BaseService, IHomeService
+    public class HomeManager : ApplicationBaseServices<User, Role>, IHomeService
     {
         private readonly IRepositoryBase<BBCContext, Popularity, int> _popularityRepository;
         private readonly IRepositoryBase<BBCContext, TarifAndRecete, int> _tarRepository;
@@ -124,13 +126,13 @@ namespace BBC.Services.Services.HomeService
                 //Swicth-case ile gelen duruma göre
                 foreach (var popularty in popularOnUser)
                 {
-                    var tar = await _tarRepository.GetQueryable().Include(y => y.User).FirstOrDefaultAsync(x => x.Id == popularty.Id);
-                    if (tar != null)
+                    var user = await _userManager.FindByIdAsync(Convert.ToString(popularty.Id));
+                    if (user != null)
                         result.Add(new PopularChefOutputDto()
                         {
-                            Id = tar.UserId,
-                            Photo = tar.User.Photo,
-                            FullName = tar.User.Name + " " + tar.User.SurName
+                            Id = user.Id,
+                            Photo = user.Photo,
+                            FullName = user.Name + " " + user.SurName
                         });
                 }
             }
