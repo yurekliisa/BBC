@@ -35,7 +35,7 @@ namespace BBC.Services.Services.HomeService
             List<SliderOutputDto> result = new List<SliderOutputDto>();
             try
             {
-                var popularOnTaR = await GetPopularity(x => x.TarifAndReceteId).Take(12).ToListAsync();
+                var popularOnTaR = await GetPopularity(x => (int)x.TarifAndReceteId).Take(12).ToListAsync();
                 foreach (var popularty in popularOnTaR)
                 {
                     var tar = await _tarRepository.GetQueryable().Include(y => y.Content).FirstOrDefaultAsync(x => x.Id == popularty.Id);
@@ -66,9 +66,7 @@ namespace BBC.Services.Services.HomeService
                 .Include(x => x.Popularities)
                 .Include(x => x.User)
                 .Include(x => x.TaRCategories)
-                .Include("TaRCategories.Category")
-                //.Where(x=>x.isDeleted != true && x.isActive== true)
-                //.OrderBy(y => y.Id)
+                .Include("TaRCategories.Category")                
                 .OrderByDescending(y => y.CreateTime)
                 .Skip((page - 1) * 18)
                 .Take(18).ToListAsync();
@@ -97,7 +95,7 @@ namespace BBC.Services.Services.HomeService
 
         public async Task<List<PopularTaROutputDto>> GetTaRByPopularCategory()
         {
-            var popularOnTaR = await GetPopularity(x => x.TarifAndReceteId).ToListAsync();
+            var popularOnTaR = await GetPopularity(x => (int)x.TarifAndReceteId).ToListAsync();
             var result = await GetRandomPopularTaR(popularOnTaR);
             return result;
         }
@@ -149,7 +147,7 @@ namespace BBC.Services.Services.HomeService
             List<PopularityDto> popularOnTaR = new List<PopularityDto>();
             try
             {
-                popularOnTaR = await GetPopularity(x => x.TarifAndReceteId).Take(10).ToListAsync();
+                popularOnTaR = await GetPopularity(x => (int)x.TarifAndReceteId).Take(10).ToListAsync();
                 foreach (var popularty in popularOnTaR)
                 {
                     var categories = await _tarRepository.GetQueryable()
@@ -166,7 +164,7 @@ namespace BBC.Services.Services.HomeService
                     result.AddRange(categories);
                 }
                 result = result.DistinctBy(x=>x.Id).ToList();
-
+              
                 if (result.Count > 10)
                     result = result.Take(10).ToList();
             }

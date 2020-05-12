@@ -15,10 +15,11 @@ namespace BBC.Core.Domain
         public double Puan { get; set; }
 
 
-        public int TarifAndReceteId { get; set; }
-
+       
+        public int? TarifAndReceteId { get; set; }
         [ForeignKey("TarifAndReceteId")]
         public TarifAndRecete TarifAndRecete { get; set; }
+
 
 
         public int UserId { get; set; }

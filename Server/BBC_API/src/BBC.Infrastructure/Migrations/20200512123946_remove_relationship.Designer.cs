@@ -4,14 +4,16 @@ using BBC.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BBC.Infrastructure.Migrations
 {
     [DbContext(typeof(BBCContext))]
-    partial class BBCContextModelSnapshot : ModelSnapshot
+    [Migration("20200512123946_remove_relationship")]
+    partial class remove_relationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -331,19 +333,14 @@ namespace BBC.Infrastructure.Migrations
                     b.Property<double>("Puan")
                         .HasColumnType("float");
 
-                    b.Property<int?>("TarifAndReceteId")
-                        .HasColumnType("int");
-
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TarifAndReceteId");
-
                     b.HasIndex("UserId");
 
-                    b.ToTable("Popularities");
+                    b.ToTable("Popularity");
                 });
 
             modelBuilder.Entity("BBC.Core.Domain.PrivateMessages", b =>
@@ -635,10 +632,6 @@ namespace BBC.Infrastructure.Migrations
 
             modelBuilder.Entity("BBC.Core.Domain.Popularity", b =>
                 {
-                    b.HasOne("BBC.Core.Domain.TarifAndRecete", "TarifAndRecete")
-                        .WithMany("Popularities")
-                        .HasForeignKey("TarifAndReceteId");
-
                     b.HasOne("BBC.Core.Domain.Identity.User", "User")
                         .WithMany("Popularities")
                         .HasForeignKey("UserId")

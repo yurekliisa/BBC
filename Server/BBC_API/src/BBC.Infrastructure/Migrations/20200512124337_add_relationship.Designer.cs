@@ -4,14 +4,16 @@ using BBC.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BBC.Infrastructure.Migrations
 {
     [DbContext(typeof(BBCContext))]
-    partial class BBCContextModelSnapshot : ModelSnapshot
+    [Migration("20200512124337_add_relationship")]
+    partial class add_relationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -331,7 +333,7 @@ namespace BBC.Infrastructure.Migrations
                     b.Property<double>("Puan")
                         .HasColumnType("float");
 
-                    b.Property<int?>("TarifAndReceteId")
+                    b.Property<int?>("TarifAndReceteId1")
                         .HasColumnType("int");
 
                     b.Property<int>("UserId")
@@ -339,7 +341,7 @@ namespace BBC.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TarifAndReceteId");
+                    b.HasIndex("TarifAndReceteId1");
 
                     b.HasIndex("UserId");
 
@@ -635,9 +637,9 @@ namespace BBC.Infrastructure.Migrations
 
             modelBuilder.Entity("BBC.Core.Domain.Popularity", b =>
                 {
-                    b.HasOne("BBC.Core.Domain.TarifAndRecete", "TarifAndRecete")
+                    b.HasOne("BBC.Core.Domain.TarifAndRecete", null)
                         .WithMany("Popularities")
-                        .HasForeignKey("TarifAndReceteId");
+                        .HasForeignKey("TarifAndReceteId1");
 
                     b.HasOne("BBC.Core.Domain.Identity.User", "User")
                         .WithMany("Popularities")

@@ -19,6 +19,12 @@
     <Compile Remove="Migrations\20200512024234_remove_fk.Designer.cs" />
     <Compile Remove="Migrations\20200512024303_remove_fk.cs" />
     <Compile Remove="Migrations\20200512024303_remove_fk.Designer.cs" />
+    <Compile Remove="Migrations\20200512123058_fixed_problems.cs" />
+    <Compile Remove="Migrations\20200512123058_fixed_problems.Designer.cs" />
+    <Compile Remove="Migrations\20200512124055_add_relationship.cs" />
+    <Compile Remove="Migrations\20200512124055_add_relationship.Designer.cs" />
+    <Compile Remove="Migrations\20200512124250_add_relationship.cs" />
+    <Compile Remove="Migrations\20200512124250_add_relationship.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

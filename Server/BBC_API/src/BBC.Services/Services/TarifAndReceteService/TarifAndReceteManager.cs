@@ -44,9 +44,7 @@ namespace BBC.Services.Services.TarifAndReceteService
                 .Include(x => x.Popularities)
                 .Include(x => x.User)
                 .Include(x => x.TaRCategories)
-                .Include("TaRCategories.Category")
-                //.Where(x=>x.isDeleted != true && x.isActive== true)
-                //.OrderBy(y => y.Id)
+                .Include("TaRCategories.Category")             
                 .OrderByDescending(y => y.CreateTime)
                 .Skip((page - 1) * 18)
                 .Take(18).ToListAsync();
@@ -116,9 +114,7 @@ namespace BBC.Services.Services.TarifAndReceteService
             .Include(x => x.Popularities)
             .Include(x => x.User)
             .Include(x => x.TaRCategories)
-            .Include("TaRCategories.Category")
-            //.Where(x=>x.isDeleted != true && x.isActive== true)
-            //.OrderBy(y => y.Id)
+            .Include("TaRCategories.Category")            
             .OrderByDescending(y => y.CreateTime)
             .Skip((page - 1) * 18)
             .Take(18).ToListAsync();
@@ -145,12 +141,11 @@ namespace BBC.Services.Services.TarifAndReceteService
             {
                 var data = await _tarRepository.GetQueryable()
                 .Include(x => x.Content)
-                .Include(x => x.Popularities)
+               .Include(x => x.Popularities)
                 .Include(x => x.User)
                 .Include(x => x.TaRCategories)
                 .Include("TaRCategories.Category")
-                //.Include("Popularities.User")
-
+                .Include("Popularities.User")
                 .FirstOrDefaultAsync(x => x.Id == tarId);
                 if (data != null)
                 {
@@ -162,7 +157,7 @@ namespace BBC.Services.Services.TarifAndReceteService
                     result.UserId = data.UserId;
                     result.UserFullName = data.User.UserName + " " + data.User.SurName;
                     result.UserPhoto = data.User.Photo;
-                    result.CommentCount = data.Popularities.Count;
+                   result.CommentCount = data.Popularities.Count;
                     result.Puan = data.Popularities.Count > 0 ? (data.Popularities.Sum(x => x.Puan) / data.Popularities.Count()) : 0;
                     result.CommentDtos = data.Popularities.Where(x => String.IsNullOrEmpty(x.Comment)).Select(x => new CommentDto()
                     {
@@ -227,7 +222,6 @@ namespace BBC.Services.Services.TarifAndReceteService
                 IsDeleted = false,
                 Puan = input.Puan,
                 TarifAndReceteId = input.TaRId,
-
                 UserId = user.Id
             });
 

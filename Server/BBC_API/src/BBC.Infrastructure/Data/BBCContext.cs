@@ -9,7 +9,7 @@ using System.Text;
 
 namespace BBC.Infrastructure.Data
 {
-    public class BBCContext: IdentityDbContext<User,Role,int>, IBBCContext
+    public class BBCContext : IdentityDbContext<User, Role, int>, IBBCContext
     {
         public DbSet<Category> Categories { get; set; }
         public DbSet<Country> Countries { get; set; }
@@ -21,14 +21,14 @@ namespace BBC.Infrastructure.Data
         public DbSet<LobiUser> LobiUsers { get; set; }
         public DbSet<PrivateMessages> PrivateMessages { get; set; }
         public DbSet<SocialMedia> SocialMedias { get; set; }
-        public DbSet<Popularity> Popularities{ get; set; }
+        public DbSet<Popularity> Popularities { get; set; }
         public DbSet<TarifAndRecete> TarifAndRecetes { get; set; }
         //public DbSet<Template> Templates { get; set; }
         public DbSet<JobsApplication> JobsApplications { get; set; }
         public DbSet<TaRCategory> TaRCategories { get; set; }
         public DbSet<Settings> Settings { get; set; }
 
-        public BBCContext(DbContextOptions<BBCContext> options):base(options)
+        public BBCContext(DbContextOptions<BBCContext> options) : base(options)
         {
 
         }
@@ -37,6 +37,8 @@ namespace BBC.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            //modelBuilder.Entity<Popularity>().HasOne<TarifAndRecete>(s => s.TarifAndRecete).WithMany(g => g.Popularities).HasForeignKey(a => a.TaRId);
 
             #region Tarif And Recete - Category (M-M)
             modelBuilder.Entity<TaRCategory>().HasKey(tarc => new { tarc.CategoryId, tarc.TarifAndReceteId });
@@ -53,7 +55,7 @@ namespace BBC.Infrastructure.Data
             #region Lobi - User (M-M)
             modelBuilder.Entity<LobiUser>().HasKey(tarc => new { tarc.LobiId, tarc.UserId });
             modelBuilder.Entity<LobiUser>()
-                .HasOne(lu=> lu.User)
+                .HasOne(lu => lu.User)
                 .WithMany(u => u.LobiUsers)
                 .HasForeignKey(lu => lu.UserId);
             modelBuilder.Entity<LobiUser>()
