@@ -1,9 +1,11 @@
 ﻿using BBC.Core.Domain;
 using BBC.Core.Repositories.Base;
 using BBC.Infrastructure.Data;
+using BBC.Services.Identity.Dto.UserDtos;
 using BBC.Services.Services.Common.Base;
 using BBC.Services.Services.LobiService.Dto;
 using BBC.Services.Services.SocialMediaService.Dto;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -49,6 +51,22 @@ namespace BBC.Services.Services.SocialMediaService
         {
             var socialMedia = await _socialMediaRepository.GetAsync(Id);
             var result = _mapper.Map<EditSocialMediaDto>(socialMedia);
+            return result;
+        }
+
+        public async Task<EditSocialMediaDto> GetSocialMediaForEdit(int socialMediaId)
+        {
+            EditSocialMediaDto result = new EditSocialMediaDto();
+            var data = await _socialMediaRepository.GetQueryable()
+                .Include(x => x.User)
+                .FirstOrDefaultAsync(x => x.Id == socialMediaId);
+            if(data != null)
+            {
+                result.Id = data.Id;
+                result.FacebookUrl = data.FacebookUrl;
+                result.InstagramUrl = data.InstagramUrl;
+                result.TwitterUrl = data.TwitterUrl;
+            }
             return result;
         }
     }
