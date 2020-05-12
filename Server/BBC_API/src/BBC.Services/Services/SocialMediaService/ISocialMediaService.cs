@@ -1,4 +1,6 @@
-﻿using BBC.Services.Services.Common.Base;
+﻿using BBC.Core.Domain;
+using BBC.Services.Identity.Dto.UserDtos;
+using BBC.Services.Services.Common.Base;
 using BBC.Services.Services.LobiService.Dto;
 using BBC.Services.Services.SocialMediaService.Dto;
 using System;
@@ -14,6 +16,7 @@ namespace BBC.Services.Services.SocialMediaService
         Task<EditSocialMediaDto> GetSocialMedia(int Id);
         Task CreateSocialMedia(CreateSocialMediaDto input);
         Task EditSocialMedia(EditSocialMediaDto input);
+        Task <EditSocialMediaDto> GetSocialMediaForEdit(int socialMediaId);
         Task DeleteSocialMedia(int Id);
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BBC.API.Helper.Attribute;
 using BBC.Services.Services.SocialMediaService;
 using BBC.Services.Services.SocialMediaService.Dto;
 using Microsoft.AspNetCore.Http;
@@ -63,6 +64,7 @@ namespace BBC.API.Controllers
         [HttpPost]
         [ProducesResponseType(200)]
         [Route("Update")]
+        [RequiredAuth]
         public async Task<IActionResult> Update([FromBody] EditSocialMediaDto model)
         {
             if (!ModelState.IsValid)
@@ -70,7 +72,16 @@ namespace BBC.API.Controllers
 
             await _socialMediaService.EditSocialMedia(model);
             return Ok();
+        }
 
+        [HttpGet]
+        [ProducesResponseType(typeof(EditSocialMediaDto), 200)]
+        [Route("Update")]
+        [RequiredAuth]
+        public async Task<IActionResult> Update(int socialMediaId)
+        {
+            var result = await _socialMediaService.GetSocialMediaForEdit(socialMediaId);
+            return Ok(result);
         }
 
         [HttpDelete]
