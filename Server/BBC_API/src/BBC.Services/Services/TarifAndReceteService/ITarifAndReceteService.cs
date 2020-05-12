@@ -19,5 +19,6 @@ namespace BBC.Services.Services.TarifAndReceteService
         Task<TarifAndReceteDetailDto> GetTarifAndReceteDetails(int tarId);
         Task DeleteTarifAndRecete(int Id);
         Task Comment(CommentDto input);
+        Task<List<CommentDto>> GetAllComments(int tarId);
     }
 }

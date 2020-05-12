@@ -131,5 +131,13 @@ namespace BBC.API.Controllers
             await _tarifAndReceteService.Comment(input);
             return Ok();
         }
+
+        [HttpGet]
+        [Route("GetAllComments")]
+        public async Task<IActionResult> GelAllComment(int tarId)
+        {
+            var result = await _tarifAndReceteService.GetAllComments(tarId);
+            return Ok(result);
+        }
     }
 }

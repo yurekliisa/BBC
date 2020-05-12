@@ -22,6 +22,7 @@ namespace BBC.Services.Services.TarifAndReceteService
         private readonly IRepositoryBase<BBCContext, TarifAndRecete, int> _tarRepository;
         private readonly IRepositoryBase<BBCContext, Popularity, int> _popularityRepository;
         private readonly IHostingEnvironment _hostingEnvironment;
+
         public TarifAndReceteManager(
             IRepositoryBase<BBCContext, TarifAndRecete, int> tarRepository,
             IRepositoryBase<BBCContext, Popularity, int> popularityRepository,
@@ -224,6 +225,9 @@ namespace BBC.Services.Services.TarifAndReceteService
         {
             var user = await GetCurrentUserAsync();
 
+            if (user == null)
+                return;
+
             await _popularityRepository.InsertAsync(new Popularity()
             {
                 Comment = input.Comment,
@@ -235,6 +239,22 @@ namespace BBC.Services.Services.TarifAndReceteService
             });
 
             await _popularityRepository.SaveChangesAsync();
+        }
+
+        public async Task<List<CommentDto>> GetAllComments(int tarId)
+        {
+            var comment = await _popularityRepository.GetQueryable().Include(z => z.User).Where(x => x.TarifAndReceteId == tarId && !String.IsNullOrEmpty(x.Comment))
+                .Select(y => new CommentDto()
+                {
+                    Comment = y.Comment,
+                    CommentDate = y.CreationTime,
+                    Puan = y.Puan,
+                    TaRId = (int)y.TarifAndReceteId,
+                    UserId = y.UserId,
+                    UserName = y.User.UserName,
+                    UserPhoto = y.User.Photo
+                }).ToListAsync();
+            return comment;
         }
 
         private async Task<string> saveFile(IFormFile file)
