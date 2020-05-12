@@ -27,8 +27,13 @@
             </v-list-item-content>
             <v-list-item-action v-if="id == $store.getters.userInfo.userId">
               <v-list-item-action-text>
-                <v-btn text color="deep-purple accent-4">
-                  <v-icon color="indigo">mdi-account-settings-outline</v-icon>Profilini Düzenle</v-btn
+                <v-btn
+                  text
+                  color="deep-purple accent-4"
+                  :to="'/profile/edit/' + id"
+                >
+                  <v-icon color="indigo">mdi-account-settings-outline</v-icon
+                  >Profilini Düzenle</v-btn
                 >
               </v-list-item-action-text>
             </v-list-item-action>

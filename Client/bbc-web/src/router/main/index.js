@@ -3,6 +3,7 @@ import LogIn from "../../views/main/pages/LogIn"
 import TARDetail from "../../views/main/pages/tar/TARDetail"
 import Register from "../../views/main/pages/Register"
 import Profile from '../../views/main/pages/Profile'
+import ProfileEdit from '../../views/main/pages/Profile-Edit'
 import CreateTAR from "../../views/main/pages/tar/CreateTAR"
 import TAR from "../../views/main/pages/tar/TAR"
 
@@ -40,6 +41,11 @@ const router = [
         path: "profile/:id",
         component: Profile,
         name: "Profile"
+    },
+    {
+        path: "profile/edit/:id",
+        component: ProfileEdit,
+        name: "ProfileEdit"
     },
     {
         path: "tar/create",
