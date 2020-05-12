@@ -40,7 +40,7 @@ namespace BBC.API.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(UserReportHeaderWidget), 200)]
         [Route("UserReport")]
         public async Task<IActionResult> UserReport()
         {

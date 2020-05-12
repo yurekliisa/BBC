@@ -76,7 +76,15 @@ namespace BBC.Services.Identity
             return result;
         }
 
-        public Task<UserListDto> Report()
+        public Task<UserReportHeaderWidget> Report()
+        {
+            var result = new UserReportHeaderWidget();
+            
+
+
+        }
+
+        Task<UserListDto> IUserService.Report()
         {
             throw new NotImplementedException();
         }
