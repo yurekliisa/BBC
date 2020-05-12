@@ -102,6 +102,7 @@ namespace BBC.API.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(200)]
         [Route("Delete")]
         [RequiredAuth]
         public async Task<IActionResult> Delete(int Id)
@@ -115,6 +116,7 @@ namespace BBC.API.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(200)]
         [Route("Edit")]
         [RequiredAuth]
         public async Task<IActionResult> Edit([FromBody] UserTarifAndReceteDto input)
@@ -124,6 +126,7 @@ namespace BBC.API.Controllers
         }
        
         [HttpPost]
+        [ProducesResponseType(200)]
         [Route("Comments")]
         [RequiredAuth]
         public async Task<IActionResult> Comment([FromBody] CommentDto input)
@@ -134,6 +137,8 @@ namespace BBC.API.Controllers
 
         [HttpGet]
         [Route("GetAllComments")]
+        [ProducesResponseType(typeof(List<CommentDto>), 200)]
+        [RequiredAuth]
         public async Task<IActionResult> GelAllComment(int tarId)
         {
             var result = await _tarifAndReceteService.GetAllComments(tarId);

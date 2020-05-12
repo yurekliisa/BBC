@@ -21,13 +21,16 @@ namespace BBC.API.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(List<SocialMediaListDto>), 200)]
         [Route("GetAll")]
         public async Task<IActionResult> GetAllSocialMedia()
         {
             var socialmedias = await _socialMediaService.GetAllSocialMedias();
             return Ok(socialmedias);
         }
+
         [HttpGet]
+        [ProducesResponseType(typeof(Task<SocialMediaListDto>), 200)]
         [Route("Get")]
         public IActionResult Get(int Id) 
         {
@@ -46,6 +49,7 @@ namespace BBC.API.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(200)]
         [Route("Create")]
         public async Task<IActionResult> Create([FromBody] CreateSocialMediaDto model)
         {
@@ -55,7 +59,9 @@ namespace BBC.API.Controllers
             await _socialMediaService.CreateSocialMedia(model);
             return Ok();
         }
+
         [HttpPost]
+        [ProducesResponseType(200)]
         [Route("Update")]
         public async Task<IActionResult> Update([FromBody] EditSocialMediaDto model)
         {
@@ -66,9 +72,10 @@ namespace BBC.API.Controllers
             return Ok();
 
         }
-        [HttpDelete]
-        [Route("Delete")]
 
+        [HttpDelete]
+        [ProducesResponseType(200)]
+        [Route("Delete")]
         public async Task<IActionResult> Delete(int Id)
         {
             await _socialMediaService.DeleteSocialMedia(Id);

@@ -25,6 +25,7 @@ namespace BBC.API.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(200)]
         [Route("Create")]
         [RequiredAuth]
         public async Task<IActionResult> Create([FromBody] CreateCategoryDto input)
@@ -34,6 +35,7 @@ namespace BBC.API.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(200)]
         [Route("Edit")]
         [RequiredAuth]
         public async Task<IActionResult> Edit([FromBody] EditCategoryDto input)
@@ -43,6 +45,7 @@ namespace BBC.API.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(200)]
         [Route("Delete")]
         [RequiredAuth]
         public async Task<IActionResult> Delete(int id)

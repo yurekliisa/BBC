@@ -25,7 +25,6 @@ namespace BBC.API.Controllers
             this._roleManager = roleManager;
         }
 
-
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<string>), 200)]
         [Route("Get/{Id}")]

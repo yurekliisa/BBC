@@ -58,8 +58,6 @@ namespace BBC.API.Controllers
             return Ok(user);
         }
 
-
-
         [HttpPut]
         [ProducesResponseType(typeof(IdentityResult), 200)]
         [ProducesResponseType(typeof(IEnumerable<string>), 400)]
@@ -76,7 +74,6 @@ namespace BBC.API.Controllers
             }
             return BadRequest(result.Errors.Select(x => x.Description));
         }
-
 
         [HttpDelete]
         [ProducesResponseType(typeof(IdentityResult), 200)]

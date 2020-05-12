@@ -32,7 +32,7 @@ namespace BBC.API.Controllers
 
 
         [HttpPut]
-        [ProducesResponseType(typeof(List<EditSettingsDto>), 200)]
+        [ProducesResponseType(200)]
         [Route("EditSettings")]
         public async Task<IActionResult> EditSettings([FromBody] EditSettingsDto input)
         {
@@ -50,6 +50,7 @@ namespace BBC.API.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(200)]
         [Route("DeleteSettings")]
         public async Task<IActionResult> Delete(int Id)
         {
