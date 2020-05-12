@@ -5,6 +5,7 @@ using System.Text;
 
 namespace BBC.Services.Services.TarifAndReceteService.Dto
 {
+
     public class CreateTarifAndReceteDto
     {
         //Categorieleri almak için

@@ -8,6 +8,6 @@ namespace BBC.Services.Services.TarifAndReceteService.Dto
         public string ContentText { get; set; }
         public string ShortDescription { get; set; }
 
-        public IFormFile MainImage { get; set; }
+        public IFormFile? MainImage { get; set; }
     }
 }

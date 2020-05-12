@@ -5,6 +5,7 @@ import Register from "../../views/main/pages/Register"
 import Profile from '../../views/main/pages/Profile'
 import ProfileEdit from '../../views/main/pages/Profile-Edit'
 import CreateTAR from "../../views/main/pages/tar/CreateTAR"
+import EditTAR from "../../views/main/pages/tar/EditTAR"
 import TAR from "../../views/main/pages/tar/TAR"
 
 const GuardToken = (to, from, next) => {
@@ -51,6 +52,11 @@ const router = [
         path: "tar/create",
         component: CreateTAR,
         name: "CreateTAR"
+    },
+    {
+        path: "tar/edit/:id",
+        component: EditTAR,
+        name: "EditTAR"
     },
     {
         path: "tar",

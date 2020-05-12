@@ -107,11 +107,29 @@ namespace BBC.Services.Services.TarifAndReceteService
             await _tarRepository.DeleteAsync(Id);
         }
 
-        public async Task EditTarifAndRecete(UserTarifAndReceteDto input)
+        public async Task EditTarifAndRecete(EditTarifAndReceteInputDto input)
         {
-            var tar = await _tarRepository.FindAsync(input.Id);
-            _mapper.Map(tar, input);
+            var tar = await _tarRepository.GetQueryable().Include(x => x.Content).Include(x => x.TaRCategories).FirstOrDefaultAsync(x => x.Id == input.Id);
+            tar.Content.Title = input.Content.Title;
+            tar.Content.ShortDescription = input.Content.Title;
+            tar.Content.ContentText = input.Content.Title;
+            if (input.Content.MainImage != null)
+            {
+                tar.Content.MainImage = await saveFile(input.Content.MainImage);
+            }
+            foreach (var id in input.Categories)
+            {
+                if (!tar.TaRCategories.Any(x => x.CategoryId == id))
+                {
+                    tar.TaRCategories.Add(new TaRCategory()
+                    {
+                        CategoryId = id
+                    });
+                }
+            }
+
             await _tarRepository.UpdateAsync(tar);
+            await _tarRepository.SaveChangesAsync();
         }
 
         public async Task<List<TarifAndReceteListDto>> GetAllTarifAndRecetes(int page)
@@ -177,7 +195,7 @@ namespace BBC.Services.Services.TarifAndReceteService
                         UserId = x.UserId,
                         UserName = x.User.UserName,
                         UserPhoto = x.User.Photo,
-                        TaRId=(int)x.TarifAndReceteId
+                        TaRId = (int)x.TarifAndReceteId
                     }).ToList();
                     result.Categories = data.TaRCategories.Select(y => y.Category.Name).ToList();
                 }

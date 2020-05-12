@@ -119,7 +119,7 @@ namespace BBC.API.Controllers
         [ProducesResponseType(200)]
         [Route("Edit")]
         [RequiredAuth]
-        public async Task<IActionResult> Edit([FromBody] UserTarifAndReceteDto input)
+        public async Task<IActionResult> Edit([FromForm] EditTarifAndReceteInputDto input)
         {
             await _tarifAndReceteService.EditTarifAndRecete(input);
             return Ok();

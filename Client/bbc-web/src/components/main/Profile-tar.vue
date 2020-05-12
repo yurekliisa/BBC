@@ -44,9 +44,12 @@
             </v-chip-group>
           </v-card-text>
           <v-card-actions>
-            <v-btn text color="deep-purple accent-4" @click="reserve()"
-              >Devamını Oku</v-btn
-            >
+            <v-btn
+              text
+              color="deep-purple accent-4"
+              @click="reserve()"
+              :to="'/tar/edit/' + item.id"
+            >Edit</v-btn>
             <v-btn text color="deep-purple accent-4" @click="reserve()"
               >Devamını Oku</v-btn
             >

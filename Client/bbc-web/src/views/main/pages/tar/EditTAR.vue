@@ -1,5 +1,5 @@
 <template>
-  <v-layout>
+  <v-layout v-if="id !== 0">
     <v-flex>
       <v-card class="mx-auto px-5 py-5" raised>
         <v-col cols="12">
@@ -48,9 +48,15 @@
             ></v-select>
           </v-col>
           <v-col cols="12">
+            <label>Kapak Resmi</label>
+            <v-img
+              :src="'https://localhost:44308/' + fakeImage"
+              width="250"
+              height="250"
+            />
             <v-file-input
               accept="image/*"
-              label="Kapak resmi"
+              label="Yeni Kapak resmi"
               v-model="mainImage"
             ></v-file-input>
           </v-col>
@@ -98,7 +104,7 @@ import DomParser from "dom-parser";
 import FormData from "form-data";
 
 export default {
-  name: "Create-TAR",
+  name: "Edit-TAR",
   components: { TiptapVuetify },
   mixins: [validationMixin],
   validations: {
@@ -137,11 +143,14 @@ export default {
     title: "",
     shortDescription: "",
     mainImage: undefined,
+    fakeImage: "",
     selectedCategories: [],
     contentText: "",
+    id: 0,
   }),
   mounted() {
     let userData = JSON.parse(localStorage.getItem("user"));
+    let _id = this.$route.params["id"];
     if (userData) {
       axios
         .get("/TaR/Create", {
@@ -156,6 +165,26 @@ export default {
             this.categories = categories.data.categories;
           }
         });
+      axios
+        .get("TaR/Edit?tarId=" + _id, {
+          headers: {
+            "Content-type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            Authorization: `Bearer ${userData.token}`,
+          },
+        })
+        .then((tar) => {
+          if (tar.status === 200) {
+            this.selectedCategories = tar.data.categories;
+            this.title = tar.data.content.title;
+            this.shortDescription = tar.data.content.shortDescription;
+            this.contentText = tar.data.content.contentText;
+            this.id = tar.data.id;
+            this.fakeImage = tar.data.content.mainImage;
+          }
+        });
+    } else {
+      this.$router.push("/");
     }
   },
   computed: {
@@ -192,10 +221,14 @@ export default {
       let data = new FormData();
       for (let i = 0; i < this.selectedCategories.length; i++) {
         const element = this.selectedCategories[i];
-        data.append("Categories[" + i + "]", element);
+        data.append("Categories[" + i + "]", element.id);
       }
       data.append("Content.Title", this.title);
-      data.append("Content.MainImage", this.mainImage);
+      data.append("id", this.id);
+      if (this.mainImage !== undefined) {
+        data.append("Content.MainImage", this.mainImage);
+      }
+
       data.append("Content.ContentText", this.contentText);
       data.append("Content.shortDescription", this.shortDescription);
       this.$v.$touch();
@@ -204,7 +237,7 @@ export default {
       } else {
         this.submitStatus = "PENDING";
         axios
-          .post("/TaR/CreateTaR", data, {
+          .post("/TaR/Edit", data, {
             headers: {
               "Content-type": "multipart/form-data",
               "Access-Control-Allow-Origin": "*",
