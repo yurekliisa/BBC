@@ -23,7 +23,7 @@
                 <v-list-item>
                   <v-list-item-avatar>
                     <v-img
-                      src="https://cdn.vuetifyjs.com/images/john.png"
+                      :src="'https://localhost:44308/'+item.photo"
                     ></v-img>
                   </v-list-item-avatar>
                   <v-list-item-content>

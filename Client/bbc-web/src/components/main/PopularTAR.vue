@@ -6,7 +6,7 @@
         <v-card :loading="item.id" class="ma-1 pa-1 cardHover">
           <v-img
             height="100"
-            :src="item.mainImage"
+            :src="'https://localhost:44308/'+item.mainImage"
             class="white--text align-end"
           >
             <v-card-title style="color:white">{{ item.title }}</v-card-title>
