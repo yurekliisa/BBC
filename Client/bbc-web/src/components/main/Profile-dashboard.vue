@@ -1,20 +1,55 @@
 <template>
-  <div>
-    <!--https://apexcharts.com/docs/vue-charts/-->
-    <h5>Profile Dashboard</h5>
-    <apexcharts
-      width="100%"
-      height="350"
-      type="bar"
-      :options="chartOptions"
-      :series="series"
-    ></apexcharts>
+  <div v-if="userReport!== undefined" >
+    <v-row class="mx-auto">
+      <v-col cols="4">
+        <v-card class="mx-auto" color="#ff6b6b" dark max-width="400">
+          <v-card-title>
+            <span class="title font-weight-light">{{userReport.headerWidget.totalRecivedComment}}</span>
+          </v-card-title>
+          <v-card-text class="headline font-weight-bold">
+            Toplam alınan yorum sayısı
+          </v-card-text>
+        </v-card>
+      </v-col>
+      <v-col cols="4">
+        <v-card class="mx-auto" color="#1a535c" dark max-width="400">
+          <v-card-title>
+            <span class="title font-weight-light">{{userReport.headerWidget.totalComment}}</span>
+          </v-card-title>
+          <v-card-text class="headline font-weight-bold">
+            Toplam yapılan yorum sayısı
+          </v-card-text>
+        </v-card>
+      </v-col>
+      <v-col cols="4">
+        <v-card class="mx-auto" color="#4ecdc4" dark max-width="400">
+          <v-card-title>
+            <span class="title font-weight-light">{{userReport.headerWidget.totalTaR}}</span>
+          </v-card-title>
+          <v-card-text class="headline font-weight-bold">
+            Toplam alınan yorum sayısı
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+    !--https://apexcharts.com/docs/vue-charts/--
+    <v-row class="mx-auto">
+      <v-col cols="12">
+        <apexcharts
+          width="100%"
+          height="350"
+          type="bar"
+          :options="chartOptions"
+          :series="series"
+        ></apexcharts>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
 <script>
 import VueApexCharts from "vue-apexcharts";
-
+import axios from"axios";
 export default {
   name: "ProfileDashboard",
   components: {
@@ -23,6 +58,7 @@ export default {
   props: ["id"],
   data() {
     return {
+      userReport: undefined,
       chartOptions: {
         chart: {
           id: "basic-bar",
@@ -39,13 +75,13 @@ export default {
           },
         },
         xaxis: {
-          categories: [1991, 1992, 1993, 1994, 1995],
+          categories: ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Agustos','Eylül','Ekim','Kasım','Aralık'],
         },
       },
       series: [
         {
           name: "series-1",
-          data: [30, 40, 45, 30, 49],
+          data: [0,0,0,0,0,0,0,0,0,0,0,0],
         },
       ],
       dashboard: {},
@@ -53,6 +89,26 @@ export default {
   },
   created(){
     console.log(this.id);
+    axios 
+      .get ("/User/UserReport?userId="+this.id,{
+        headers:{
+          "Content-type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
+      .then((result)=>{
+        console.log(result);
+        if(result.status===200){
+          for (let i = 0; i < result.data.monthlyTAR.length; i++) {
+            const element = result.data.monthlyTAR[i];
+            this.chartOptions.series[0].data[element.month-1]=element.totalTaR;
+          }
+          this.userReport = result.data;
+        }
+      })
+      .catch((err)=>{
+        console.log (err);
+    });
   },
   methods: {
     updateTheme(e) {
