@@ -1,4 +1,6 @@
 ﻿using BBC.Core.Domain.Identity;
+using BBC.Core.Repositories.Base;
+using BBC.Infrastructure.Data;
 using BBC.Services.Identity.Dto.Auth;
 using BBC.Services.Identity.Dto.UserDtos;
 using BBC.Services.Identity.Interfaces;
@@ -16,6 +18,12 @@ namespace BBC.Services.Identity
 {
     public class UserService : ApplicationBaseServices<User, Role>, IUserService
     {
+        private readonly IUserService userService;
+        private readonly IRepositoryBase<BBCContext, User, int> _userRepository;
+        public UserService(IRepositoryBase<BBCContext, User, int> userRepository)
+        {
+            _userRepository = userRepository;
+        }
         public async Task<List<UserListDto>> GetUsers()
         {
             IQueryable<User> roles = await Task.Run(() =>
@@ -76,12 +84,18 @@ namespace BBC.Services.Identity
             return result;
         }
 
-        public Task<UserReportHeaderWidget> Report()
+        public async Task<List<UserReportHeaderWidget>> Report()
         {
-            var result = new UserReportHeaderWidget();
-            
-
-
+            List<UserReportHeaderWidget> result = new List<UserReportHeaderWidget>();
+            List<User> query = await _userRepository.GetQueryable()
+                .Include(x => x.TarifAndRecetes).ToListAsync();
+            result = query.Select(y => new UserReportHeaderWidget()
+            {
+                TotalComment = y.Popularities.Count(x => x.Comment != null),
+                TotalRecivedComment = 1,
+                TotalTaR = y.TarifAndRecetes.Count(x => x.TaRCategories != null),
+            }).ToList();
+            return result;
         }
 
         Task<UserListDto> IUserService.Report()

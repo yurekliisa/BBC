@@ -44,7 +44,7 @@ namespace BBC.API.Controllers
         [Route("UserReport")]
         public async Task<IActionResult> UserReport()
         {
-            var report = _userService.Report();
+            var report = await _userService.Report();
             return Ok(report);
         }
 
