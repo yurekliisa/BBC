@@ -40,10 +40,10 @@ namespace BBC.Services.Services.SocialMediaService
             await _socialMediaRepository.UpdateAsync(socialMedia);
         }
 
-        public async Task<List<SocialMediaListDto>> GetAllSocialMedias()
+        public async Task<List<SocialMediaDto>> GetAllSocialMedias()
         {
             var socialMedias = await _socialMediaRepository.GetListAsync();
-            var result = _mapper.Map<List<SocialMediaListDto>>(socialMedias);
+            var result = _mapper.Map<List<SocialMediaDto>>(socialMedias);
             return result;
         }
 

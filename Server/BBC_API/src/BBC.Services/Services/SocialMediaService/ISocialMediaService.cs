@@ -12,7 +12,7 @@ namespace BBC.Services.Services.SocialMediaService
 {
     public interface ISocialMediaService : IBaseService
     {
-        Task<List<SocialMediaListDto>> GetAllSocialMedias();
+        Task<List<SocialMediaDto>> GetAllSocialMedias();
         Task<EditSocialMediaDto> GetSocialMedia(int Id);
         Task CreateSocialMedia(CreateSocialMediaDto input);
         Task EditSocialMedia(EditSocialMediaDto input);

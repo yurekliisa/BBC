@@ -1,4 +1,5 @@
 ﻿using BBC.Core.Domain;
+using BBC.Services.Services.SocialMediaService.Dto;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -16,6 +17,11 @@ namespace BBC.Services.Identity.Dto.UserDtos
         public virtual string Photo { get; set; }
         public virtual string About { get; set; }
         public virtual DateTime Birthday { get; set; }
-        public List<SocialMedia> SocialMedias { get; set; }
+        public SocialMediaDto SocialMedia { get; set; }
+
+        public EditUserDto()
+        {
+            SocialMedia = new SocialMediaDto();
+        }
     }
 }

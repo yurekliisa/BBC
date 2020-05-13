@@ -47,7 +47,7 @@ namespace BBC.Services.Identity
 
         public async Task<UserProfileDto> GetUser(int Id)
         {
-            var user = await _userManager.Users.FirstOrDefaultAsync(user => user.Id == Id);
+            var user = await _userManager.Users.Include(y=>y.SocialMedia).FirstOrDefaultAsync(user => user.Id == Id);
             if (user == null)
                 return null;
 

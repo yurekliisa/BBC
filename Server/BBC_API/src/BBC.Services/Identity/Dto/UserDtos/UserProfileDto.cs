@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BBC.Services.Services.SocialMediaService.Dto;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -15,5 +16,11 @@ namespace BBC.Services.Identity.Dto.UserDtos
         public virtual string Photo { get; set; }
         public virtual string About { get; set; }
         public virtual DateTime Birthday { get; set; }
+        public SocialMediaDto SocialMedia { get; set; }
+
+        public UserProfileDto()
+        {
+            SocialMedia = new SocialMediaDto();
+        }
     }
 }

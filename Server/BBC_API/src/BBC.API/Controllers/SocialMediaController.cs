@@ -22,7 +22,7 @@ namespace BBC.API.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(List<SocialMediaListDto>), 200)]
+        [ProducesResponseType(typeof(List<SocialMediaDto>), 200)]
         [Route("GetAll")]
         public async Task<IActionResult> GetAllSocialMedia()
         {
@@ -31,7 +31,7 @@ namespace BBC.API.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(Task<SocialMediaListDto>), 200)]
+        [ProducesResponseType(typeof(Task<SocialMediaDto>), 200)]
         [Route("Get")]
         public IActionResult Get(int Id) 
         {

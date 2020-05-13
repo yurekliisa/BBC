@@ -51,6 +51,9 @@ export default {
       dashboard: {},
     };
   },
+  created(){
+    console.log(this.id);
+  },
   methods: {
     updateTheme(e) {
       this.chartOptions = {

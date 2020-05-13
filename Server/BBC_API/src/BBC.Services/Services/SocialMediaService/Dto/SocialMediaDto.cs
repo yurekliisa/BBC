@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BBC.Services.Services.SocialMediaService.Dto
 {
-    public class SocialMediaListDto
+    public class SocialMediaDto
     {
         public string FacebookUrl { get; set; }
         public string InstagramUrl { get; set; }

@@ -11,7 +11,7 @@ namespace BBC.Services.Services.SocialMediaService.Dto
     {
         public SocialMediaMapping()
         {
-            CreateMap<SocialMedia, SocialMediaListDto>();
+            CreateMap<SocialMedia, SocialMediaDto>();
             CreateMap<SocialMedia, EditSocialMediaDto>();
             CreateMap<EditSocialMediaDto, SocialMedia>();
             CreateMap<CreateSocialMediaDto, SocialMedia>();
