@@ -1,6 +1,6 @@
 <template>
-  <div v-if="userReport!== undefined" >
-    <v-row class="mx-auto">
+  <div v-if="isActive">
+     <v-row class="mx-auto">
       <v-col cols="4">
         <v-card class="mx-auto" color="#ff6b6b" dark max-width="400">
           <v-card-title>
@@ -32,7 +32,7 @@
         </v-card>
       </v-col>
     </v-row>
-    !--https://apexcharts.com/docs/vue-charts/--
+   
     <v-row class="mx-auto">
       <v-col cols="12">
         <apexcharts
@@ -48,6 +48,7 @@
 </template>
 
 <script>
+// --https://apexcharts.com/docs/vue-charts
 import VueApexCharts from "vue-apexcharts";
 import axios from"axios";
 export default {
@@ -58,7 +59,8 @@ export default {
   props: ["id"],
   data() {
     return {
-      userReport: undefined,
+      userReport: {},
+      isActive:false,
       chartOptions: {
         chart: {
           id: "basic-bar",
@@ -101,9 +103,10 @@ export default {
         if(result.status===200){
           for (let i = 0; i < result.data.monthlyTAR.length; i++) {
             const element = result.data.monthlyTAR[i];
-            this.chartOptions.series[0].data[element.month-1]=element.totalTaR;
+            this.series[0].data[element.month-1]=element.totalTaR;
           }
           this.userReport = result.data;
+          this.isActive=true;
         }
       })
       .catch((err)=>{
