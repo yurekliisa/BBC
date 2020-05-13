@@ -1,5 +1,5 @@
 <template>
-  <v-layout>
+  <v-layout v-if="userId > 0">
     <v-flex>
       <v-card class="mx-auto formContainer" width="900" raised>
         <v-col cols="12">
@@ -9,33 +9,21 @@
           <v-col cols="12">
             <v-text-field
               v-model="userName"
-              :error-messages="userNameErrors"
               label="User name"
-              required
-              @input="$v.userName.$touch()"
-              @blur="$v.userName.$touch()"
               solo
             ></v-text-field>
             <v-row>
               <v-col cols="6">
                 <v-text-field
-                  v-model="firstName"
-                  :error-messages="userNameErrors"
+                  v-model="userFirstName"
                   label="First Name"
-                  required
-                  @input="$v.userFirstName.$touch()"
-                  @blur="$v.userFirstName.$touch()"
                   solo
                 ></v-text-field>
               </v-col>
               <v-col cols="6">
                 <v-text-field
-                  v-model="surname"
-                  :error-messages="userSurnameErrors"
+                  v-model="userSurname"
                   label="Surname"
-                  required
-                  @input="$v.userSurname.$touch()"
-                  @blur="$v.userSurname.$touch()"
                   solo
                 ></v-text-field>
               </v-col>
@@ -44,11 +32,7 @@
               <v-col cols="6">
                 <v-text-field
                   v-model="userPhone"
-                  :error-messages="userPhoneErrors"
                   label="Phone Number"
-                  required
-                  @input="$v.userPhone.$touch()"
-                  @blur="$v.userPhone.$touch()"
                   solo
                 ></v-text-field>
               </v-col>
@@ -72,16 +56,40 @@
                       solo
                     ></v-text-field>
                   </template>
-                  <v-date-picker v-model="userBirthday" no-title @input="menu1 = false"></v-date-picker>
+                  <v-date-picker
+                    v-model="userBirhtday"
+                    no-title
+                    @input="menu1 = false"
+                  ></v-date-picker>
                 </v-menu>
               </v-col>
             </v-row>
+            <v-row>
+              <v-col cols="4">
+                <v-text-field
+                  v-model="facebookUrl"
+                  label="facebookUrl"
+                  solo
+                ></v-text-field>
+              </v-col>
+              <v-col cols="4">
+                <v-text-field
+                  v-model="instagramUrl"
+                  label="instagramUrl"
+                  solo
+                ></v-text-field>
+              </v-col>
+              <v-col cols="4">
+                <v-text-field
+                  v-model="twitterUrl"
+                  label="twitterUrl"
+                  solo
+                ></v-text-field>
+              </v-col>
+            </v-row>
             <v-textarea
-              v-model="aboutMe"
-              :error-messages="userAboutMeErors"
+              v-model="userAboutMe"
               label="About me"
-              @input="$v.userAboutMe.$touch()"
-              @blur="$v.userAboutMe.$touch()"
               solo
             ></v-textarea>
             <v-card-actions style="justify-content:center;">
@@ -91,7 +99,8 @@
                 color="primary"
                 @click="submit"
                 :disabled="submitStatus === 'PENDING'"
-              >Submit</v-btn>
+                >Submit</v-btn
+              >
             </v-card-actions>
           </v-col>
         </form>
@@ -101,39 +110,59 @@
 </template>
 
 <script>
-import { validationMixin } from "vuelidate";
-import {required} from "vuelidate/lib/validators";
 import axios from "axios";
 export default {
-  // mixins:[validationsMixin],
-//   validations:{
-//     userName:{required},
-//     userName:{required},
-//     userSurname:{required},
-//     userPhone:{required}
-      // userBirthday:{required}
-//   },
-data(){
-  return{
-    userBirhtday:new Date().toISOString().substr(0, 10),
-    dateFormatted: this.formatDate(new Date().toISOString().substr(0, 10)),
-    menu1: false,
-    userName: "",
-    userFirstName:"",
-    userSurname:"",
-    userPhone:"",
-    userAboutMe:"",
-    submitStatus:null
-  };
-},
-watch: {
+  data() {
+    return {
+      userBirhtday: new Date().toISOString().substr(0, 10),
+      dateFormatted: this.formatDate(new Date().toISOString().substr(0, 10)),
+      menu1: false,
+      userId: 0,
+      userName: "",
+      userFirstName: "",
+      userSurname: "",
+      userPhone: "",
+      userAboutMe: "",
+      facebookUrl: "",
+      instagramUrl: "",
+      twitterUrl: "",
+      userFakePhoto: "",
+      submitStatus: null,
+    };
+  },
+  created() {
+    let _id = this.$route.params["id"];
+    axios
+      .get("User/Get/" + _id, {
+        headers: {
+          "Content-type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
+      .then((user) => {
+        if (user.status === 200) {
+          this.userName = user.data.userName;
+          this.userSurname = user.data.surName;
+          this.userFirstName = user.data.name;
+          this.userPhone = user.data.phoneNumber;
+          this.userFakePhoto = user.data.photo;
+          this.userAboutMe = user.data.about;
+          this.userBirhtday = user.data.birthday;
+          this.facebookUrl = user.data.socialMedia.facebookUrl;
+          this.instagramUrl = user.data.socialMedia.instagramUrl;
+          this.twitterUrl = user.data.socialMedia.twitterUrl;
+          this.userId = user.data.id;
+        }
+      });
+  },
+  watch: {
     date(val) {
       this.dateFormatted = this.formatDate(this.date);
     },
   },
-  methods:{
-    formatDate(date){
-      if (!date)return null;
+  methods: {
+    formatDate(date) {
+      if (!date) return null;
 
       const [year, month, day] = date.split("-");
       return `${month}/${day}/${year}`;
@@ -144,36 +173,41 @@ watch: {
       const [month, day, year] = date.split("/");
       return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
     },
-     submit() {
-      this.$v.$touch();
+    submit() {
+      this.submitStatus = "PENDING";
+      let data = {
+        id: this.userId.toString(),
+        userName: this.userName,
+        name: this.userFirstName,
+        surName: this.userSurname,
+        phoneNumber: this.userPhone,
+        about: this.userAboutMe,
+        birthday: this.userBirhtday,
+        photo: this.userFakePhoto,
+        socialMedia: {
+          facebookUrl: this.facebookUrl,
+          instagramUrl: this.instagramUrl,
+          twitterUrl: this.twitterUrl,
+        },
+      };
 
-      if (this.$v.$invalid) {
-        this.submitStatus = "ERROR";
-      } else {
-        this.submitStatus = "PENDING";
-        let data = {
-          userName: this.userName,
-          userFirstName: this.userFirstName,
-          userSurname: this.userSurname,
-          userPhone: this.userPhone,
-          userAboutMe: this. userAboutMe ,
-          userBirhtday: this.userBirhtday,
-        };
-        // axios
-        //    .post("Auth/Register", data)
-        //    .then((response) => {
-        //      if (response.status === 200) {
-        //        this.submitStatus = "OK";
-        //        this.$router.push("/login");
-        //     } else {
-        //        this.submitStatus = "ERROR";
-        //      }
-        //    })
-        //   .catch(function(error) {
-        //      console.log(error);
-        //   });
-  
- };
+      axios
+        .post("User/Update/" + this.userId.toString(), data, {
+          headers: {
+            "Content-type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            Authorization: `Bearer ${this.$store.getters.userInfo.token}`,
+          },
+        })
+        .then((result) => {
+          if (result.status === 200) {
+            this.$router.push("/");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+  },
+};
 </script>
-
-<style></style>

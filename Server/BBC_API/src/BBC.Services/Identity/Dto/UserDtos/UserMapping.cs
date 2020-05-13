@@ -13,6 +13,8 @@ namespace BBC.Services.Identity.Dto.UserDtos
         {
             CreateMap<User, UserProfileDto>();
             CreateMap<User, UserListDto>();
+            CreateMap<EditUserDto, User>();
+            CreateMap<User, EditUserDto>();
         }
     }
 }

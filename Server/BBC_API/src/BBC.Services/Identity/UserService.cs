@@ -55,9 +55,9 @@ namespace BBC.Services.Identity
             return result;
         }
 
-        public async Task<IdentityResult> EditUser(string Id, EditUserDto model)
+        public async Task<IdentityResult> EditUser(int Id, EditUserDto model)
         {
-            User user = await _userManager.FindByIdAsync(Id);
+            User user = await _userManager.FindByIdAsync(Convert.ToString(Id));
             if (user == null)
             {
                 return IdentityResult.Failed(new IdentityError[]
@@ -69,16 +69,16 @@ namespace BBC.Services.Identity
                     }
                 });
             }
-            user = _mapper.Map<User>(model);
+            _mapper.Map(model,user);
 
             IdentityResult result = await _userManager.UpdateAsync(user);
 
             return result;
         }
 
-        public async Task<IdentityResult> Delete(string Id)
+        public async Task<IdentityResult> Delete(int Id)
         {
-            User user = await _userManager.FindByIdAsync(Id);
+            User user = await _userManager.FindByIdAsync(Convert.ToString(Id));
             if (user == null)
             {
                 return IdentityResult.Failed(new IdentityError[]

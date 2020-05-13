@@ -72,6 +72,34 @@
             </v-list-item-content>
           </v-list-item>
           <v-divider inset></v-divider>
+
+          <v-list-item>
+            <v-list-item-icon> </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-subtitle>Social Media</v-list-item-subtitle>
+              <v-list-item-title>
+                <v-btn icon color="primary" :href="user.socialMedia.twitterUrl">
+                  <v-icon>mdi-twitter</v-icon>
+                </v-btn>
+                <v-btn
+                  icon
+                  color="primary"
+                  :href="user.socialMedia.facebookUrl"
+                >
+                  <v-icon>mdi-facebook</v-icon>
+                </v-btn>
+                <v-btn
+                  icon
+                  color="primary"
+                  :href="user.socialMedia.instagramUrl"
+                >
+                  <v-icon>mdi-instagram</v-icon>
+                </v-btn>
+              </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-divider inset></v-divider>
           <v-list-item>
             <v-list-item-content>
               <v-list-item-title class="headline" style="text-align:center">{{

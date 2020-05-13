@@ -68,11 +68,11 @@ namespace BBC.API.Controllers
             return Ok(user);
         }
 
-        [HttpPut]
+        [HttpPost]
         [ProducesResponseType(typeof(IdentityResult), 200)]
         [ProducesResponseType(typeof(IEnumerable<string>), 400)]
         [Route("Update/{Id}")]
-        public async Task<IActionResult> Put(string Id, [FromBody]EditUserDto model)
+        public async Task<IActionResult> Put(int Id, [FromBody]EditUserDto model)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.Values.Select(x => x.Errors.FirstOrDefault().ErrorMessage));
@@ -89,11 +89,8 @@ namespace BBC.API.Controllers
         [ProducesResponseType(typeof(IdentityResult), 200)]
         [ProducesResponseType(typeof(IEnumerable<string>), 400)]
         [Route("Delete/{Id}")]
-        public async Task<IActionResult> Delete(string Id)
+        public async Task<IActionResult> Delete(int Id)
         {
-            if (!String.IsNullOrEmpty(Id))
-                return BadRequest(new string[] { "Empty parameter!" });
-
             IdentityResult result = await _userService.Delete(Id);
             if (result.Succeeded)
             {

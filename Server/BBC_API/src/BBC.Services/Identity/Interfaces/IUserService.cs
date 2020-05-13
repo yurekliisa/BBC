@@ -14,8 +14,8 @@ namespace BBC.Services.Identity.Interfaces
     {
         Task<List<UserListDto>> GetUsers();
         Task<UserProfileDto> GetUser(int Id);
-        Task<IdentityResult> EditUser(string Id, EditUserDto model);
-        Task<IdentityResult> Delete(string Id);
+        Task<IdentityResult> EditUser(int Id, EditUserDto model);
+        Task<IdentityResult> Delete(int Id);
         Task<UserReportHeaderWidget> HeaderReport(int userId);
         Task<List<UserReportMonthlyTAR>> MonthlyTaR(int userId);
     }
