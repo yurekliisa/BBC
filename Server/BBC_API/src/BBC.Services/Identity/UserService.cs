@@ -1,4 +1,7 @@
-﻿using BBC.Core.Domain.Identity;
+﻿using BBC.Core.Domain;
+using BBC.Core.Domain.Identity;
+using BBC.Core.Repositories.Base;
+using BBC.Infrastructure.Data;
 using BBC.Services.Identity.Dto.Auth;
 using BBC.Services.Identity.Dto.UserDtos;
 using BBC.Services.Identity.Interfaces;
@@ -16,6 +19,22 @@ namespace BBC.Services.Identity
 {
     public class UserService : ApplicationBaseServices<User, Role>, IUserService
     {
+        private readonly IRepositoryBase<BBCContext, TarifAndRecete, int> _tarRepository;
+        private readonly IRepositoryBase<BBCContext, Popularity, int> _popularityRepository;
+
+        public UserService(
+            IRepositoryBase<BBCContext, TarifAndRecete, int> tarRepository,
+            IRepositoryBase<BBCContext, Popularity, int> popularityRepository
+            )
+        {
+            _tarRepository = tarRepository;
+            _popularityRepository = popularityRepository;
+        }
+
+        public UserService()
+        {
+
+        }
         public async Task<List<UserListDto>> GetUsers()
         {
             IQueryable<User> roles = await Task.Run(() =>
@@ -76,17 +95,36 @@ namespace BBC.Services.Identity
             return result;
         }
 
-        public Task<UserReportHeaderWidget> Report()
+        public async Task<UserReportHeaderWidget> HeaderReport(int userId)
         {
-            var result = new UserReportHeaderWidget();
-            
+            var totalComment = _popularityRepository.GetQueryable().Count(x => x.UserId == userId);
 
+            //Userin makalelerini  ve populartieisini aldık
+            //makalenin populartiesinin countlarını topladık
+            var totalReceivedComment = _tarRepository.GetQueryable().Include(x => x.Popularities)
+                .Where(x => x.UserId == userId).SelectMany(x => x.Popularities).Count();
 
+            var totalTAR = _tarRepository.GetQueryable().Where(x => x.UserId == userId).Count();
+
+            return new UserReportHeaderWidget()
+            {
+                TotalComment = totalComment,
+                TotalRecivedComment = totalReceivedComment,
+                TotalTaR = totalTAR
+            };
         }
 
-        Task<UserListDto> IUserService.Report()
+        public async Task<List<UserReportMonthlyTAR>> MonthlyTaR(int userId)
         {
-            throw new NotImplementedException();
+            var query =await _tarRepository.GetQueryable().Where(x => x.UserId == userId && x.CreateTime.Year == DateTime.Now.Year)
+                .GroupBy(x => x.CreateTime.Month)
+                .Select(x => new UserReportMonthlyTAR()
+                {
+                    Month= x.Key,
+                    TotalTaR = x.Count()
+                }).ToListAsync();
+
+            return query;
         }
     }
 }

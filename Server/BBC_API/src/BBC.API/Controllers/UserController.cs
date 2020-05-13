@@ -40,12 +40,14 @@ namespace BBC.API.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(UserReportHeaderWidget), 200)]
+        [ProducesResponseType(typeof(UserReport), 200)]
         [Route("UserReport")]
-        public async Task<IActionResult> UserReport()
+        public async Task<IActionResult> UserReport(int userId)
         {
-            var report = _userService.Report();
-            return Ok(report);
+            var result = new UserReport();
+            result.HeaderWidget=await _userService.HeaderReport(userId);
+            result.MonthlyTAR = await _userService.MonthlyTaR(userId);
+            return Ok(result);
         }
 
         [HttpGet]
