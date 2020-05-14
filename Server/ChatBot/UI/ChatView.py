@@ -1,3 +1,4 @@
+{% load static %}
 import tkinter  as tk
 import pygubu
 import datetime
