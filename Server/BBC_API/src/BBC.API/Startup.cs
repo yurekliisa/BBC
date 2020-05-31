@@ -20,6 +20,7 @@ using BBC.API.Middlewares;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using BBC.API.Hubs;
 
 namespace BBC.API
 {
@@ -55,6 +56,7 @@ namespace BBC.API
 
             KernelAssembly.SetAssembly(assemblies);
             services.PreBuild(Configuration);
+            services.AddSignalR();
 
         }
 
@@ -102,7 +104,9 @@ namespace BBC.API
 
             app.UseErrorHandlingMiddleware();
 
-            
+            app.UseSignalR(hubRouteBuilder => {
+                hubRouteBuilder.MapHub<ChatHub>("/signalr");
+            });
 
             app.UseEndpoints(endpoints =>
             {
