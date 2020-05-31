@@ -37,7 +37,7 @@ namespace BBC.Services.Services.LobiService
             await _lobiRepository.UpdateAsync(lobi);
         }
 
-        public async Task<List<LobiListDto>> GetAllLobis()
+        public async Task<List<LobiListDto>> GetAllLobies()
         {
             var lobis = await _lobiRepository.GetListAsync();
             var result = _mapper.Map<List<LobiListDto>>(lobis);

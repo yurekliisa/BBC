@@ -9,7 +9,7 @@ namespace BBC.Services.Services.LobiService
 {
     public interface ILobiService : IBaseService
     {
-        Task<List<LobiListDto>> GetAllLobis();
+        Task<List<LobiListDto>> GetAllLobies();
         Task<EditLobiDto> GetLobi(int Id);
         Task CreateLobi(CreateLobiDto input);
         Task EditLobi(EditLobiDto input);
