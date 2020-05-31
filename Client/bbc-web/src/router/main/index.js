@@ -7,6 +7,7 @@ import ProfileEdit from '../../views/main/pages/Profile-Edit'
 import CreateTAR from "../../views/main/pages/tar/CreateTAR"
 import EditTAR from "../../views/main/pages/tar/EditTAR"
 import TAR from "../../views/main/pages/tar/TAR"
+import Chat from "../../views/main/pages/Chat"
 
 const GuardToken = (to, from, next) => {
     let go = localStorage.getItem('user');
@@ -62,6 +63,12 @@ const router = [
         path: "tar",
         component: TAR,
         name: "TAR"
+    },
+    {
+        path:"chat",
+        component:Chat,
+        name:"chat",
+        //beforeEnter: GuardToken
     }
 ];
 
