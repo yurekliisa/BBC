@@ -1,4 +1,6 @@
-﻿using BBC.Services.Services.Common.Base;
+﻿using BBC.Core.Domain.Identity;
+using BBC.Services.Services.Base;
+using BBC.Services.Services.Common.Base;
 using BBC.Services.Services.HomeService.Dto;
 using System;
 using System.Collections.Generic;
@@ -7,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BBC.Services.Services.HomeService
 {
-    public interface IHomeService:IBaseService
+    public interface IHomeService : IApplicationBaseServices<User, Role>
     {
         Task<List<SliderOutputDto>> GetSliderImages();
         Task<List<TaRHomeOuputDto>> GetHomeContent(int page);

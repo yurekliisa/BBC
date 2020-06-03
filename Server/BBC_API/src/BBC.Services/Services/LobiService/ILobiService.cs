@@ -14,5 +14,12 @@ namespace BBC.Services.Services.LobiService
         Task CreateLobi(CreateLobiDto input);
         Task EditLobi(EditLobiDto input);
         Task DeleteLobi(int Id);
+
+        Task<List<LobiMessagesDto>> GetAllLobiMessages(int Id);
+
+        Task JoinUserToLobi(LobiInputDto input);
+        Task LeaveUserToLobi(LobiInputDto input);
+
+        Task SendUserMessageToLobi(int lobiId, LobiMessagesDto input);
     }
 }

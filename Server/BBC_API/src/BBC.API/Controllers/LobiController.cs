@@ -40,6 +40,17 @@ namespace BBC.API.Controllers
             return Ok();
         }
 
+
+        [HttpGet]
+        [Route("GetLobiMessages")]
+        [ProducesResponseType(typeof(List<LobiMessagesDto>), 200)]
+        [RequiredAuth]
+        public async Task<IActionResult> GetLobiMessages(int Id)
+        {
+            var messages = await _lobiService.GetAllLobiMessages(Id);
+            return Ok(messages);
+        }
+
         [HttpGet]
         [ProducesResponseType(typeof(List<LobiListDto>), 200)]
         [Route("GetAllLobies")]
