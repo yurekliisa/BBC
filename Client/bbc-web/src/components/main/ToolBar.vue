@@ -61,11 +61,17 @@ export default {
   // },
   methods: {
     filterMenu() {
-      let userData = this.$store.getters.userInfo;//
+      let userData = this.$store.getters.userInfo; //
       if (userData.userId == undefined) {
         return orjMenu.filter((x) => x.isAuth !== "user");
       } else {
         const menu = orjMenu.filter((x) => x.isAuth !== "notUser");
+        menu.push({
+          text: "chat",
+          to: "/chat",
+          isAuth: "user",
+        });
+
         menu.push({
           text: userData.userName,
           to: "/profile/" + userData.userId,

@@ -1,4 +1,5 @@
-﻿using BBC.Services.Services.Common.Base;
+﻿using BBC.Services.Identity.Dto.UserDtos;
+using BBC.Services.Services.Common.Base;
 using BBC.Services.Services.LobiService.Dto;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace BBC.Services.Services.LobiService
         Task DeleteLobi(int Id);
 
         Task<List<LobiMessagesDto>> GetAllLobiMessages(int Id);
-
+        Task<List<UserListDto>> GetLobiUsers(int lobiId);
         Task JoinUserToLobi(LobiInputDto input);
         Task LeaveUserToLobi(LobiInputDto input);
 

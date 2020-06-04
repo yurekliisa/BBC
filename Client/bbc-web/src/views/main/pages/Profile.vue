@@ -77,7 +77,7 @@
             <v-list-item-icon> </v-list-item-icon>
             <v-list-item-content>
               <v-list-item-subtitle>Social Media</v-list-item-subtitle>
-              <v-list-item-title>
+              <v-list-item-title v-if="user.socialMedia">
                 <v-btn icon color="primary" :href="user.socialMedia.twitterUrl">
                   <v-icon>mdi-twitter</v-icon>
                 </v-btn>

@@ -2,14 +2,25 @@
   <v-row no-gutters>
     <v-col sm="2" class="scrollable">
       <v-list subheader>
-        <v-subheader>Your Chats</v-subheader>
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-title>Chat Bot</v-list-item-title>
+          </v-list-item-content>
+          <v-list-item-action>
+            <v-icon>mdi-chat</v-icon>
+          </v-list-item-action>
+        </v-list-item>
+      </v-list>
+      <v-list subheader>
+        <v-subheader>Lobiler</v-subheader>
         <v-list-item
-          v-for="(chat, index) in [{ name: 'Oda 1' }]"
-          v-bind:key="chat.name"
-          :to="/chat/ + index"
+          :v-if="lobis.length > 0"
+          v-for="(lobi, index) in lobis"
+          v-bind:key="index"
+          @click="getRoomDetails(lobi)"
         >
           <v-list-item-content>
-            <v-list-item-title v-html="chat.name"></v-list-item-title>
+            <v-list-item-title v-html="lobi.name"></v-list-item-title>
           </v-list-item-content>
           <v-list-item-action>
             <v-icon>mdi-chat</v-icon>
@@ -17,47 +28,82 @@
         </v-list-item>
       </v-list>
     </v-col>
-    <v-col sm="8" style="position: relative;">
+    <v-col :sm="selectedLobi ? '8' : '10'" style="position: relative;">
       <div class="chat-container" v-on:scroll="onScroll" ref="chatContainer">
         <div
           class="message"
           v-for="(message, index) in messages"
           v-bind:key="index"
-          :class="{ own: message.user == username }"
+          :class="{ own: message.senderUserId == currentUser.userId }"
         >
           <div
             class="username"
-            v-if="index > 0 && messages[index - 1].user != message.user"
+            v-if="
+              index > 0 &&
+                messages[index - 1].senderUserId != message.senderUserId
+            "
           >
-            {{ message.user }}
+            {{ message.senderUserName }}
           </div>
-          <div class="username" v-if="index == 0">{{ message.user }}</div>
+          <div class="username" v-if="index == 0">
+            {{ message.senderUserName }}
+          </div>
           <div style="margin-top: 5px"></div>
           <div class="content">
-            <div v-html="message.content"></div>
+            <div v-html="message.message"></div>
           </div>
         </div>
       </div>
-      <div class="typer">
-        <input
-          type="text"
-          placeholder="Type here..."
-          v-on:keyup.enter="sendMessage"
-          v-model="content"
-        />
+      <div class="typer" v-if="selectedLobi">
+        <template v-if="selectedLobi.isJoin">
+          <input
+            type="text"
+            placeholder="Type here..."
+            v-on:keyup.enter="sendMessage"
+            v-model="content"
+          />
+        </template>
+        <template  v-else>
+          <span style="width:100%;text-align:center">Lobiye katılmanız gerekmektedir</span>
+        </template>
+      </div>
+      <div class="typer" style="justify-content:center" v-else>
+        <span>Lobi Seçmeni gerekmektedir</span>
       </div>
     </v-col>
-    <v-col sm="2" class="scrollable">
+    <v-col sm="2" class="scrollable" v-if="selectedLobi">
       <v-list subheader>
         <v-subheader>Your Chats</v-subheader>
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-title v-if="selectedLobi.isJoin">
+              <v-btn
+                x-large
+                color="red accent-4"
+                dark
+                @click="leaveLobi(selectedLobi)"
+                >Lobiden ayrıl</v-btn
+              >
+            </v-list-item-title>
+            <v-list-item-title v-if="!selectedLobi.isJoin">
+              <v-btn
+                x-large
+                color="deep-purple accent-4"
+                dark
+                @click="joinLobi(selectedLobi)"
+                >Lobiye Katıl</v-btn
+              >
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
         <v-list-item
-          avatar
-          v-for="(chat, index) in [{ name: 'Oda 1' }]"
-          v-bind:key="chat.name"
+          :v-if="lobiUsers.length > 0"
+          v-for="(user, index) in lobiUsers"
+          v-bind:key="index"
           :to="/chat/ + index"
         >
           <v-list-item-content>
-            <v-list-item-title v-html="chat.name"></v-list-item-title>
+            <v-list-item-title v-html="user.userName"></v-list-item-title>
           </v-list-item-content>
           <v-list-item-action>
             <v-icon>mdi-chat</v-icon>
@@ -71,94 +117,55 @@
 <script>
 import { mapGetters, mapMutations } from "vuex";
 import axios from "axios";
+import * as signalR from "@aspnet/signalr";
 
 export default {
   name: "Chat",
-  components: {},
+  computed: {
+    ...mapGetters(["connection"]),
+  },
   data() {
     return {
       content: "",
       chatMessages: [],
+      lobis: [],
+      selectedLobi: undefined,
+      lobiUsers: [],
       currentRef: {},
       loading: false,
       totalChatHeight: 0,
     };
   },
   created() {
-    let data = [
-      {
-        user: "Ahmet",
-        content: "afhadfhasdfhadfhafhasfdhasfhasfh",
-      },
-      {
-        user: "İsa Yürekli",
-        content: "ghlşsdgşlmfgmlşmsfghlşmsrthşlmsfgh",
-      },
-      {
-        user: "fhafdh",
-        content: "sdfhgsdfh",
-      },
-      {
-        user: "Ahmet",
-        content: "afhadfhasdfhadfhafhasfdhasfhasfh",
-      },
-      {
-        user: "İsa Yürekli",
-        content: "ghlşsdgşlmfgmlşmsfghlşmsrthşlmsfgh",
-      },
-      {
-        user: "fhafdh",
-        content: "sdfhgsdfh",
-      },
-      {
-        user: "Ahmet",
-        content: "afhadfhasdfhadfhafhasfdhasfhasfh",
-      },
-      {
-        user: "İsa Yürekli",
-        content: "ghlşsdgşlmfgmlşmsfghlşmsrthşlmsfgh",
-      },
-      {
-        user: "fhafdh",
-        content: "sdfhgsdfh",
-      },
-      {
-        user: "Ahmet",
-        content: "afhadfhasdfhadfhafhasfdhasfhasfh",
-      },
-      {
-        user: "İsa Yürekli",
-        content: "ghlşsdgşlmfgmlşmsfghlşmsrthşlmsfgh",
-      },
-      {
-        user: "fhafdh",
-        content: "sdfhgsdfh",
-      },
-      {
-        user: "Ahmet",
-        content: "afhadfhasdfhadfhafhasfdhasfhasfh",
-      },
-      {
-        user: "İsa Yürekli",
-        content: "ghlşsdgşlmfgmlşmsfghlşmsrthşlmsfgh",
-      },
-      {
-        user: "fhafdh",
-        content: "sdfhgsdfh",
-      },
-    ];
-    this.chatMessages = data;
+    this.fecthLobis();
   },
   mounted() {
     this.loadChat();
+    this.$store.getters.connection.on("ReceiveMessage", (message) => {
+      if (message.lobiId === this.selectedLobi.id) {
+        if (message.senderUserId === 1) {
+          message.isOwner = true;
+        } else {
+          message.isOwner = false;
+        }
+        this.chatMessages.push(message);
+        this.scrollToEnd();
+      }
+    });
+    this.$store.getters.connection.on("NewUser", (lobiId) => {
+      console.log("silindi");
+      if (lobiId === this.selectedLobi.id) {
+        this.getRoomDetails(this.selectedLobi);
+      }
+    });
   },
   computed: {
     messages() {
+      console.log(this.chatMessages);
       return this.chatMessages;
     },
-    username() {
-      return "İsa Yürekli";
-      //return this.$store.getters.user.username
+    currentUser() {
+      return this.$store.getters.userInfo;
     },
     onNewMessageAdded() {
       const that = this;
@@ -196,19 +203,115 @@ export default {
     },
   },
   methods: {
+    joinLobi(lobi, create) {
+      if (
+        this.$store.getters.connection.state ===
+        signalR.HubConnectionState.Connected
+      ) {
+        this.$store.getters.connection.invoke(
+          "JoinGroup",
+          lobi.id,
+          this.$store.getters.userInfo.userId
+        );
+      } else {
+        this.$store.getters.connection
+          .start()
+          .then(() =>
+            this.$store.getters.connection.invoke(
+              "JoinGroup",
+              lobi.id,
+              this.$store.getters.userInfo.userId
+            )
+          );
+      }
+
+      if (!create) {
+        this.selectedLobi = lobi;
+        this.selectedLobi.isJoin = true;
+        //this.fecthLobis();
+      }
+    },
+    leaveLobi(lobi) {
+      if (lobi.isJoin) {
+        if (
+          this.$store.getters.connection.state ===
+          signalR.HubConnectionState.Connected
+        ) {
+          this.$store.getters.connection.invoke(
+            "LeaveGroup",
+            lobi.id,
+            this.$store.getters.userInfo.userId
+          );
+        } else {
+          this.$store.getters.connection
+            .start()
+            .then(() =>
+              this.$store.getters.connection.invoke(
+                "LeaveGroup",
+                lobi.id,
+                this.$store.getters.userInfo.userId
+              )
+            );
+        }
+        console.log(this.selectedLobi);
+        this.selectedLobi = lobi;
+        this.selectedLobi.isJoin = false;
+        //this.fecthLobis();
+      }
+    },
+    getRoomDetails(lobi) {
+      this.selectedLobi = lobi;
+      axios
+        .get("Lobi/GetLobiUsers?lobiId=" + lobi.id, {
+          headers: {
+            "Content-type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            Authorization: `Bearer ${this.$store.getters.userInfo.token}`,
+          },
+        })
+        .then((response) => {
+          console.log(response);
+          this.lobiUsers = response.data;
+        });
+      axios
+        .get("Lobi/GetLobiMessages?Id=" + lobi.id, {
+          headers: {
+            "Content-type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            Authorization: `Bearer ${this.$store.getters.userInfo.token}`,
+          },
+        })
+        .then((response) => {
+          console.log(response);
+          this.chatMessages = response.data;
+          this.scrollToEnd();
+        });
+    },
+    fecthLobis() {
+      axios
+        .get("Lobi/GetAllLobies", {
+          headers: {
+            "Content-type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            Authorization: `Bearer ${this.$store.getters.userInfo.token}`,
+          },
+        })
+        .then((response) => {
+          this.lobis = response.data;
+          response.data.forEach((lobi) => {
+            if (lobi.isJoin) {
+              this.joinLobi(lobi, true);
+            }
+          });
+        });
+      //this.chatMessages = data;
+    },
     loadChat() {
       this.totalChatHeight = this.$refs.chatContainer.scrollHeight;
       this.loading = false;
       if (this.id !== undefined) {
         this.chatMessages = [];
         let chatID = this.id;
-        // this.currentRef = firebase
-        //   .database()
-        //   .ref("messages")
-        //   .child(chatID)
-        //   .child("messages")
-        //   .limitToLast(20);
-        //this.currentRef.on("child_added", this.onNewMessageAdded);
       }
     },
     onScroll() {
@@ -227,14 +330,28 @@ export default {
     },
     sendMessage() {
       if (this.content !== "") {
-        console.log(this.username);
-        //this.$store.dispatch('sendMessage', { username: this.username, content: this.content, date: new Date().toString(), chatID: this.id })
-        this.messages.push({
-          user: "İsa Yürekli",
-          content: this.content,
-        });
+        if (
+          this.$store.getters.connection.state ===
+          signalR.HubConnectionState.Connected
+        ) {
+          this.$store.getters.connection.invoke("SendMessage", {
+            lobiId: this.selectedLobi.id,
+            senderUserId: this.$store.getters.userInfo.userId,
+            senderUserName: this.$store.getters.userInfo.userName,
+            Message: this.content,
+          });
+        } else {
+          this.$store.getters.connection.start().then(() => {
+            this.$store.getters.connection.invoke("SendMessage", {
+              lobiId: this.selectedLobi.id,
+              senderUserId: this.$store.getters.userInfo.userId,
+              senderUserName: this.$store.getters.userInfo.userName,
+              Message: this.content,
+            });
+            this.scrollToEnd();
+          });
+        }
         this.content = "";
-        this.scrollToEnd();
       }
     },
     scrollToEnd() {

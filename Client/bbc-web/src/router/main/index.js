@@ -68,7 +68,7 @@ const router = [
         path:"chat",
         component:Chat,
         name:"chat",
-        //beforeEnter: GuardToken
+        beforeEnter: GuardToken
     }
 ];
 

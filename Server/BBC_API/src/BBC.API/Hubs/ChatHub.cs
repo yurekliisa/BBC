@@ -26,16 +26,18 @@ namespace BBC.API.Hubs
             return base.OnDisconnectedAsync(exception);
         }
 
-        public async Task SendMessage(int lobiId, LobiMessagesDto input)
+        public async Task SendMessage(LobiMessagesDto input)
         {
             input.senderTime = DateTime.Now;
 
-            await Clients.Group(lobiId.ToString()).SendAsync("ReceiveMessage", input);
+            await Clients.Group(input.lobiId.ToString()).SendAsync("ReceiveMessage", input);
 
-            await _lobiService.SendUserMessageToLobi(lobiId, input);
+            await _lobiService.SendUserMessageToLobi(input.lobiId, input);
+
+            
 
         }
-
+       
         public async Task JoinGroup(int lobiId, int userId)
         {
             await this.Groups.AddToGroupAsync(this.Context.ConnectionId, lobiId.ToString());
@@ -44,16 +46,18 @@ namespace BBC.API.Hubs
                 LobiId = lobiId,
                 UserId = userId
             });
+            await Clients.Group(lobiId.ToString()).SendAsync("NewUser",lobiId);
         }
 
         public async Task LeaveGroup(int lobiId, int userId)
         {
-            await this.Groups.RemoveFromGroupAsync(this.Context.ConnectionId, lobiId.ToString());
             await _lobiService.LeaveUserToLobi(new LobiInputDto()
             {
                 LobiId = lobiId,
                 UserId = userId
             });
+            await Clients.Group(lobiId.ToString()).SendAsync("NewUser", lobiId);
+            await this.Groups.RemoveFromGroupAsync(this.Context.ConnectionId, lobiId.ToString());
         }
     }
 }

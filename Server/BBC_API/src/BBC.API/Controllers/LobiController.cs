@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BBC.API.Helper.Attribute;
+using BBC.Services.Identity.Dto.UserDtos;
 using BBC.Services.Services.LobiService;
 using BBC.Services.Services.LobiService.Dto;
 using Microsoft.AspNetCore.Http;
@@ -59,6 +60,16 @@ namespace BBC.API.Controllers
         {
             var lobies = await _lobiService.GetAllLobies();
             return Ok(lobies);
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(List<UserListDto>), 200)]
+        [Route("GetLobiUsers")]
+        [RequiredAuth]
+        public async Task<IActionResult> GetLobiUsers(int lobiId)
+        {
+            var users = await _lobiService.GetLobiUsers(lobiId);
+            return Ok(users);
         }
     }
 }

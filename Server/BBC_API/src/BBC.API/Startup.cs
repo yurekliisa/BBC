@@ -102,11 +102,12 @@ namespace BBC.API
 
             app.PostBuilder();
 
-            app.UseErrorHandlingMiddleware();
-
+           
             app.UseSignalR(hubRouteBuilder => {
                 hubRouteBuilder.MapHub<ChatHub>("/signalr");
             });
+
+            app.UseErrorHandlingMiddleware();
 
             app.UseEndpoints(endpoints =>
             {

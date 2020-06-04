@@ -1,5 +1,9 @@
+import * as signalR from '@aspnet/signalr';
+
+
 const state = {
     userInfo: {},
+    connection:{},
     /* 
         id,
         userName,
@@ -7,16 +11,25 @@ const state = {
         email
     */
 };
+const actions = {
+
+}
+
 const mutations = {
     SET_USER(state, user) {
-        console.log("set")
-        console.log(user)
         state.userInfo = user;
+        state.connection = new signalR.HubConnectionBuilder()
+        .withUrl('https://localhost:44308/signalr')
+        .build();
+        console.log(state.connection);
     },
 };
 const getters = {
     userInfo(state) {
         return state.userInfo;
+    },
+    connection(state) {
+        return state.connection;
     },
 };
 export default {

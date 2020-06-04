@@ -2,6 +2,7 @@
 using BBC.Core.Domain.Identity;
 using BBC.Core.Repositories.Base;
 using BBC.Infrastructure.Data;
+using BBC.Services.Identity.Dto.UserDtos;
 using BBC.Services.Services.Base;
 using BBC.Services.Services.Common.Base;
 using BBC.Services.Services.LobiService.Dto;
@@ -18,9 +19,10 @@ namespace BBC.Services.Services.LobiService
     {
         private readonly IRepositoryBase<BBCContext, Lobi, int> _lobiRepository;
         private readonly IRepositoryBase<BBCContext, LobiMessages, int> _lobiMessagesRepository;
-
-        public LobiManager(IRepositoryBase<BBCContext, Lobi, int> lobiRepository, IRepositoryBase<BBCContext, LobiMessages, int> lobiMessagesRepository)
+        private readonly BBCContext _context;
+        public LobiManager(BBCContext context , IRepositoryBase<BBCContext, Lobi, int> lobiRepository, IRepositoryBase<BBCContext, LobiMessages, int> lobiMessagesRepository)
         {
+            _context = context;
             _lobiRepository = lobiRepository;
             _lobiMessagesRepository = lobiMessagesRepository;
         }
@@ -45,12 +47,35 @@ namespace BBC.Services.Services.LobiService
 
         public async Task<List<LobiListDto>> GetAllLobies()
         {
-            var lobis = await _lobiRepository.GetListAsync();
-            var result = _mapper.Map<List<LobiListDto>>(lobis);
-            return result;
+            var currentUser = await this.GetCurrentUserAsync();
+            var lobis = await _lobiRepository.GetQueryable().Include(x => x.LobiUsers).Select(x => new LobiListDto()
+            {
+                Id = x.Id,
+                Name = x.Name,
+                isJoin = x.LobiUsers.Any(x => x.UserId == currentUser.Id)
+            }).ToListAsync();
+            return lobis;
         }
 
+        public async Task<List<UserListDto>> GetLobiUsers(int lobiId)
+        {
+            List<UserListDto> result = new List<UserListDto>();
+            var lobi = await _lobiRepository.GetQueryable().Include(x => x.LobiUsers)
+                .Include("LobiUsers.User")
+                .FirstOrDefaultAsync(x => x.Id == lobiId);
 
+            if (lobi != null)
+            {
+                result = lobi.LobiUsers.Select(y => new UserListDto()
+                {
+                    Id = y.UserId,
+                    Name = y.User.Name,
+                    SurName = y.User.SurName,
+                    UserName = y.User.UserName
+                }).ToList();
+            }
+            return result;
+        }
 
         public async Task<EditLobiDto> GetLobi(int Id)
         {
@@ -79,23 +104,27 @@ namespace BBC.Services.Services.LobiService
 
         public async Task JoinUserToLobi(LobiInputDto input)
         {
-            var lobi = await _lobiRepository.GetAsync(input.LobiId);
-            lobi.LobiUsers.Add(new LobiUser()
+            var lobi = await _lobiRepository.GetQueryable().Include(x => x.LobiUsers).FirstOrDefaultAsync(x => x.Id == input.LobiId);
+            if (!lobi.LobiUsers.Any(x => x.UserId == input.UserId))
             {
-                UserId = input.UserId
-            });
-            await _lobiRepository.UpdateAsync(lobi);
+                lobi.LobiUsers.Add(new LobiUser()
+                {
+                    UserId = input.UserId
+                });
+                await _lobiRepository.UpdateAsync(lobi);
+            }
         }
 
         public async Task LeaveUserToLobi(LobiInputDto input)
         {
-            var lobi = await _lobiRepository.GetAsync(input.LobiId);
-            lobi.LobiUsers.Remove(new LobiUser()
+            var lobiUser = await _context.LobiUsers.FirstOrDefaultAsync(x=>x.LobiId == input.LobiId && x.UserId == x.UserId);
+            if (lobiUser!=null)
             {
-                LobiId = input.LobiId,
-                UserId = input.UserId
-            });
-            await _lobiRepository.UpdateAsync(lobi);
+                _context.Entry<LobiUser>(lobiUser).State = EntityState.Deleted;
+                _context.SaveChanges();
+
+            }
+           
         }
 
         public async Task SendUserMessageToLobi(int lobiId, LobiMessagesDto input)
@@ -106,7 +135,7 @@ namespace BBC.Services.Services.LobiService
                 Message = input.Message,
                 SendTime = input.senderTime,
                 ToLobiId = lobiId
-            });
+            }, true);
         }
     }
 }
