@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using BBC.Services.Services.LobiService;
@@ -34,10 +35,8 @@ namespace BBC.API.Hubs
 
             await _lobiService.SendUserMessageToLobi(input.lobiId, input);
 
-            
-
         }
-       
+
         public async Task JoinGroup(int lobiId, int userId)
         {
             await this.Groups.AddToGroupAsync(this.Context.ConnectionId, lobiId.ToString());
@@ -46,7 +45,7 @@ namespace BBC.API.Hubs
                 LobiId = lobiId,
                 UserId = userId
             });
-            await Clients.Group(lobiId.ToString()).SendAsync("NewUser",lobiId);
+            await Clients.Group(lobiId.ToString()).SendAsync("NewUser", lobiId);
         }
 
         public async Task LeaveGroup(int lobiId, int userId)

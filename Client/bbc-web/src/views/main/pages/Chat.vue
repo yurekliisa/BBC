@@ -2,7 +2,9 @@
   <v-row no-gutters>
     <v-col sm="2" class="scrollable">
       <v-list subheader>
-        <v-list-item>
+        <v-list-item
+          @click="getRoomDetails({ id: 0, isJoin: true, name: 'chatBot' })"
+        >
           <v-list-item-content>
             <v-list-item-title>Chat Bot</v-list-item-title>
           </v-list-item-content>
@@ -28,7 +30,10 @@
         </v-list-item>
       </v-list>
     </v-col>
-    <v-col :sm="selectedLobi ? '8' : '10'" style="position: relative;">
+    <v-col
+      :sm="selectedLobi ? (selectedLobi.id !== 0 ? '8' : '10') : '10'"
+      style="position: relative;"
+    >
       <div class="chat-container" v-on:scroll="onScroll" ref="chatContainer">
         <div
           class="message"
@@ -63,15 +68,21 @@
             v-model="content"
           />
         </template>
-        <template  v-else>
-          <span style="width:100%;text-align:center">Lobiye katılmanız gerekmektedir</span>
+        <template v-else>
+          <span style="width:100%;text-align:center"
+            >Lobiye katılmanız gerekmektedir</span
+          >
         </template>
       </div>
       <div class="typer" style="justify-content:center" v-else>
         <span>Lobi Seçmeni gerekmektedir</span>
       </div>
     </v-col>
-    <v-col sm="2" class="scrollable" v-if="selectedLobi">
+    <v-col
+      sm="2"
+      class="scrollable"
+      v-if="selectedLobi ? (selectedLobi.id === 0 ? false : true) : false"
+    >
       <v-list subheader>
         <v-subheader>Your Chats</v-subheader>
         <v-list-item>
@@ -142,7 +153,7 @@ export default {
   mounted() {
     this.loadChat();
     this.$store.getters.connection.on("ReceiveMessage", (message) => {
-      if (message.lobiId === this.selectedLobi.id) {
+      if (message.lobiId === this.selectedLobi?.id) {
         if (message.senderUserId === 1) {
           message.isOwner = true;
         } else {
@@ -153,15 +164,13 @@ export default {
       }
     });
     this.$store.getters.connection.on("NewUser", (lobiId) => {
-      console.log("silindi");
-      if (lobiId === this.selectedLobi.id) {
+      if (lobiId === this.selectedLobi?.id) {
         this.getRoomDetails(this.selectedLobi);
       }
     });
   },
   computed: {
     messages() {
-      console.log(this.chatMessages);
       return this.chatMessages;
     },
     currentUser() {
@@ -253,7 +262,6 @@ export default {
               )
             );
         }
-        console.log(this.selectedLobi);
         this.selectedLobi = lobi;
         this.selectedLobi.isJoin = false;
         //this.fecthLobis();
@@ -261,31 +269,34 @@ export default {
     },
     getRoomDetails(lobi) {
       this.selectedLobi = lobi;
-      axios
-        .get("Lobi/GetLobiUsers?lobiId=" + lobi.id, {
-          headers: {
-            "Content-type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-            Authorization: `Bearer ${this.$store.getters.userInfo.token}`,
-          },
-        })
-        .then((response) => {
-          console.log(response);
-          this.lobiUsers = response.data;
-        });
-      axios
-        .get("Lobi/GetLobiMessages?Id=" + lobi.id, {
-          headers: {
-            "Content-type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-            Authorization: `Bearer ${this.$store.getters.userInfo.token}`,
-          },
-        })
-        .then((response) => {
-          console.log(response);
-          this.chatMessages = response.data;
-          this.scrollToEnd();
-        });
+      if (lobi.id !== 0) {
+        axios
+          .get("Lobi/GetLobiUsers?lobiId=" + lobi.id, {
+            headers: {
+              "Content-type": "application/json",
+              "Access-Control-Allow-Origin": "*",
+              Authorization: `Bearer ${this.$store.getters.userInfo.token}`,
+            },
+          })
+          .then((response) => {
+            console.log(response);
+            this.lobiUsers = response.data;
+          });
+        axios
+          .get("Lobi/GetLobiMessages?Id=" + lobi.id, {
+            headers: {
+              "Content-type": "application/json",
+              "Access-Control-Allow-Origin": "*",
+              Authorization: `Bearer ${this.$store.getters.userInfo.token}`,
+            },
+          })
+          .then((response) => {
+            this.chatMessages = response.data;
+            this.scrollToEnd();
+          });
+      } else {
+        this.chatMessages = [];
+      }
     },
     fecthLobis() {
       axios
@@ -329,29 +340,75 @@ export default {
       }
     },
     sendMessage() {
-      if (this.content !== "") {
-        if (
-          this.$store.getters.connection.state ===
-          signalR.HubConnectionState.Connected
-        ) {
-          this.$store.getters.connection.invoke("SendMessage", {
-            lobiId: this.selectedLobi.id,
-            senderUserId: this.$store.getters.userInfo.userId,
-            senderUserName: this.$store.getters.userInfo.userName,
-            Message: this.content,
-          });
-        } else {
-          this.$store.getters.connection.start().then(() => {
+      if (
+        this.selectedLobi?.id !== 0 &&
+        this.selectedLobi?.name !== "chatLobi"
+      ) {
+        if (this.content !== "") {
+          if (
+            this.$store.getters.connection.state ===
+            signalR.HubConnectionState.Connected
+          ) {
             this.$store.getters.connection.invoke("SendMessage", {
               lobiId: this.selectedLobi.id,
               senderUserId: this.$store.getters.userInfo.userId,
               senderUserName: this.$store.getters.userInfo.userName,
-              Message: this.content,
+              message: this.content,
             });
+          } else {
+            this.$store.getters.connection.start().then(() => {
+              this.$store.getters.connection.invoke("SendMessage", {
+                lobiId: this.selectedLobi.id,
+                senderUserId: this.$store.getters.userInfo.userId,
+                senderUserName: this.$store.getters.userInfo.userName,
+                message: this.content,
+              });
+              this.scrollToEnd();
+            });
+          }
+          this.content = "";
+        }
+      } else {
+        //SignalR ile servera gönderirken büyük M ?
+        this.chatMessages.push({
+          senderUserId: this.$store.getters.userInfo.userId,
+          senderUserName: this.$store.getters.userInfo.userName,
+          message: this.content,
+        });
+        axios
+          .create({
+            baseURL: "http://52.229.54.243:8000",
+          })
+          .post(
+            "/api",
+            {
+              msg: this.content,
+            },
+            {
+              headers: {
+                "Content-type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+              },
+            }
+          )
+          .then((answer) => {
+            this.chatMessages.push({
+              senderUserId: 0,
+              senderUserName: "CHATBOT",
+              message: answer.res,
+            });
+            this.content = "";
             this.scrollToEnd();
           });
-        }
-        this.content = "";
+
+        /*
+        {
+    "desc": "Başarılı.",
+    "ques": "hi",
+    "res": "Hi there, how can I help?",
+    "time": "2020-06-05 11:45:14"
+}
+        */
       }
     },
     scrollToEnd() {

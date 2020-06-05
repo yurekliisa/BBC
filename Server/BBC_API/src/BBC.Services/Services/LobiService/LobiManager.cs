@@ -20,7 +20,11 @@ namespace BBC.Services.Services.LobiService
         private readonly IRepositoryBase<BBCContext, Lobi, int> _lobiRepository;
         private readonly IRepositoryBase<BBCContext, LobiMessages, int> _lobiMessagesRepository;
         private readonly BBCContext _context;
-        public LobiManager(BBCContext context , IRepositoryBase<BBCContext, Lobi, int> lobiRepository, IRepositoryBase<BBCContext, LobiMessages, int> lobiMessagesRepository)
+        public LobiManager(
+            BBCContext context , 
+            IRepositoryBase<BBCContext, Lobi, int> lobiRepository, 
+            IRepositoryBase<BBCContext, LobiMessages, int> lobiMessagesRepository
+            )
         {
             _context = context;
             _lobiRepository = lobiRepository;
@@ -117,12 +121,12 @@ namespace BBC.Services.Services.LobiService
 
         public async Task LeaveUserToLobi(LobiInputDto input)
         {
-            var lobiUser = await _context.LobiUsers.FirstOrDefaultAsync(x=>x.LobiId == input.LobiId && x.UserId == x.UserId);
+            var lobiUser = await _context.LobiUsers.FirstOrDefaultAsync(x=>x.LobiId == input.LobiId && x.UserId == input.UserId);
+            
             if (lobiUser!=null)
             {
                 _context.Entry<LobiUser>(lobiUser).State = EntityState.Deleted;
                 _context.SaveChanges();
-
             }
            
         }
