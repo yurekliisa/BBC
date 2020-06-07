@@ -379,23 +379,13 @@ export default {
           .create({
             baseURL: "http://52.229.54.243:8000",
           })
-          .post(
-            "/api",
-            {
-              msg: this.content,
-            },
-            {
-              headers: {
-                "Content-type": "application/json",
-                "Access-Control-Allow-Origin": "*",
-              },
-            }
-          )
+          .get("/api?msg="+this.content)
           .then((answer) => {
+            console.log(answer);
             this.chatMessages.push({
               senderUserId: 0,
               senderUserName: "CHATBOT",
-              message: answer.res,
+              message: answer.data.res,
             });
             this.content = "";
             this.scrollToEnd();

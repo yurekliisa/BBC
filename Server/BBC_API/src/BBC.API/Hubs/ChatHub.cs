@@ -17,16 +17,6 @@ namespace BBC.API.Hubs
             _lobiService = lobiService;
         }
 
-        public override Task OnConnectedAsync()
-        {
-            return base.OnConnectedAsync();
-        }
-
-        public override Task OnDisconnectedAsync(Exception exception)
-        {
-            return base.OnDisconnectedAsync(exception);
-        }
-
         public async Task SendMessage(LobiMessagesDto input)
         {
             input.senderTime = DateTime.Now;

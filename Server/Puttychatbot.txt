@@ -1,0 +1,8 @@
+http://52.229.54.243:8000/api
+Request Tipi    : 'POST'
+Gönderilecek veri   : {"msg" : "What is your name"}
+Dönen veri: {"ques" : "What is your name", "res":"I'm Slack", "time" :"2018-01 10:07:32"}
+IP 52.229.54.243
+Putty  Username: AzureUser
+password:Bruski.23Hector.23
+code python3 manage.py runserver 10.0.0.4:8000
