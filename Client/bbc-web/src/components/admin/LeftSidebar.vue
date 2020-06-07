@@ -43,8 +43,8 @@ export default {
         },
         {
           icon: "mdi-account-card-details", // bu da ikonu fakat gözükmüyo
-          title: "UserReports",
-          to: "/admin/userreports"
+          title: "Lobby",
+          to: "/admin/lobby"
         },
         {
           icon: "mdi-settings-box", //mdi-settings // gözükmüyo ama ikonu bu mdi-settings-box

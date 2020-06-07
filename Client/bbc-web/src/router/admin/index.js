@@ -2,7 +2,7 @@
 import Dashboard from "../../views/admin/pages/Dashboard.vue";
 import Category from "../../views/admin/pages/Category.vue";
 import Country from "../../views/admin/pages/Country.vue";
-import UserReports from "../../views/admin/pages/UserReports.vue";
+import UserReports from "../../views/admin/pages/Lobby.vue";
 import Settings from "../../views/admin/pages/Settings.vue";
 const router = [
     {
@@ -22,8 +22,8 @@ const router = [
         component: Country
     },
     {
-        path:  "userreports",
-        component: UserReports
+        path:  "lobby",
+        component: Lobby
     },
     {
         path: "settings",
