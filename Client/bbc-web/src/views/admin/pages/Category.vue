@@ -1,9 +1,7 @@
 <template>
   <v-layout warp align-center justify-center row fill-height>
     <v-flex xs12 md12>
-      <v-btn outlined color="deep-purple" dark @click="showModal()"
-        >Create Category</v-btn
-      >
+      <v-btn outlined color="deep-purple" dark @click="showModal()">Create Category</v-btn>
       <v-dialog v-model="dialog" persistent max-width="600px">
         <v-card>
           <v-card-title>
@@ -14,11 +12,7 @@
               <v-form>
                 <v-row>
                   <v-col cols="12">
-                    <v-text-field
-                      v-model="category.name"
-                      label="Name*"
-                      required
-                    ></v-text-field>
+                    <v-text-field v-model="category.name" label="Name*" required></v-text-field>
                   </v-col>
                 </v-row>
               </v-form>
@@ -27,12 +21,8 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" text @click="dialog = false"
-              >Close</v-btn
-            >
-            <v-btn color="blue darken-1" text @click="createOrEditCategory()"
-              >Save</v-btn
-            >
+            <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
+            <v-btn color="blue darken-1" text @click="createOrEditCategory()">Save</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -114,46 +104,45 @@ export default {
     },
     fetchData() {
       axios
-        .get(
-          "Category/GetAllCategories",
-          {
-            headers: {
-              "Content-type": "application/json",
-              "Access-Control-Allow-Origin": "*"
-            }
+        .get("Category/GetAllCategories", {
+          headers: {
+            "Content-type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            Authorization: `Bearer ${this.$store.getters.userInfo.token}`
           }
-        )
+        })
         .then(response => {
           this.categories = response.data;
         });
     },
     deleteCategory(value) {
       axios
-        .get(
-          "Category/Delete?id=" + value.id,
-          {
-            headers: {
-              "Content-type": "application/json",
-              "Access-Control-Allow-Origin": "*"
-            }
+        .get("Category/Delete?id=" + value.id, {
+          headers: {
+            "Content-type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+             Authorization: `Bearer ${this.$store.getters.userInfo.token}`
           }
-        )
+        })
         .then(response => {
           this.fetchData();
         });
     },
-    createOrEditCategory(){
-      if(this.category.id !== 0)
-      {
+    createOrEditCategory() {
+      if (this.category.id !== 0) {
         this.editCategory();
-      }
-      else{
+      } else {
         this.addCategory();
       }
     },
     editCategory() {
       axios
-        .post("Category/Edit", this.category)
+        .post("Category/Edit", this.category,{ headers: {
+            "Content-type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            Authorization: `Bearer ${this.$store.getters.userInfo.token}`
+          }
+          })
         .then(response => {
           if (response.status === 200) {
             this.fetchData();
@@ -167,7 +156,12 @@ export default {
     },
     addCategory() {
       axios
-        .post("Category/Create", this.category)
+        .post("Category/Create", this.category,{ headers: {
+            "Content-type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            Authorization: `Bearer ${this.$store.getters.userInfo.token}`
+          }
+          })
         .then(response => {
           if (response.status === 200) {
             this.fetchData();

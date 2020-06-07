@@ -1,9 +1,7 @@
 <template>
   <v-layout warp align-center justify-center row fill-height>
     <v-flex xs12 md12>
-      <v-btn outlined color="deep-purple" dark @click="showModal()"
-        >Create Settings</v-btn
-      >
+      <v-btn outlined color="deep-purple" dark @click="showModal()">Create Settings</v-btn>
       <v-dialog v-model="dialog" persistent max-width="600px">
         <v-card>
           <v-card-title>
@@ -33,12 +31,14 @@
         <template v-slot:item="row">
           <tr>
             <td style="width:200px;">
-              <v-btn 
-              class="mx-2" 
-              fab 
-              dark 
-              small 
-              color="deep-purple" @click="selectedSettings(row.item)">
+              <v-btn
+                class="mx-2"
+                fab
+                dark
+                small
+                color="deep-purple"
+                @click="selectedSettings(row.item)"
+              >
                 <v-icon dark>mdi-pencil</v-icon>
               </v-btn>
               <v-btn
@@ -64,17 +64,17 @@
 import axios from "axios";
 export default {
   name: "Settings",
-  created(){
+  created() {
     this.fetchData();
     this.$store.commit("SET_panelText", "Settings");
   },
-  data(){
-    return{
+  data() {
+    return {
       title: "Create ",
       currentIndex: -1,
-      setting: {key:"", value:"",id: 0},
+      setting: { key: "", value: "", id: 0 },
       dialog: false,
-      headers:[
+      headers: [
         {
           text: "Action"
         },
@@ -82,17 +82,17 @@ export default {
           text: "Key",
           align: "start",
           sortable: false,
-          value: "keys",
+          value: "keys"
         },
         {
           text: "Value",
           align: "start",
           sortable: false,
-          value: "values",
-        },
+          value: "values"
+        }
       ],
-      settings:[]
-      };
+      settings: []
+    };
   },
   methods: {
     showModal() {
@@ -107,49 +107,46 @@ export default {
     },
     fetchData() {
       axios
-        .get(
-          "Settings/GetAllSettings",
-          {},
-          {
-            headers: {
-              "Content-type": "application/json",
-              "Access-Control-Allow-Origin": "*"
-            }
+        .get("Settings/GetAllSettings", {
+          headers: {
+            "Content-type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            Authorization: `Bearer ${this.$store.getters.userInfo.token}`
           }
-        )
+        })
         .then(response => {
           this.settings = response.data;
-          
         });
     },
-    deleteSettings(item){
+    deleteSettings(item) {
       axios
-        .get(
-          "Settings/Delete?id=" + item.id,
-          {},
-          {
-            headers: {
-              "Content-type": "application/json",
-              "Access-Control-Allow-Origin": "*"
-            }
+        .get("Settings/Delete?id=" + item.id, {
+          headers: {
+            "Content-type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            Authorization: `Bearer ${this.$store.getters.userInfo.token}`
           }
-        )
+        })
         .then(response => {
           this.fetchData();
-          });
-        },
-        createOrEditSettings(){
-      if(this.setting.id !== 0)
-      {
+        });
+    },
+    createOrEditSettings() {
+      if (this.setting.id !== 0) {
         this.editSettings();
-      }
-      else{
+      } else {
         this.addSettings();
       }
     },
-    editSettings(item)  {
-       axios
-        .post("Settings/Edit", this.setting)
+    editSettings(item) {
+      axios
+        .post("Settings/Edit", this.setting, {
+          headers: {
+            "Content-type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            Authorization: `Bearer ${this.$store.getters.userInfo.token}`
+          }
+        })
         .then(response => {
           if (response.status === 200) {
             this.fetchData();
@@ -161,9 +158,15 @@ export default {
       this.dialog = false;
       this.settings = { name: "" };
     },
-    addSettings(item){
+    addSettings(item) {
       axios
-        .post("Settings/Create", this.setting)
+        .post("Settings/Create", this.setting, {
+          headers: {
+            "Content-type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            Authorization: `Bearer ${this.$store.getters.userInfo.token}`
+          }
+        })
         .then(response => {
           if (response.status === 200) {
             this.fetchData();
@@ -172,9 +175,9 @@ export default {
         .catch(function(error) {
           console.log(error);
         });
-       
+
       this.dialog = false;
-      this.settings ={key:""}; //????
+      this.settings = { key: "" }; //????
     }
   }
 };

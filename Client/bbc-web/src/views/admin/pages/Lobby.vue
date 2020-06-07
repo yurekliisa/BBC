@@ -90,9 +90,10 @@ export default {
         .get(
           "Category/GetAllLobbies",
           {
-            headers: {
+            headers: {    
               "Content-type": "application/json",
-              "Access-Control-Allow-Origin": "*"
+              "Access-Control-Allow-Origin": "*",
+              Authorization: `Bearer ${this.$store.getters.userInfo.token}`
             }
           }
         )
@@ -104,7 +105,12 @@ export default {
    
     createLobby() {
       axios
-        .post("Lobby/Create", this.lobby)
+        .post("Lobby/Create", this.lobby,{ headers: {
+            "Content-type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            Authorization: `Bearer ${this.$store.getters.userInfo.token}`
+          }
+            })
         .then(response => {
           if (response.status === 200) {
             this.fetchData();
