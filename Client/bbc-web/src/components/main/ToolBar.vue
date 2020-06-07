@@ -57,8 +57,8 @@ export default {
   },
   methods: {
     filterMenu() {
-      let userData = this.$store.getters.userInfo; 
-      if (userData == undefined) {
+      let userData = this.$store.getters.userInfo;
+      if (Object.keys(userData).length === 0) {
         return orjMenu.filter(
           (x) => x.isAuth !== "user" || x.isAuth !== "admin"
         );
@@ -69,8 +69,8 @@ export default {
           to: "/chat",
           isAuth: "user",
         });
-        
-        let index = userData.roles.findIndex((x) => x === "Admin");
+
+        let index = userData?.roles.findIndex((x) => x === "Admin");
         if (index !== -1) {
           menu.push({
             text: "Panel",
@@ -78,14 +78,13 @@ export default {
             isAuth: "admin",
           });
         }
-        
+
         menu.push({
           text: userData.userName,
           to: "/profile/" + userData.userId,
           isAuth: "user",
         });
-        
-        
+
         return menu;
       }
     },

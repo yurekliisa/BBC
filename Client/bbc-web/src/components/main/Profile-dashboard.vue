@@ -7,7 +7,7 @@
             <span class="title font-weight-light">{{userReport.headerWidget.totalRecivedComment}}</span>
           </v-card-title>
           <v-card-text class="headline font-weight-bold">
-            Toplam alınan yorum sayısı
+            Toplam Alınan Yorum Sayısı
           </v-card-text>
         </v-card>
       </v-col>
@@ -17,7 +17,7 @@
             <span class="title font-weight-light">{{userReport.headerWidget.totalComment}}</span>
           </v-card-title>
           <v-card-text class="headline font-weight-bold">
-            Toplam yapılan yorum sayısı
+            Toplam Yapılan Yorum Sayısı
           </v-card-text>
         </v-card>
       </v-col>
@@ -27,7 +27,7 @@
             <span class="title font-weight-light">{{userReport.headerWidget.totalTaR}}</span>
           </v-card-title>
           <v-card-text class="headline font-weight-bold">
-            Toplam alınan yorum sayısı
+            Toplam Tarif ve Reçete
           </v-card-text>
         </v-card>
       </v-col>
