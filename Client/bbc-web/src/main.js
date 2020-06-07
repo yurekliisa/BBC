@@ -37,7 +37,7 @@ Axios.interceptors.response.use(response => {
   }
 })
 
-Axios.defaults.baseURL = "https://localhost:44308/api/";
+Axios.defaults.baseURL = "https://bbc-api.azurewebsites.net/api/";
 
 
 

@@ -50,7 +50,7 @@
           <v-col cols="12">
             <label>Kapak Resmi</label>
             <v-img
-              :src="'https://localhost:44308/' + fakeImage"
+              :src="'https://bbc-api.azurewebsites.net/' + fakeImage"
               width="250"
               height="250"
             />

@@ -15,7 +15,7 @@ namespace BBC.API.Registery
         {
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("v1", new OpenApiInfo { Title = "BlogAPI", Version = "v1" });
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Bana Bi'Chef", Version = "v1" });
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     In = ParameterLocation.Header,
@@ -43,8 +43,8 @@ namespace BBC.API.Registery
             app.UseSwagger();
             app.UseSwaggerUI(options =>
             {
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Blog API Version 1");
-                options.DocumentTitle = "Title Documentation";
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "BBC Beta Version");
+                options.DocumentTitle = "Bana Bi'Chef";
                 options.DocExpansion(DocExpansion.None);
             });
         }

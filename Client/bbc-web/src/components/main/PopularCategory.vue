@@ -1,7 +1,7 @@
 <template>
   <div class="mt-4">
     <!--Widget 1 -->
-    <h1 class="homeTitle">Populer kategori</h1>
+    <h1 class="homeTitle">Popüler Kategoriler</h1>
     <v-row>
       <v-flex>
         <v-tabs>

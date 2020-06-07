@@ -1,7 +1,7 @@
 <template>
   <div class="mt-4">
     <!--Widget 1 -->
-    <h1 class="homeTitle">Populer Chef</h1>
+    <h1 class="homeTitle">Popüler Chef</h1>
     <v-row>
       <v-flex>
         <v-tabs>
@@ -23,7 +23,7 @@
                 <v-list-item :to="'/profile/'+item.id" style="cursor:pointer">
                   <v-list-item-avatar>
                     <v-img
-                      :src="'https://localhost:44308/'+item.photo"
+                      :src="'https://bbc-api.azurewebsites.net/'+item.photo"
                     ></v-img>
                   </v-list-item-avatar>
                   <v-list-item-content>

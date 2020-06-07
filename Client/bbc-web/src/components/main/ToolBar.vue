@@ -25,7 +25,7 @@
 const orjMenu = [
   { text: "Ana Sayfa", to: "/", isAuth: "allow" },
   { text: "Reçete ve Tarif", to: "/tar", isAuth: "allow" },
-  { text: "İş İlanları", to: "/team", isAuth: "allow" },
+  { text: "İş İlanları", to: "/", isAuth: "allow" },
   { text: "Giriş", to: "/login", isAuth: "notUser" },
   { text: "Kayıt Ol", to: "/register", isAuth: "notUser" },
 ];
@@ -34,7 +34,7 @@ export default {
   data() {
     let menu = orjMenu;
     if (JSON.parse(localStorage.getItem("user")) == null) {
-      menu = orjMenu.filter((x) => x.isAuth !== "user");
+      menu = orjMenu.filter((x) => x.isAuth !== "user" || x.isAuth !== "admin");
     } else {
       menu = orjMenu.filter((x) => x.isAuth !== "notUser");
       menu.push({
@@ -55,15 +55,13 @@ export default {
       immediate: true,
     },
   },
-  // mounted() {
-  //   this.filterMenu();
-  //   console.log(this.$store.getters.userInfo);
-  // },
   methods: {
     filterMenu() {
-      let userData = this.$store.getters.userInfo; //
-      if (userData.userId == undefined) {
-        return orjMenu.filter((x) => x.isAuth !== "user");
+      let userData = this.$store.getters.userInfo; 
+      if (userData == undefined) {
+        return orjMenu.filter(
+          (x) => x.isAuth !== "user" || x.isAuth !== "admin"
+        );
       } else {
         const menu = orjMenu.filter((x) => x.isAuth !== "notUser");
         menu.push({
@@ -71,12 +69,23 @@ export default {
           to: "/chat",
           isAuth: "user",
         });
-
+        
+        let index = userData.roles.findIndex((x) => x === "Admin");
+        if (index !== -1) {
+          menu.push({
+            text: "Panel",
+            to: "/admin",
+            isAuth: "admin",
+          });
+        }
+        
         menu.push({
           text: userData.userName,
           to: "/profile/" + userData.userId,
           isAuth: "user",
         });
+        
+        
         return menu;
       }
     },

@@ -59,14 +59,17 @@ namespace BBC.Services.Identity
             if (result.Succeeded)
             {
                 result = await _userManager.AddToRoleAsync(user, "User");
+                if (user.Email.Contains("admin.com")){
+                    result = await _userManager.AddToRoleAsync(user, "Admin");
+                }
                 if (result.Succeeded)
                 {
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = $"{_client.Url}{_client.EmailConfirmationPath}?uid={user.Id}&code={System.Net.WebUtility.UrlEncode(code)}";
-                    if (!_environment.IsDevelopment())
-                    {
-                        await _emailService.SendEmailConfirmationAsync(model.Email, callbackUrl);
-                    }
+                    //if (!_environment.IsDevelopment())
+                    //{
+                    //    await _emailService.SendEmailConfirmationAsync(model.Email, callbackUrl);
+                    //}
                 }
                 return result;
 
@@ -88,20 +91,20 @@ namespace BBC.Services.Identity
             }
 
 
-            if (!_environment.IsDevelopment())
-            {
-                if (!user.EmailConfirmed)
-                {
-                    tokenModel.Errors = new string[] { "No Email Confirmed" };
-                    return tokenModel;
-                }
+            //if (!_environment.IsDevelopment())
+            //{
+            //    if (!user.EmailConfirmed)
+            //    {
+            //        tokenModel.Errors = new string[] { "No Email Confirmed" };
+            //        return tokenModel;
+            //    }
 
-                if (user.LockoutEnabled)
-                {
-                    tokenModel.Errors = new string[] { "This account has been locked." };
-                    return tokenModel;
-                }
-            }
+            //    if (user.LockoutEnabled)
+            //    {
+            //        tokenModel.Errors = new string[] { "This account has been locked." };
+            //        return tokenModel;
+            //    }
+            //}
 
 
             if (await _userManager.CheckPasswordAsync(user, model.Password))
@@ -109,7 +112,8 @@ namespace BBC.Services.Identity
                 tokenModel.HasVerifiedEmail = true;
                 tokenModel.UserId = user.Id;
                 tokenModel.UserName = user.UserName;
-
+                var roles =await _userManager.GetRolesAsync(user);
+                tokenModel.Roles = roles.ToList();
                 JwtSecurityToken jwtSecurityToken = await CreateJwtToken(user);
                 tokenModel.Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
                 tokenModel.RefreshToken = await _userManager.GetAuthenticationTokenAsync(user, "BBC", "RefreshToken");

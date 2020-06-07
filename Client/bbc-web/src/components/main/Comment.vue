@@ -13,7 +13,7 @@
               <router-link :to="'/profile/' + comment.userId">
                 <v-list-item-avatar>
                   <v-img
-                    :src="'https://localhost:44308/' + comment.userPhoto"
+                    :src="'https://bbc-api.azurewebsites.net/' + comment.userPhoto"
                   ></v-img>
                 </v-list-item-avatar>
               </router-link>

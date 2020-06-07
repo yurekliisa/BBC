@@ -13,6 +13,11 @@ namespace BBC.Services.Identity.Dto.Auth
         public int UserId { get; set; }
         public string UserName { get; set; }
         public string[] Errors { get; set; }
-       
+        public List<string> Roles { get; set; }
+        public TokenOutputDto()
+        {
+            Roles = new List<string>();
+        }
+
     }
 }

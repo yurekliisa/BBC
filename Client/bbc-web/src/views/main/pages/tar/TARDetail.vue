@@ -4,14 +4,14 @@
       <v-img
         v-if="data.mainImage"
         height="250"
-        :src="'https://localhost:44308/' + data.mainImage"
+        :src="'https://bbc-api.azurewebsites.net/' + data.mainImage"
       ></v-img>
       <v-card-title>{{ data.title }}</v-card-title>
       <v-card-text>
         <v-row align="center" class="mx-0">
           <v-chip outlined to="/">
             <v-avatar left v-if="data.userPhoto">
-              <v-img :src="'https://localhost:44308/' + data.userPhoto"></v-img>
+              <v-img :src="'https://bbc-api.azurewebsites.net/' + data.userPhoto"></v-img>
             </v-avatar>
             {{ data.userFullName }}
           </v-chip>

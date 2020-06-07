@@ -381,13 +381,12 @@ export default {
           })
           .get("/api?msg="+this.content)
           .then((answer) => {
-            console.log(answer);
+            this.content = "";
             this.chatMessages.push({
               senderUserId: 0,
               senderUserName: "CHATBOT",
               message: answer.data.res,
             });
-            this.content = "";
             this.scrollToEnd();
           });
 

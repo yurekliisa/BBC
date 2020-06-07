@@ -24,8 +24,8 @@
 
     <v-flex md2 offset-md-1>
       <v-col style="padding:0">
-        <PopularTAR />
-        <PopularTAR />
+        <PopularTAR type="forUser"/>
+        <PopularTAR type="forCategory"/>
         <PopularChef />
         <PopularCategory />
       </v-col>

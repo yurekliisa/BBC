@@ -17,7 +17,9 @@
 
           <v-list-item>
             <v-list-item-avatar color="grey" v-if="user.photo">
-              <v-img :src="'https://localhost:44308' + user.photo"></v-img>
+              <v-img
+                :src="'https://bbc-api.azurewebsites.net' + user.photo"
+              ></v-img>
             </v-list-item-avatar>
             <v-list-item-content>
               <v-list-item-title class="headline"
@@ -34,6 +36,11 @@
                 >
                   <v-icon color="indigo">mdi-account-settings-outline</v-icon
                   >Profilini Düzenle</v-btn
+                >
+              </v-list-item-action-text>
+              <v-list-item-action-text>
+                <v-btn text color="deep-purple accent-4" @click="logout()">
+                  <v-icon color="indigo">mdi-logout</v-icon>Çıkış</v-btn
                 >
               </v-list-item-action-text>
             </v-list-item-action>
@@ -185,12 +192,17 @@ export default {
     this.id = this.$route.params["id"];
     axios.get("User/Get/" + this.id).then((res) => {
       if (res.status === 200) {
+        res.data.birthday = new Date(res.data.birthday).toLocaleDateString();
         this.user = res.data;
-        console.log(res.data);
       }
     });
   },
   methods: {
+    logout() {
+      localStorage.removeItem("user");
+      this.$store.commit("SET_USER", undefined);
+      this.$router.push("/");
+    },
     onScroll(e) {
       this.offsetTop = e.target.scrollTop;
     },

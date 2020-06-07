@@ -114,15 +114,24 @@ export default {
       } else {
         this.submitStatus = "PENDING";
         axios
-          .post("Auth/Login", {
-            email: this.email,
-            password: this.password,
-          })
+          .post(
+            "Auth/Login",
+            {
+              email: this.email,
+              password: this.password,
+            },
+            {
+              headers: {
+                "Content-type": "application/json",
+                "Access-Control-Allow-Origin": "http:localhost:8080/",
+              },
+            }
+          )
           .then((response) => {
             if (response.status === 200) {
               this.submitStatus = "OK";
               localStorage.setItem("user", JSON.stringify(response.data));
-              this.$store.commit("SET_USER",response.data);
+              this.$store.commit("SET_USER", response.data);
               this.$router.push("/");
             }
           })

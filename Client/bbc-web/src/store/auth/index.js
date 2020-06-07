@@ -19,7 +19,7 @@ const mutations = {
     SET_USER(state, user) {
         state.userInfo = user;
         state.connection = new signalR.HubConnectionBuilder()
-        .withUrl('https://localhost:44308/signalr')
+        .withUrl('https://bbc-api.azurewebsites.net/signalr')
         .build();
         console.log(state.connection);
     },

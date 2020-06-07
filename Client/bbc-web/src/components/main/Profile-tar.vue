@@ -10,7 +10,7 @@
         <v-card :loading="item.isLoading" class="ma-2 pa-1 my-2">
           <v-img
             height="250"
-            :src="'https://localhost:44308/' + item.content.mainImage"
+            :src="'https://bbc-api.azurewebsites.net/' + item.content.mainImage"
           ></v-img>
           <v-card-title>{{ item.content.title }}</v-card-title>
           <v-card-text>
