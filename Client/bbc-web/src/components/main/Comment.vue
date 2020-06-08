@@ -13,7 +13,9 @@
               <router-link :to="'/profile/' + comment.userId">
                 <v-list-item-avatar>
                   <v-img
-                    :src="'https://bbc-api.azurewebsites.net/' + comment.userPhoto"
+                    :src="
+                      'https://bbc-api.azurewebsites.net/' + comment.userPhoto
+                    "
                   ></v-img>
                 </v-list-item-avatar>
               </router-link>
@@ -98,10 +100,11 @@ export default {
     };
   },
   mounted() {
-    console.log(this.comments);
+    console.log(this.$store.getters.userInfo.token);
   },
   methods: {
     insertComment() {
+      console.log(this.$store.getters.userInfo.token);
       let data = {
         taRId: this.tarId,
         comment: this.comment,
@@ -118,7 +121,22 @@ export default {
         })
         .then((result) => {
           if (result.status === 200) {
-            axios.get("TaR/GetAllComments?tarId="+this.tarId)
+            axios
+              .get("TaR/GetAllComments?tarId=" + this.tarId, {
+                headers: {
+                  "Content-type": "application/json",
+                  "Access-Control-Allow-Origin": "*",
+                  Authorization: `Bearer ${this.$store.getters.userInfo.token}`,
+                },
+              })
+              .then((res) => {
+                if (res.status === 200) {
+                  this.comments = res.data;
+                  this.comment = "";
+                  this.puan = 5;
+                  this.isComment = false;
+                }
+              });
           }
         })
         .catch((err) => {

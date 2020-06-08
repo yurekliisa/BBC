@@ -1,5 +1,5 @@
 <template>
-  <v-layout warp align-center justify-center row fill-height>
+  <v-layout warp align-center justify-center row fill-height style="padding:1rem">
     <v-flex xs12 md12>
       <v-btn outlined color="deep-purple" dark @click="showModal()">Create Settings</v-btn>
       <v-dialog v-model="dialog" persistent max-width="600px">
@@ -53,6 +53,7 @@
               </v-btn>
             </td>
             <td>{{row.item.key}}</td>
+            <td>{{row.item.value}}</td>
           </tr>
         </template>
       </v-data-table>
@@ -116,6 +117,7 @@ export default {
         })
         .then(response => {
           this.settings = response.data;
+          console.log(this.settings)
         });
     },
     deleteSettings(item) {

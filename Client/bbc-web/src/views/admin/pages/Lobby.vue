@@ -1,5 +1,5 @@
 <template>
-  <v-layout warp align-center justify-center row fill-height>
+  <v-layout warp align-center justify-center row fill-height style="padding:1rem">
     <v-flex xs12 md12>
       <v-btn outlined color="deep-purple" dark @click="showModal()"
         >Create Lobby</v-btn
@@ -66,9 +66,6 @@ export default {
       dialog: false,
       headers: [
         {
-          text: "Action"
-        },
-        {
           text: "Name",
           align: "start",
           sortable: false,
@@ -88,7 +85,7 @@ export default {
     fetchData() {
       axios
         .get(
-          "Lobi/GetAllLobbies",
+          "Lobi/GetAllLobies",
           {
             headers: {    
               "Content-type": "application/json",

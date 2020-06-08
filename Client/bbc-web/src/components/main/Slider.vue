@@ -17,7 +17,7 @@
           v-for="(yemek, j) in slide"
           :key="j"
         >
-          <v-img :src="yemek.mainImage" @click="getDetail(yemek)">
+          <v-img :src="'https://bbc-api.azurewebsites.net/'+yemek.mainImage" @click="getDetail(yemek)">
             <v-row align="start" class="lightbox white--text pa-2 fill-height">
               <v-col>
                 <div class="body-1" style="text-align:center">

@@ -47,13 +47,10 @@
             <v-btn
               text
               color="deep-purple accent-4"
-              @click="reserve()"
               :to="'/tar/edit/' + item.id"
-            >Edit</v-btn>
-            <v-btn text color="deep-purple accent-4" @click="reserve()"
-              >Devamını Oku</v-btn
+              >Edit</v-btn
             >
-            <v-btn text color="deep-purple accent-4" @click="reserve()"
+            <v-btn text color="deep-purple accent-4" @click="goToTaRDetail(item)"
               >Devamını Oku</v-btn
             >
           </v-card-actions>
@@ -77,6 +74,15 @@ export default {
     this.fetchdata();
   },
   methods: {
+    goToTaRDetail(item) {
+      this.$router.push({
+        name: "TARDetail",
+        params: {
+          name: item.content.title.replace(/ /g, "&"),
+          id: item.id,
+        },
+      });
+    },
     fetchdata() {
       axios
         .get("TaR/GetTarifAndReceteByUserId?userId=" + this.id, {
