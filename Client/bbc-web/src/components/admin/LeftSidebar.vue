@@ -46,6 +46,11 @@ export default {
           title: "Settings",
           to: "/admin/settings"
         },
+        {
+          icon: "mdi-logout", // bu da ikonu fakat gözükmüyo
+          title: "Çıkış",
+          to: "/"
+        },
       ]
     };
   },
