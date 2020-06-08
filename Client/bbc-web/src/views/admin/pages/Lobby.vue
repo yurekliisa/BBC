@@ -88,7 +88,7 @@ export default {
     fetchData() {
       axios
         .get(
-          "Category/GetAllLobbies",
+          "Lobi/GetAllLobbies",
           {
             headers: {    
               "Content-type": "application/json",
@@ -105,7 +105,7 @@ export default {
    
     createLobby() {
       axios
-        .post("Lobby/Create", this.lobby,{ headers: {
+        .post("Lobi/Create", this.lobby,{ headers: {
             "Content-type": "application/json",
             "Access-Control-Allow-Origin": "*",
             Authorization: `Bearer ${this.$store.getters.userInfo.token}`

@@ -107,7 +107,7 @@ export default {
     },
     fetchData() {
       axios
-        .get("Settings/GetAllSettings", {
+        .get("Settings/GetSettings", {
           headers: {
             "Content-type": "application/json",
             "Access-Control-Allow-Origin": "*",
@@ -120,7 +120,7 @@ export default {
     },
     deleteSettings(item) {
       axios
-        .get("Settings/Delete?id=" + item.id, {
+        .get("Settings/DeleteSettings?id=" + item.id, {
           headers: {
             "Content-type": "application/json",
             "Access-Control-Allow-Origin": "*",
@@ -140,7 +140,7 @@ export default {
     },
     editSettings(item) {
       axios
-        .post("Settings/Edit", this.setting, {
+        .post("Settings/EditSettings", this.setting, {
           headers: {
             "Content-type": "application/json",
             "Access-Control-Allow-Origin": "*",
@@ -160,7 +160,7 @@ export default {
     },
     addSettings(item) {
       axios
-        .post("Settings/Create", this.setting, {
+        .post("Settings/CreateSettings", this.setting, {
           headers: {
             "Content-type": "application/json",
             "Access-Control-Allow-Origin": "*",
